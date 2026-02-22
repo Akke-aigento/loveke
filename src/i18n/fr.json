@@ -1,0 +1,184 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "story": "Notre Histoire",
+    "comic": "La BD",
+    "sizeGuide": "Guide des tailles",
+    "giftCards": "Cartes cadeaux",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Born from Love. Worn on the Street.",
+    "subtitle": "Streetwear belge avec une histoire. De Bratislava à la Belgique.",
+    "shopCta": "Voir la Collection",
+    "storyCta": "Notre Histoire"
+  },
+  "storyTeaser": {
+    "title": "Un surnom est devenu une marque",
+    "text": "Tout a commencé avec deux sacs à dos, une auberge à Bratislava et un nom qui est resté. Loveke — un petit mot belge plein de chaleur devenu streetwear avec une âme.",
+    "cta": "Lire notre histoire →"
+  },
+  "featured": {
+    "title": "Fresh Drops 🔥",
+    "viewProduct": "Voir",
+    "forTwo": {
+      "title": "Loveke for Two 💕",
+      "subtitle": "Achetez-en 2, économisez 10%",
+      "cta": "Shop for Two"
+    }
+  },
+  "comicBanner": {
+    "text": "📖 Recevez notre BD GRATUITEMENT avec votre première commande !",
+    "cta": "Commander maintenant →"
+  },
+  "usps": {
+    "belgium": "Made in Belgium 🇧🇪",
+    "organic": "100% Coton Bio 🌿",
+    "gots": "Certifié GOTS ✅",
+    "shipping": "Livraison gratuite dès €50 📦",
+    "love": "Imprimé avec amour ❤️",
+    "comic": "BD gratuite avec 1ère commande 📖"
+  },
+  "socialWall": {
+    "title": "Le Mur Loveke",
+    "subtitle": "Partagez votre moment Loveke avec #loveke",
+    "follow": "Suivez-nous sur Instagram"
+  },
+  "giftCardTeaser": {
+    "title": "Offrez un cadeau Loveke 🎁",
+    "cta": "Découvrir les cartes cadeaux"
+  },
+  "newsletter": {
+    "title": "Restez dans la boucle !",
+    "subtitle": "Inscrivez-vous pour les news, drops et offres exclusives.",
+    "placeholder": "votre@email.be",
+    "submit": "Inscrivez-moi ! 💌",
+    "success": "Vous êtes inscrit ! 🎉",
+    "error": "Oups, réessayez."
+  },
+  "footer": {
+    "shop": "Boutique",
+    "info": "Info",
+    "help": "Aide",
+    "allProducts": "Tous les produits",
+    "newArrivals": "Nouveautés",
+    "giftCards": "Cartes cadeaux",
+    "ourStory": "Notre Histoire",
+    "theComic": "La BD",
+    "sustainability": "Durabilité",
+    "sizeGuide": "Guide des tailles",
+    "shipping": "Livraison",
+    "returns": "Retours",
+    "contact": "Contact",
+    "copyright": "© 2026 Loveke — Made with ❤️ en Belgique",
+    "privacy": "Confidentialité"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide — c'est l'heure du shopping ! 🛒",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "freeShipping": "Livraison gratuite dès €50",
+    "discount": "Réduction",
+    "total": "Total",
+    "discountPlaceholder": "Code promo",
+    "apply": "Appliquer",
+    "checkout": "Payer",
+    "remove": "Supprimer"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "size": "Taille",
+    "color": "Couleur",
+    "quantity": "Quantité",
+    "inStock": "En stock",
+    "lowStock": "Stock limité",
+    "outOfStock": "Épuisé",
+    "sizeGuide": "Voir le guide des tailles",
+    "related": "Vous aimerez aussi",
+    "belgiumMade": "Made in Belgium 🇧🇪",
+    "organicCotton": "Coton Bio 🌿",
+    "freeComic": "BD gratuite avec 1ère commande 📖"
+  },
+  "shop": {
+    "title": "Boutique",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "sortNewest": "Nouveautés",
+    "sortPriceLow": "Prix croissant",
+    "sortPriceHigh": "Prix décroissant",
+    "all": "Tout",
+    "empty": "Quelque chose de beau arrive bientôt ! 👀"
+  },
+  "story": {
+    "heroTitle": "Comment tout a commencé...",
+    "chapter1Title": "Bratislava, 2019 🍺",
+    "chapter1": "Tout a commencé au Wild Elephants Hostel à Bratislava. Akke était assis dehors avec une bière et une cigarette — pieds nus, comme il se doit. Puis Nastya est passée avec son sac à dos. Coup de foudre ? Peut-être. Mais d'abord, elle s'est retrouvée coincée dans les toilettes pendant 25 minutes. Romantique ? Pas vraiment. Drôle ? Absolument. Une fois libérée, ils sont allés boire un verre ensemble. Et un autre. Et encore un autre.",
+    "chapter2Title": "\"Tu viens en Ukraine ?\" 🚂",
+    "chapter2": "Le lendemain. Déjeuner slovaque. Bière et Becherovka à midi — c'étaient les vacances, non ? Akke lui a dit qu'il trouvait dommage qu'elle doive rentrer en Ukraine. 'Tu peux toujours venir avec moi ?' a-t-elle ri. Une blague. N'est-ce pas ? Deux heures plus tard, il était assis à côté d'elle dans le train. Billets réservés, pas de plan, pas de vêtements propres, juste l'aventure et des papillons dans le ventre.",
+    "chapter3Title": "La Première Nuit 🌙",
+    "chapter3": "À Mukachevo, ils ont partagé leur première nuit. Un motel beaucoup trop chaud, un petit lit, tout habillés — très sage. Mais ils ont parlé toute la nuit, ri, et fixé le plafond. Certaines nuits changent tout.",
+    "chapter4Title": "Kyiv 🏛️",
+    "chapter4": "De Mukachevo à Kyiv — à chaque kilomètre, ils se sont rapprochés. Elle lui a montré tout Kyiv : les dômes dorés, les cafés, les couchers de soleil sur le Dnipro. Le meilleur guide qu'il ait jamais eu. Et puis il a fallu se dire au revoir.",
+    "chapter5Title": "Loveke ❤️",
+    "chapter5": "De retour en Belgique, la connexion n'a jamais cessé. Messages, vocaux, appels vidéo — jour et nuit. Deux pays, un seul sentiment. La distance les a rendus plus forts. Quelque part en chemin, ils ont commencé à s'appeler 'Loveke'. Un petit mot belge plein de chaleur. Les amis l'adoraient. Les inconnus posaient des questions. Et c'est ainsi qu'un surnom est devenu... une marque. De Bratislava à la Belgique — Loveke, c'est l'amour que l'on porte.",
+    "shopCta": "Voir la collection →"
+  },
+  "comic": {
+    "title": "La BD",
+    "subtitle": "L'histoire Loveke en bande dessinée",
+    "freeReminder": "📖 GRATUITE avec votre première commande !",
+    "buyDigital": "Acheter en digital",
+    "buyPrinted": "Acheter en imprimé"
+  },
+  "sizeGuide": {
+    "title": "Guide des tailles",
+    "tshirts": "T-Shirts",
+    "sweaters": "Pulls",
+    "hoodies": "Hoodies",
+    "size": "Taille",
+    "chest": "Poitrine (cm)",
+    "length": "Longueur (cm)",
+    "shoulder": "Épaule (cm)",
+    "tip": "Je mesure 1m83 et je porte du L en normal, XL en oversized — Akke"
+  },
+  "giftCardsPage": {
+    "title": "Offrez un cadeau Loveke 🎁",
+    "subtitle": "La carte cadeau parfaite pour votre Loveke",
+    "selectAmount": "Choisissez un montant",
+    "recipientEmail": "Email du destinataire (optionnel)",
+    "addToCart": "Ajouter au panier",
+    "balanceCheck": "Vérifier le solde",
+    "balancePlaceholder": "Code carte cadeau",
+    "checkBalance": "Vérifier le solde",
+    "balance": "Solde"
+  },
+  "contactPage": {
+    "title": "Contact",
+    "subtitle": "Envoyez-nous un message !",
+    "name": "Nom",
+    "email": "Email",
+    "subject": "Sujet",
+    "message": "Message",
+    "send": "Envoyer 💌",
+    "info": "Nous répondons sous 24h !",
+    "success": "Message envoyé ! 💌"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oups... cette page est coincée. Comme Nastya dans ces toilettes à Bratislava. 🚽",
+    "occupied": "OCCUPÉ",
+    "homeCta": "Ramenez-moi à l'accueil 🏠",
+    "storyCta": "Ou lire l'histoire complète →"
+  },
+  "cookie": {
+    "message": "Nous utilisons des cookies. Pas les délicieux malheureusement, mais pour améliorer votre expérience. 🍪",
+    "accept": "D'accord ! 👍",
+    "decline": "Non merci",
+    "privacy": "Politique de confidentialité"
+  },
+  "loading": {
+    "shopNap": "Notre boutique fait une petite sieste 😴 Réessayez bientôt !"
+  }
+}

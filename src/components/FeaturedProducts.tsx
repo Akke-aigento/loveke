@@ -1,0 +1,71 @@
+import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { MOCK_PRODUCTS } from '@/lib/sellqo';
+import ProductCard from './ProductCard';
+import { motion } from 'framer-motion';
+
+export default function FeaturedProducts() {
+  const { t } = useLanguage();
+  
+  // In production, these would come from SellQo API via React Query
+  const featuredProducts = MOCK_PRODUCTS.filter(p => p.collection === 'featured');
+  const coupleProducts = MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two');
+
+  return (
+    <>
+      {/* Featured Collection */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-4xl md:text-5xl text-center mb-12"
+          >
+            {t('featured.title')}
+          </motion.h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            {featuredProducts.map((product, i) => (
+              <ProductCard key={product.id} product={product} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Loveke for Two */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="gradient-love rounded-3xl p-8 md:p-12 text-center border-3 border-foreground shadow-card"
+          >
+            <h2 className="font-display text-3xl md:text-4xl text-primary-foreground mb-2">
+              {t('featured.forTwo.title')}
+            </h2>
+            <p className="font-handwritten text-xl text-primary-foreground/80 mb-8">
+              {t('featured.forTwo.subtitle')}
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
+              {coupleProducts.map((product, i) => (
+                <div key={product.id} className="w-48">
+                  <ProductCard product={product} index={i} />
+                </div>
+              ))}
+            </div>
+
+            <Link
+              to="/shop?collection=loveke-for-two"
+              className="inline-flex items-center justify-center px-8 py-3 rounded-xl font-display text-lg bg-background text-foreground border-2 border-foreground shadow-sticker hover:scale-105 transition-transform"
+            >
+              {t('featured.forTwo.cta')} 💕
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </>
+  );
+}
