@@ -59,7 +59,7 @@ const Index = () => {
             ))}
           </div>
           <a
-            href="https://instagram.com/loveke.shop"
+            href="https://www.instagram.com/loveke.shop/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-display text-primary hover:underline"
