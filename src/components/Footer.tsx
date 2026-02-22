@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="font-display text-3xl gradient-text">Loveke</span>
             <p className="mt-3 text-sm opacity-70 font-body">Born from Love. Worn on the Street.</p>
             <div className="flex gap-3 mt-4">
-              <a href="https://instagram.com/loveke" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+              <a href="https://instagram.com/loveke.shop" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="https://tiktok.com/@loveke" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-bold">
