@@ -1,0 +1,184 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "story": "Ons Verhaal",
+    "comic": "De Strip",
+    "sizeGuide": "Maatgids",
+    "giftCards": "Cadeaubon",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Born from Love. Worn on the Street.",
+    "subtitle": "Belgische streetwear met een verhaal. Van Bratislava tot België.",
+    "shopCta": "Shop de Collectie",
+    "storyCta": "Ons Verhaal"
+  },
+  "storyTeaser": {
+    "title": "Een koosnaampje werd een merk",
+    "text": "Het begon met twee rugzakken, een hostel in Bratislava, en een naam die bleef hangen. Loveke — een Belgisch woordje vol warmte dat uitgroeide tot streetwear met een ziel.",
+    "cta": "Lees ons verhaal →"
+  },
+  "featured": {
+    "title": "Fresh Drops 🔥",
+    "viewProduct": "Bekijk",
+    "forTwo": {
+      "title": "Loveke for Two 💕",
+      "subtitle": "Koop er 2, bespaar 10%",
+      "cta": "Shop for Two"
+    }
+  },
+  "comicBanner": {
+    "text": "📖 Bij je eerste bestelling krijg je ons stripverhaal GRATIS erbij!",
+    "cta": "Bestel nu →"
+  },
+  "usps": {
+    "belgium": "Made in Belgium 🇧🇪",
+    "organic": "100% Biologisch Katoen 🌿",
+    "gots": "GOTS Gecertificeerd ✅",
+    "shipping": "Gratis verzending vanaf €50 📦",
+    "love": "Gedrukt met liefde ❤️",
+    "comic": "Gratis strip bij 1e bestelling 📖"
+  },
+  "socialWall": {
+    "title": "De Loveke Muur",
+    "subtitle": "Deel jouw Loveke moment met #loveke",
+    "follow": "Volg ons op Instagram"
+  },
+  "giftCardTeaser": {
+    "title": "Geef een Loveke cadeau 🎁",
+    "cta": "Ontdek cadeaubonnen"
+  },
+  "newsletter": {
+    "title": "Blijf in de loop!",
+    "subtitle": "Schrijf je in voor nieuws, drops en exclusieve deals.",
+    "placeholder": "jouw@email.be",
+    "submit": "Schrijf me in! 💌",
+    "success": "Je bent erbij! 🎉",
+    "error": "Oeps, probeer het opnieuw."
+  },
+  "footer": {
+    "shop": "Shop",
+    "info": "Info",
+    "help": "Help",
+    "allProducts": "Alle producten",
+    "newArrivals": "Nieuw binnen",
+    "giftCards": "Cadeaubonnen",
+    "ourStory": "Ons Verhaal",
+    "theComic": "De Strip",
+    "sustainability": "Duurzaamheid",
+    "sizeGuide": "Maatgids",
+    "shipping": "Verzending",
+    "returns": "Retourneren",
+    "contact": "Contact",
+    "copyright": "© 2026 Loveke — Made with ❤️ in België",
+    "privacy": "Privacy"
+  },
+  "cart": {
+    "title": "Winkelwagen",
+    "empty": "Je winkelwagen is leeg — tijd om te shoppen! 🛒",
+    "subtotal": "Subtotaal",
+    "shipping": "Verzending",
+    "freeShipping": "Gratis verzending vanaf €50",
+    "discount": "Korting",
+    "total": "Totaal",
+    "discountPlaceholder": "Kortingscode",
+    "apply": "Toepassen",
+    "checkout": "Afrekenen",
+    "remove": "Verwijder"
+  },
+  "product": {
+    "addToCart": "Voeg toe aan winkelwagen",
+    "size": "Maat",
+    "color": "Kleur",
+    "quantity": "Aantal",
+    "inStock": "Op voorraad",
+    "lowStock": "Bijna uitverkocht",
+    "outOfStock": "Uitverkocht",
+    "sizeGuide": "Maatgids bekijken",
+    "related": "Je vindt dit misschien ook leuk",
+    "belgiumMade": "Made in Belgium 🇧🇪",
+    "organicCotton": "Biologisch Katoen 🌿",
+    "freeComic": "Gratis strip bij 1e bestelling 📖"
+  },
+  "shop": {
+    "title": "Shop",
+    "filter": "Filter",
+    "sort": "Sorteer",
+    "sortNewest": "Nieuwste",
+    "sortPriceLow": "Prijs laag-hoog",
+    "sortPriceHigh": "Prijs hoog-laag",
+    "all": "Alles",
+    "empty": "Hier komt binnenkort iets moois! 👀"
+  },
+  "story": {
+    "heroTitle": "Hoe het allemaal begon...",
+    "chapter1Title": "Bratislava, 2019 🍺",
+    "chapter1": "Het begon allemaal bij het Wild Elephants Hostel in Bratislava. Akke zat buiten met een pintje en een sigaret — op blote voeten, zoals het hoort. Toen wandelde Nastya voorbij met haar rugzak. Love at first sight? Misschien. Maar eerst moest ze 25 minuten vast komen te zitten op het toilet. Romantisch? Niet echt. Grappig? Absoluut. Eens bevrijd uit haar benarde situatie gingen ze samen iets drinken. En de rest van de avond. En de nacht.",
+    "chapter2Title": "\"Kom je mee naar Oekraïne?\" 🚂",
+    "chapter2": "De volgende dag. Slowaakse lunch. Bier en Becherovka om 12 uur — het was vakantie, hé. Akke zei dat hij het jammer vond dat ze terug naar Oekraïne moest. 'Je kan toch altijd meekomen?' lachte ze. Een grap. Toch? Twee uur later zat hij naast haar op de trein. Tickets geboekt, geen plan, geen schone kleren, alleen avontuur en vlinders in de buik.",
+    "chapter3Title": "De Eerste Nacht 🌙",
+    "chapter3": "In Mukachevo deelden ze hun eerste nacht. Een veel te warm motel, één bedje, broek aan — braaf hoor. Maar de hele nacht gepraat, gelachen, en naar het plafond gestaard. Sommige nachten veranderen alles.",
+    "chapter4Title": "Kyiv 🏛️",
+    "chapter4": "Van Mukachevo naar Kyiv — met elke kilometer groeiden ze dichter naar elkaar toe. Ze liet hem heel Kyiv zien: de gouden koepels, de gezellige cafés, de zonsondergangen boven de Dnjepr. De beste gids die hij ooit had gehad. En toen was het tijd om afscheid te nemen.",
+    "chapter5Title": "Loveke ❤️",
+    "chapter5": "Terug in België stopte het contact nooit. Berichten, voice notes, videocalls — dag en nacht. Twee landen, één gevoel. De afstand maakte hen alleen maar sterker. Ergens onderweg begonnen ze elkaar 'Loveke' te noemen. Een Belgisch woordje vol warmte. Vrienden vonden het geweldig. Vreemden vroegen ernaar. En zo werd een koosnaampje... een merk. Van Bratislava tot België — Loveke is liefde die je draagt.",
+    "shopCta": "Shop de collectie →"
+  },
+  "comic": {
+    "title": "De Strip",
+    "subtitle": "Het Loveke verhaal als stripverhaal",
+    "freeReminder": "📖 GRATIS bij je eerste kledingbestelling!",
+    "buyDigital": "Koop digitaal",
+    "buyPrinted": "Koop gedrukt"
+  },
+  "sizeGuide": {
+    "title": "Maatgids",
+    "tshirts": "T-Shirts",
+    "sweaters": "Sweaters",
+    "hoodies": "Hoodies",
+    "size": "Maat",
+    "chest": "Borst (cm)",
+    "length": "Lengte (cm)",
+    "shoulder": "Schouder (cm)",
+    "tip": "Ik ben 1m83 en draag L voor normaal, XL voor oversized — Akke"
+  },
+  "giftCardsPage": {
+    "title": "Geef een Loveke cadeau 🎁",
+    "subtitle": "De perfecte cadeaubon voor je Loveke",
+    "selectAmount": "Kies een bedrag",
+    "recipientEmail": "E-mail ontvanger (optioneel)",
+    "addToCart": "Voeg toe aan winkelwagen",
+    "balanceCheck": "Saldo checken",
+    "balancePlaceholder": "Cadeaubon code",
+    "checkBalance": "Check saldo",
+    "balance": "Saldo"
+  },
+  "contactPage": {
+    "title": "Contact",
+    "subtitle": "Stuur ons een berichtje!",
+    "name": "Naam",
+    "email": "E-mail",
+    "subject": "Onderwerp",
+    "message": "Bericht",
+    "send": "Verstuur 💌",
+    "info": "We antwoorden binnen 24u!",
+    "success": "Bericht verzonden! 💌"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oeps... deze pagina zit vast. Net als Nastya op dat toilet in Bratislava. 🚽",
+    "occupied": "BEZET",
+    "homeCta": "Breng me terug naar home 🏠",
+    "storyCta": "Of lees het volledige verhaal →"
+  },
+  "cookie": {
+    "message": "Wij gebruiken cookies. Geen koekjes helaas, maar wel om je ervaring beter te maken. 🍪",
+    "accept": "Oké, lekker! 👍",
+    "decline": "Liever niet",
+    "privacy": "Privacybeleid"
+  },
+  "loading": {
+    "shopNap": "Onze winkel doet even een dutje 😴 Probeer het zo opnieuw!"
+  }
+}

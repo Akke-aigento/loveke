@@ -1,0 +1,184 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "story": "Our Story",
+    "comic": "The Comic",
+    "sizeGuide": "Size Guide",
+    "giftCards": "Gift Cards",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Born from Love. Worn on the Street.",
+    "subtitle": "Belgian streetwear with a story. From Bratislava to Belgium.",
+    "shopCta": "Shop the Collection",
+    "storyCta": "Our Story"
+  },
+  "storyTeaser": {
+    "title": "A pet name became a brand",
+    "text": "It started with two backpacks, a hostel in Bratislava, and a name that stuck. Loveke — a little Belgian word full of warmth that grew into streetwear with a soul.",
+    "cta": "Read our story →"
+  },
+  "featured": {
+    "title": "Fresh Drops 🔥",
+    "viewProduct": "View",
+    "forTwo": {
+      "title": "Loveke for Two 💕",
+      "subtitle": "Buy 2, save 10%",
+      "cta": "Shop for Two"
+    }
+  },
+  "comicBanner": {
+    "text": "📖 Get our comic book FREE with your first order!",
+    "cta": "Order now →"
+  },
+  "usps": {
+    "belgium": "Made in Belgium 🇧🇪",
+    "organic": "100% Organic Cotton 🌿",
+    "gots": "GOTS Certified ✅",
+    "shipping": "Free shipping from €50 📦",
+    "love": "Printed with love ❤️",
+    "comic": "Free comic with 1st order 📖"
+  },
+  "socialWall": {
+    "title": "The Loveke Wall",
+    "subtitle": "Share your Loveke moment with #loveke",
+    "follow": "Follow us on Instagram"
+  },
+  "giftCardTeaser": {
+    "title": "Give a Loveke gift 🎁",
+    "cta": "Discover gift cards"
+  },
+  "newsletter": {
+    "title": "Stay in the loop!",
+    "subtitle": "Sign up for news, drops and exclusive deals.",
+    "placeholder": "your@email.com",
+    "submit": "Sign me up! 💌",
+    "success": "You're in! 🎉",
+    "error": "Oops, try again."
+  },
+  "footer": {
+    "shop": "Shop",
+    "info": "Info",
+    "help": "Help",
+    "allProducts": "All products",
+    "newArrivals": "New arrivals",
+    "giftCards": "Gift cards",
+    "ourStory": "Our Story",
+    "theComic": "The Comic",
+    "sustainability": "Sustainability",
+    "sizeGuide": "Size Guide",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "contact": "Contact",
+    "copyright": "© 2026 Loveke — Made with ❤️ in Belgium",
+    "privacy": "Privacy"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty — time to shop! 🛒",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "freeShipping": "Free shipping from €50",
+    "discount": "Discount",
+    "total": "Total",
+    "discountPlaceholder": "Discount code",
+    "apply": "Apply",
+    "checkout": "Checkout",
+    "remove": "Remove"
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "size": "Size",
+    "color": "Color",
+    "quantity": "Quantity",
+    "inStock": "In stock",
+    "lowStock": "Low stock",
+    "outOfStock": "Out of stock",
+    "sizeGuide": "View size guide",
+    "related": "You might also like",
+    "belgiumMade": "Made in Belgium 🇧🇪",
+    "organicCotton": "Organic Cotton 🌿",
+    "freeComic": "Free comic with 1st order 📖"
+  },
+  "shop": {
+    "title": "Shop",
+    "filter": "Filter",
+    "sort": "Sort",
+    "sortNewest": "Newest",
+    "sortPriceLow": "Price low-high",
+    "sortPriceHigh": "Price high-low",
+    "all": "All",
+    "empty": "Something beautiful is coming soon! 👀"
+  },
+  "story": {
+    "heroTitle": "How it all started...",
+    "chapter1Title": "Bratislava, 2019 🍺",
+    "chapter1": "It all started at the Wild Elephants Hostel in Bratislava. Akke was sitting outside with a beer and a cigarette — barefoot, as one does. Then Nastya walked by with her backpack. Love at first sight? Maybe. But first she got stuck in the bathroom for 25 minutes. Romantic? Not exactly. Funny? Absolutely. Once freed from her predicament, they grabbed a drink together. And another. And another.",
+    "chapter2Title": "\"Come to Ukraine?\" 🚂",
+    "chapter2": "The next day. Slovak lunch. Beer and Becherovka at noon — it was vacation, right? Akke said he was sorry she had to go back to Ukraine. 'You can always come along?' she laughed. A joke. Right? Two hours later he was sitting next to her on the train. Tickets booked, no plan, no clean clothes, just adventure and butterflies.",
+    "chapter3Title": "The First Night 🌙",
+    "chapter3": "In Mukachevo they shared their first night. A way too hot motel, one small bed, fully clothed — all very innocent. But they talked all night, laughed, and stared at the ceiling. Some nights change everything.",
+    "chapter4Title": "Kyiv 🏛️",
+    "chapter4": "From Mukachevo to Kyiv — with every kilometer they grew closer. She showed him all of Kyiv: the golden domes, the cozy cafés, the sunsets over the Dnipro. The best guide he ever had. And then it was time to say goodbye.",
+    "chapter5Title": "Loveke ❤️",
+    "chapter5": "Back in Belgium, the connection never stopped. Messages, voice notes, video calls — day and night. Two countries, one feeling. Distance only made them stronger. Somewhere along the way, they started calling each other 'Loveke'. A little Belgian word full of warmth. Friends loved it. Strangers asked about it. And that's how a pet name became... a brand. From Bratislava to Belgium — Loveke is love you wear.",
+    "shopCta": "Shop the collection →"
+  },
+  "comic": {
+    "title": "The Comic",
+    "subtitle": "The Loveke story as a comic book",
+    "freeReminder": "📖 FREE with your first clothing order!",
+    "buyDigital": "Buy digital",
+    "buyPrinted": "Buy printed"
+  },
+  "sizeGuide": {
+    "title": "Size Guide",
+    "tshirts": "T-Shirts",
+    "sweaters": "Sweaters",
+    "hoodies": "Hoodies",
+    "size": "Size",
+    "chest": "Chest (cm)",
+    "length": "Length (cm)",
+    "shoulder": "Shoulder (cm)",
+    "tip": "I'm 1m83 and wear L for regular, XL for oversized — Akke"
+  },
+  "giftCardsPage": {
+    "title": "Give a Loveke gift 🎁",
+    "subtitle": "The perfect gift card for your Loveke",
+    "selectAmount": "Choose an amount",
+    "recipientEmail": "Recipient email (optional)",
+    "addToCart": "Add to cart",
+    "balanceCheck": "Check balance",
+    "balancePlaceholder": "Gift card code",
+    "checkBalance": "Check balance",
+    "balance": "Balance"
+  },
+  "contactPage": {
+    "title": "Contact",
+    "subtitle": "Send us a message!",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send 💌",
+    "info": "We reply within 24h!",
+    "success": "Message sent! 💌"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops... this page is stuck. Just like Nastya in that bathroom in Bratislava. 🚽",
+    "occupied": "OCCUPIED",
+    "homeCta": "Take me back home 🏠",
+    "storyCta": "Or read the full story →"
+  },
+  "cookie": {
+    "message": "We use cookies. Not the tasty kind unfortunately, but to improve your experience. 🍪",
+    "accept": "Okay, yum! 👍",
+    "decline": "Rather not",
+    "privacy": "Privacy policy"
+  },
+  "loading": {
+    "shopNap": "Our shop is taking a nap 😴 Try again soon!"
+  }
+}
