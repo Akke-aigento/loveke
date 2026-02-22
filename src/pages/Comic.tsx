@@ -12,8 +12,10 @@ import strip7 from '@/assets/comic/strip-7.jpg';
 import strip8 from '@/assets/comic/strip-8.jpg';
 import strip9 from '@/assets/comic/strip-9.jpg';
 import strip10 from '@/assets/comic/strip-10.jpg';
+import strip11 from '@/assets/comic/strip-11.jpg';
+import strip12 from '@/assets/comic/strip-12.jpg';
 
-const comicPages = [strip1, strip2, strip3, strip4, strip5, strip6, strip7, strip8, strip9, strip10];
+const comicPages = [strip1, strip2, strip3, strip4, strip5, strip6, strip7, strip8, strip9, strip10, strip11, strip12];
 
 export default function Comic() {
   const { t } = useLanguage();
