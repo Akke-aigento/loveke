@@ -59,8 +59,8 @@ export default function Contact() {
         )}
 
         <div className="text-center mt-8 font-body text-sm text-muted-foreground">
-          <p>📧 hello@loveke.be</p>
-          <p>📸 @loveke</p>
+          <p>📧 <a href="mailto:info@loveke.be" className="hover:text-primary transition-colors">info@loveke.be</a></p>
+          <p>📸 <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@loveke.shop</a></p>
         </div>
       </div>
     </main>
