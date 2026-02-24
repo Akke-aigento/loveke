@@ -163,7 +163,8 @@
     "message": "Bericht",
     "send": "Verstuur 💌",
     "info": "We antwoorden binnen 24u!",
-    "success": "Bericht verzonden! 💌"
+    "success": "Bericht verzonden! 💌",
+    "error": "Er ging iets mis. Probeer het opnieuw."
   },
   "notFound": {
     "title": "404",

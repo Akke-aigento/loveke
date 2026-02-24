@@ -163,7 +163,8 @@
     "message": "Message",
     "send": "Envoyer 💌",
     "info": "Nous répondons sous 24h !",
-    "success": "Message envoyé ! 💌"
+    "success": "Message envoyé ! 💌",
+    "error": "Quelque chose s'est mal passé. Réessayez."
   },
   "notFound": {
     "title": "404",
