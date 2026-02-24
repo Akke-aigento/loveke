@@ -1,14 +1,39 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 
 export default function Contact() {
   const { t } = useLanguage();
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+    setError('');
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke('send-contact-email', {
+        body: form,
+      });
+
+      if (fnError) throw fnError;
+      if (data?.error) throw new Error(data.error);
+
+      setSent(true);
+    } catch (err: any) {
+      console.error('Contact form error:', err);
+      setError(t('contactPage.error') || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,22 +62,23 @@ export default function Contact() {
           >
             <div>
               <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.name')}</label>
-              <input required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <input name="name" value={form.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
               <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.email')}</label>
-              <input type="email" required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <input name="email" type="email" value={form.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
               <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.subject')}</label>
-              <input required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <input name="subject" value={form.subject} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
               <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.message')}</label>
-              <textarea required rows={5} className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground resize-none" />
+              <textarea name="message" value={form.message} onChange={handleChange} required rows={5} className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground resize-none" />
             </div>
-            <button type="submit" className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform">
-              {t('contactPage.send')}
+            {error && <p className="text-destructive text-sm font-body text-center">{error}</p>}
+            <button type="submit" disabled={loading} className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100">
+              {loading ? '⏳' : t('contactPage.send')}
             </button>
             <p className="text-center text-sm font-body text-muted-foreground">{t('contactPage.info')}</p>
           </motion.form>

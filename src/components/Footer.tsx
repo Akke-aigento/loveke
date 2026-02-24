@@ -17,8 +17,8 @@ export default function Footer() {
               <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://tiktok.com/@loveke" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-bold">
-                TikTok
+              <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-bold">
+                @loveke.shop
               </a>
             </div>
           </div>
