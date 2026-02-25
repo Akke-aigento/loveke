@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
 import { MOCK_PRODUCTS, MOCK_COLLECTIONS } from '@/lib/sellqo';
+import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
 
@@ -11,15 +13,32 @@ export default function Shop() {
   const activeCollection = searchParams.get('collection') || 'all';
   const [sort, setSort] = useState('newest');
 
-  const filteredProducts = useMemo(() => {
-    let products = activeCollection === 'all'
+  // Map sort values to API params
+  const sortParam = sort === 'price-asc' ? 'price_asc' : sort === 'price-desc' ? 'price_desc' : 'newest';
+
+  const { data: productsData, isLoading: productsLoading } = useProducts({
+    collection: activeCollection !== 'all' ? activeCollection : undefined,
+    sort: sortParam as 'newest' | 'price_asc' | 'price_desc',
+  });
+
+  const { data: collectionsData, isLoading: collectionsLoading } = useCollections();
+
+  // Use API data, fall back to mock data
+  const products: Product[] = useMemo(() => {
+    if (productsData?.data) return productsData.data;
+    // Fallback to mock data
+    let filtered = activeCollection === 'all'
       ? MOCK_PRODUCTS
       : MOCK_PRODUCTS.filter(p => p.collection === activeCollection);
+    if (sort === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
+    if (sort === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
+    return filtered as unknown as Product[];
+  }, [productsData, activeCollection, sort]);
 
-    if (sort === 'price-asc') products = [...products].sort((a, b) => a.price - b.price);
-    if (sort === 'price-desc') products = [...products].sort((a, b) => b.price - a.price);
-    return products;
-  }, [activeCollection, sort]);
+  const collections = useMemo(() => {
+    if (collectionsData) return collectionsData;
+    return MOCK_COLLECTIONS as unknown as typeof collectionsData;
+  }, [collectionsData]);
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -35,10 +54,21 @@ export default function Shop() {
         {/* Filters */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
           <div className="flex flex-wrap gap-2">
-            {MOCK_COLLECTIONS.map(col => (
+            {/* Always show "All" */}
+            <button
+              onClick={() => setSearchParams({})}
+              className={`px-4 py-2 rounded-full font-body text-sm border-2 transition-all ${
+                activeCollection === 'all'
+                  ? 'border-foreground bg-foreground text-background shadow-sticker'
+                  : 'border-border hover:border-foreground'
+              }`}
+            >
+              {t('shop.all') || 'Alles'}
+            </button>
+            {collections && Array.isArray(collections) && collections.filter(c => c.slug !== 'all').map(col => (
               <button
                 key={col.slug}
-                onClick={() => setSearchParams(col.slug === 'all' ? {} : { collection: col.slug })}
+                onClick={() => setSearchParams({ collection: col.slug })}
                 className={`px-4 py-2 rounded-full font-body text-sm border-2 transition-all ${
                   activeCollection === col.slug
                     ? 'border-foreground bg-foreground text-background shadow-sticker'
@@ -60,14 +90,24 @@ export default function Shop() {
           </select>
         </div>
 
-        {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
+        {/* Loading */}
+        {productsLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="aspect-square bg-muted rounded-2xl mb-3" />
+                <div className="h-4 bg-muted rounded w-3/4 mb-2" />
+                <div className="h-4 bg-muted rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : products.length === 0 ? (
           <div className="text-center py-20">
             <p className="font-handwritten text-2xl text-muted-foreground">{t('shop.empty')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-            {filteredProducts.map((product, i) => (
+            {products.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
           </div>

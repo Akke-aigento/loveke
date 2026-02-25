@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import type { Product } from '@/lib/sellqo';
+import type { Product } from '@/integrations/sellqo/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const randomRotation = () => (Math.random() - 0.5) * 6;
@@ -36,10 +36,14 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         <div className={`sticker-card ${borderColor} bg-card overflow-hidden`}>
           {/* Image placeholder */}
           <div className="aspect-square bg-muted relative flex items-center justify-center overflow-hidden">
-            <span className="text-6xl">🧡</span>
+            {product.images?.[0]?.url ? (
+              <img src={product.images[0].url} alt={product.images[0].alt || product.title} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-6xl">🧡</span>
+            )}
             {product.compare_at_price && (
               <div className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-xs font-bold px-2 py-1 rounded-full rotate-6">
-                -10%
+                -{Math.round((1 - product.price / product.compare_at_price) * 100)}%
               </div>
             )}
             {product.stock_status === 'low_stock' && (

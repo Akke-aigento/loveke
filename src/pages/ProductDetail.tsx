@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCart } from '@/contexts/CartContext';
+import { useSellQoCart } from '@/integrations/sellqo/CartContext';
+import { useProduct, useRelatedProducts } from '@/integrations/sellqo/hooks';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
+import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
 import { Minus, Plus } from 'lucide-react';
@@ -10,13 +12,33 @@ import { Minus, Plus } from 'lucide-react';
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useLanguage();
-  const { addItem } = useCart();
+  const { addItem } = useSellQoCart();
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  // In production: useQuery for fetching from SellQo
-  const product = MOCK_PRODUCTS.find(p => p.slug === slug);
-  const relatedProducts = MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3);
+  const { data: apiProduct, isLoading } = useProduct(slug || '');
+  const { data: apiRelated } = useRelatedProducts(slug || '');
+
+  // Fallback to mock data
+  const product: Product | undefined = apiProduct || (MOCK_PRODUCTS.find(p => p.slug === slug) as unknown as Product | undefined);
+  const relatedProducts = apiRelated || (MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3) as unknown as Product[]);
+
+  if (isLoading) {
+    return (
+      <main className="pt-24 pb-16 px-4 min-h-screen">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16">
+            <div className="aspect-square bg-muted rounded-2xl animate-pulse" />
+            <div className="space-y-4">
+              <div className="h-8 bg-muted rounded w-3/4 animate-pulse" />
+              <div className="h-6 bg-muted rounded w-1/4 animate-pulse" />
+              <div className="h-20 bg-muted rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   if (!product) {
     return (
@@ -30,14 +52,13 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     addItem({
-      id: `${product.id}-${variant.id}`,
       product_id: product.id,
       variant_id: variant.id,
       title: product.title,
       variant_title: variant.title,
       price: variant.price,
       quantity,
-      image: '',
+      image: product.images?.[0]?.url || '',
     });
   };
 
@@ -46,6 +67,8 @@ export default function ProductDetail() {
     low_stock: { text: t('product.lowStock'), color: 'text-secondary-foreground' },
     out_of_stock: { text: t('product.outOfStock'), color: 'text-destructive' },
   }[variant.stock_status];
+
+  const mainImage = product.images?.[0]?.url;
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -64,9 +87,13 @@ export default function ProductDetail() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center"
+            className="aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center overflow-hidden"
           >
-            <span className="text-8xl">🧡</span>
+            {mainImage ? (
+              <img src={mainImage} alt={product.images?.[0]?.alt || product.title} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-8xl">🧡</span>
+            )}
           </motion.div>
 
           {/* Info */}
@@ -79,8 +106,8 @@ export default function ProductDetail() {
             
             <div className="flex items-center gap-3 mb-4">
               <span className="font-display text-2xl text-primary">€{variant.price.toFixed(2)}</span>
-              {product.compare_at_price && (
-                <span className="font-body text-muted-foreground line-through">€{product.compare_at_price.toFixed(2)}</span>
+              {(variant.compare_at_price || product.compare_at_price) && (
+                <span className="font-body text-muted-foreground line-through">€{(variant.compare_at_price || product.compare_at_price)?.toFixed(2)}</span>
               )}
             </div>
 
@@ -106,7 +133,7 @@ export default function ProductDetail() {
                     } ${v.stock_status === 'out_of_stock' ? 'opacity-40 cursor-not-allowed' : ''}`}
                     disabled={v.stock_status === 'out_of_stock'}
                   >
-                    {v.size || v.title}
+                    {v.options?.size || v.title}
                   </button>
                 ))}
               </div>

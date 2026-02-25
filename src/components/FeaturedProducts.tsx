@@ -1,15 +1,20 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useProducts } from '@/integrations/sellqo/hooks';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
+import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
 
 export default function FeaturedProducts() {
   const { t } = useLanguage();
-  
-  // In production, these would come from SellQo API via React Query
-  const featuredProducts = MOCK_PRODUCTS.filter(p => p.collection === 'featured');
-  const coupleProducts = MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two');
+
+  const { data: featuredData } = useProducts({ collection: 'featured' });
+  const { data: coupleData } = useProducts({ collection: 'loveke-for-two' });
+
+  // Fallback to mock data
+  const featuredProducts: Product[] = featuredData?.data || (MOCK_PRODUCTS.filter(p => p.collection === 'featured') as unknown as Product[]);
+  const coupleProducts: Product[] = coupleData?.data || (MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two') as unknown as Product[]);
 
   return (
     <>
