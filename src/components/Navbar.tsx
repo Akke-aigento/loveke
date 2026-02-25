@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCart } from '@/contexts/CartContext';
+import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const locales = [
@@ -13,7 +13,7 @@ const locales = [
 
 export default function Navbar() {
   const { t, locale, setLocale } = useLanguage();
-  const { itemCount, openCart } = useCart();
+  const { itemCount, openCart } = useSellQoCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();

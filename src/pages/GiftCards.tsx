@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { usePurchaseGiftCard, useCheckGiftCardBalance } from '@/integrations/sellqo/hooks';
 import { motion } from 'framer-motion';
 
 const amounts = [25, 50, 75, 100];
@@ -9,6 +10,32 @@ export default function GiftCards() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [recipientEmail, setRecipientEmail] = useState('');
   const [balanceCode, setBalanceCode] = useState('');
+  const [balanceResult, setBalanceResult] = useState<{ balance: number; currency: string } | null>(null);
+
+  const purchaseGiftCard = usePurchaseGiftCard();
+  const checkBalance = useCheckGiftCardBalance();
+
+  const handlePurchase = async () => {
+    if (!selectedAmount) return;
+    try {
+      await purchaseGiftCard.mutateAsync({
+        amount: selectedAmount,
+        email: recipientEmail || undefined,
+      });
+    } catch {
+      // error handling
+    }
+  };
+
+  const handleCheckBalance = async () => {
+    if (!balanceCode) return;
+    try {
+      const result = await checkBalance.mutateAsync(balanceCode);
+      setBalanceResult(result);
+    } catch {
+      setBalanceResult(null);
+    }
+  };
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -48,8 +75,12 @@ export default function GiftCards() {
               placeholder={t('giftCardsPage.recipientEmail')}
               className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground"
             />
-            <button className="w-full py-3 rounded-xl font-display gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform">
-              {t('giftCardsPage.addToCart')} 🎁
+            <button
+              onClick={handlePurchase}
+              disabled={purchaseGiftCard.isPending}
+              className="w-full py-3 rounded-xl font-display gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50"
+            >
+              {purchaseGiftCard.isPending ? '...' : `${t('giftCardsPage.addToCart')} 🎁`}
             </button>
           </motion.div>
         )}
@@ -65,10 +96,19 @@ export default function GiftCards() {
               placeholder={t('giftCardsPage.balancePlaceholder')}
               className="flex-1 px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground"
             />
-            <button className="px-6 py-3 rounded-xl font-display border-2 border-foreground bg-background shadow-sticker hover:scale-105 transition-transform">
-              {t('giftCardsPage.checkBalance')}
+            <button
+              onClick={handleCheckBalance}
+              disabled={checkBalance.isPending}
+              className="px-6 py-3 rounded-xl font-display border-2 border-foreground bg-background shadow-sticker hover:scale-105 transition-transform disabled:opacity-50"
+            >
+              {checkBalance.isPending ? '...' : t('giftCardsPage.checkBalance')}
             </button>
           </div>
+          {balanceResult && (
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-center font-display text-lg">
+              Saldo: €{balanceResult.balance.toFixed(2)}
+            </motion.p>
+          )}
         </div>
       </div>
     </main>

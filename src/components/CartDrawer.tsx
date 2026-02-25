@@ -1,11 +1,20 @@
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCart } from '@/contexts/CartContext';
+import { useSellQoCart } from '@/integrations/sellqo/CartContext';
+import { useCreateCheckout } from '@/integrations/sellqo/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartDrawer() {
   const { t } = useLanguage();
-  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount } = useCart();
+  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount } = useSellQoCart();
+  const createCheckout = useCreateCheckout();
+
+  const handleCheckout = () => {
+    createCheckout.mutate({
+      success_url: window.location.origin + '/bedankt',
+      cancel_url: window.location.origin + '/shop',
+    });
+  };
 
   return (
     <AnimatePresence>
@@ -46,8 +55,12 @@ export default function CartDrawer() {
                 <div className="space-y-4">
                   {items.map(item => (
                     <div key={item.id} className="flex gap-3 p-3 rounded-lg bg-card border border-border">
-                      <div className="w-16 h-16 rounded-md bg-muted flex items-center justify-center text-2xl flex-shrink-0">
-                        🧡
+                      <div className="w-16 h-16 rounded-md bg-muted flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
+                        {item.image ? (
+                          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                        ) : (
+                          '🧡'
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-body font-semibold text-sm truncate">{item.title}</p>
@@ -99,8 +112,12 @@ export default function CartDrawer() {
                   <span>{t('cart.total')}</span>
                   <span className="text-primary">€{total.toFixed(2)}</span>
                 </div>
-                <button className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform">
-                  {t('cart.checkout')} →
+                <button
+                  onClick={handleCheckout}
+                  disabled={createCheckout.isPending}
+                  className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50"
+                >
+                  {createCheckout.isPending ? '...' : `${t('cart.checkout')} →`}
                 </button>
               </div>
             )}

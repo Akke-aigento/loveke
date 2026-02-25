@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback, useMemo } from
 import nl from '@/i18n/nl.json';
 import en from '@/i18n/en.json';
 import fr from '@/i18n/fr.json';
-import { setSellqoLocale } from '@/lib/sellqo';
+import { setSellqoLocale } from '@/integrations/sellqo/client';
 
 type Locale = 'nl' | 'en' | 'fr';
 

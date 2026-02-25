@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useNewsletterSubscribe } from '@/integrations/sellqo/hooks';
 import { motion } from 'framer-motion';
 
 export default function NewsletterSignup() {
   const { t, locale } = useLanguage();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const subscribe = useNewsletterSubscribe();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     
     try {
-      // In production: await sellqoAPI.subscribe(email, locale);
-      console.log('Newsletter subscribe:', { email, locale });
+      await subscribe.mutateAsync({ email, locale });
       setStatus('success');
       setEmail('');
     } catch {
@@ -57,9 +58,10 @@ export default function NewsletterSignup() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 rounded-xl font-display bg-foreground text-background shadow-sticker hover:scale-105 transition-transform whitespace-nowrap"
+                disabled={subscribe.isPending}
+                className="px-6 py-3 rounded-xl font-display bg-foreground text-background shadow-sticker hover:scale-105 transition-transform whitespace-nowrap disabled:opacity-50"
               >
-                {t('newsletter.submit')}
+                {subscribe.isPending ? '...' : t('newsletter.submit')}
               </button>
             </form>
           )}
