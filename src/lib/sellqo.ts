@@ -1,4 +1,4 @@
-const SELLQO_API_BASE = import.meta.env.VITE_SELLQO_API_URL || 'https://api.sellqo.com/storefront/v1';
+const SELLQO_API_BASE = import.meta.env.VITE_SELLQO_API_URL || 'https://sellqo.app.supabase.co/functions/v1/storefront-api';
 const SELLQO_TENANT_ID = import.meta.env.VITE_SELLQO_TENANT_ID || 'loveke';
 
 let currentLocale = 'nl';
