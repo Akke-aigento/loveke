@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
+import { extractArray } from '@/integrations/sellqo/client';
 import { MOCK_PRODUCTS, MOCK_COLLECTIONS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
@@ -13,19 +14,21 @@ export default function Shop() {
   const activeCollection = searchParams.get('collection') || 'all';
   const [sort, setSort] = useState('newest');
 
-  // Map sort values to API params
   const sortParam = sort === 'price-asc' ? 'price_asc' : sort === 'price-desc' ? 'price_desc' : 'newest';
 
-  const { data: productsData, isLoading: productsLoading } = useProducts({
+  const { data: productsData, isLoading: productsLoading, isError: productsError } = useProducts({
     collection: activeCollection !== 'all' ? activeCollection : undefined,
     sort: sortParam as 'newest' | 'price_asc' | 'price_desc',
   });
 
-  const { data: collectionsData, isLoading: collectionsLoading } = useCollections();
+  const { data: collectionsData, isError: collectionsError } = useCollections();
 
-  // Use API data, fall back to mock data
+  // Safely extract products with fallback
   const products: Product[] = useMemo(() => {
-    if (productsData?.data) return productsData.data;
+    if (!productsError) {
+      const apiProducts = extractArray<Product>(productsData);
+      if (apiProducts.length > 0) return apiProducts;
+    }
     // Fallback to mock data
     let filtered = activeCollection === 'all'
       ? MOCK_PRODUCTS
@@ -33,12 +36,16 @@ export default function Shop() {
     if (sort === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
     if (sort === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
     return filtered as unknown as Product[];
-  }, [productsData, activeCollection, sort]);
+  }, [productsData, productsError, activeCollection, sort]);
 
+  // Safely extract collections with fallback
   const collections = useMemo(() => {
-    if (collectionsData) return collectionsData;
+    if (!collectionsError && collectionsData) {
+      const arr = Array.isArray(collectionsData) ? collectionsData : [];
+      if (arr.length > 0) return arr;
+    }
     return MOCK_COLLECTIONS as unknown as typeof collectionsData;
-  }, [collectionsData]);
+  }, [collectionsData, collectionsError]);
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -54,7 +61,6 @@ export default function Shop() {
         {/* Filters */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
           <div className="flex flex-wrap gap-2">
-            {/* Always show "All" */}
             <button
               onClick={() => setSearchParams({})}
               className={`px-4 py-2 rounded-full font-body text-sm border-2 transition-all ${

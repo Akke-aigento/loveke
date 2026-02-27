@@ -1,20 +1,27 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts } from '@/integrations/sellqo/hooks';
+import { extractArray } from '@/integrations/sellqo/client';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
 
+const FEATURED_FALLBACK = MOCK_PRODUCTS.filter(p => p.collection === 'featured') as unknown as Product[];
+const COUPLE_FALLBACK = MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two') as unknown as Product[];
+
 export default function FeaturedProducts() {
   const { t } = useLanguage();
 
-  const { data: featuredData } = useProducts({ collection: 'featured' });
-  const { data: coupleData } = useProducts({ collection: 'loveke-for-two' });
+  const { data: featuredData, isError: featuredError } = useProducts({ collection: 'featured' });
+  const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
 
-  // Fallback to mock data
-  const featuredProducts: Product[] = featuredData?.data || (MOCK_PRODUCTS.filter(p => p.collection === 'featured') as unknown as Product[]);
-  const coupleProducts: Product[] = coupleData?.data || (MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two') as unknown as Product[]);
+  // Safely extract arrays, fallback to mock data on error or empty
+  const featuredFromApi = extractArray<Product>(featuredData);
+  const featuredProducts = featuredFromApi.length > 0 && !featuredError ? featuredFromApi : FEATURED_FALLBACK;
+
+  const coupleFromApi = extractArray<Product>(coupleData);
+  const coupleProducts = coupleFromApi.length > 0 && !coupleError ? coupleFromApi : COUPLE_FALLBACK;
 
   return (
     <>
