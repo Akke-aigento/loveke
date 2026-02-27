@@ -1,6 +1,6 @@
 // SellQo Storefront API Client
 
-const SELLQO_API_BASE = import.meta.env.VITE_SELLQO_API_URL || 'https://sellqo.app.supabase.co/functions/v1/storefront-api';
+const SELLQO_API_BASE = import.meta.env.VITE_SELLQO_API_URL || 'https://gczmfcabnoofnmfpzeop.supabase.co/functions/v1/storefront-api';
 const SELLQO_TENANT_ID = import.meta.env.VITE_SELLQO_TENANT_ID || 'loveke';
 const SELLQO_API_KEY = import.meta.env.VITE_SELLQO_API_KEY || '';
 
