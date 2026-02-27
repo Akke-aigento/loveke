@@ -1,34 +1,31 @@
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, accept-language, x-tenant-id",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, accept-language, x-tenant-id, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 const SELLQO_API_BASE = "https://gczmfcabnoofnmfpzeop.supabase.co/functions/v1/storefront-api";
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response(null, { headers: corsHeaders });
   }
 
   const SELLQO_API_KEY = Deno.env.get("VITE_SELLQO_API_KEY") || Deno.env.get("SELLQO_API_KEY");
 
   if (!SELLQO_API_KEY) {
-    console.error("SELLQO_API_KEY not configured");
+    console.error("SELLQO_API_KEY not configured in secrets");
     return new Response(
-      JSON.stringify({ error: "Server configuration error: API key not set" }),
+      JSON.stringify({ success: false, error: "Server configuration error: API key not set" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 
   try {
     const url = new URL(req.url);
-    // The endpoint path comes after /sellqo-proxy/
-    // e.g. /sellqo-proxy/products?collection=featured -> /products?collection=featured
-    const pathMatch = url.pathname.match(/\/sellqo-proxy(\/.*)/);
-    const endpoint = pathMatch ? pathMatch[1] : "/";
-    const queryString = url.search;
-
-    const targetUrl = `${SELLQO_API_BASE}${endpoint}${queryString}`;
+    // pathname: /sellqo-proxy/products  search: ?collection=featured
+    const endpoint = url.pathname.replace(/^.*\/sellqo-proxy/, '') || '/';
+    const targetUrl = `${SELLQO_API_BASE}${endpoint}${url.search}`;
+    console.log(`Proxying ${req.method} -> ${targetUrl}`);
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -65,7 +62,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error("Proxy error:", error);
     return new Response(
-      JSON.stringify({ error: "Proxy request failed", details: String(error) }),
+      JSON.stringify({ success: false, error: "Proxy request failed", details: String(error) }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
