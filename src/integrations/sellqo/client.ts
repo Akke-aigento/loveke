@@ -1,8 +1,8 @@
-// SellQo Storefront API Client
+// SellQo Storefront API Client - routes through proxy edge function
 
-const SELLQO_API_BASE = import.meta.env.VITE_SELLQO_API_URL || 'https://gczmfcabnoofnmfpzeop.supabase.co/functions/v1/storefront-api';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ncumndxdxjscghiytxsl.supabase.co';
+const SELLQO_PROXY_BASE = `${SUPABASE_URL}/functions/v1/sellqo-proxy`;
 const SELLQO_TENANT_ID = import.meta.env.VITE_SELLQO_TENANT_ID || 'loveke';
-const SELLQO_API_KEY = import.meta.env.VITE_SELLQO_API_KEY || '';
 
 let currentLocale = 'nl';
 
@@ -18,17 +18,14 @@ export async function sellqoFetch<T = unknown>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
-  const url = `${SELLQO_API_BASE}${endpoint}`;
+  const url = `${SELLQO_PROXY_BASE}${endpoint}`;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'X-Tenant-ID': SELLQO_TENANT_ID,
     'Accept-Language': currentLocale,
+    'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '',
   };
-
-  if (SELLQO_API_KEY) {
-    headers['X-API-Key'] = SELLQO_API_KEY;
-  }
 
   const res = await fetch(url, {
     ...options,
