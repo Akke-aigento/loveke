@@ -8,6 +8,7 @@ import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/norma
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
+import GiftCardDetail from '@/components/GiftCardDetail';
 import { motion } from 'framer-motion';
 import { Minus, Plus } from 'lucide-react';
 
