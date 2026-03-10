@@ -39,7 +39,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             {product.images?.[0]?.url ? (
               <img src={product.images[0].url} alt={product.images[0].alt || product.title} className="w-full h-full object-cover" />
             ) : (
-              <span className="text-6xl">🧡</span>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <span className="text-6xl">🧡</span>
+                <span className="font-body text-xs text-muted-foreground">Foto binnenkort</span>
+              </div>
             )}
             {product.compare_at_price && (
               <div className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-xs font-bold px-2 py-1 rounded-full rotate-6">
