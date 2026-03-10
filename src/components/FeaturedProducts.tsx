@@ -1,32 +1,52 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useProducts } from '@/integrations/sellqo/hooks';
+import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
-import { normalizeProducts } from '@/integrations/sellqo/normalizer';
-import { MOCK_PRODUCTS } from '@/lib/sellqo';
+import { normalizeProducts, normalizeCollections } from '@/integrations/sellqo/normalizer';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
 
-const FEATURED_FALLBACK = MOCK_PRODUCTS.filter(p => p.collection === 'featured') as unknown as Product[];
-const COUPLE_FALLBACK = MOCK_PRODUCTS.filter(p => p.collection === 'loveke-for-two') as unknown as Product[];
+function CollectionPlaceholder({ title }: { title: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="aspect-[3/4] bg-card border-2 border-border rounded-2xl shadow-sticker flex flex-col items-center justify-center p-4 text-center"
+    >
+      <span className="text-5xl mb-3">🧡</span>
+      <span className="font-display text-lg">{title}</span>
+      <span className="font-body text-sm text-accent mt-1">Binnenkort beschikbaar</span>
+    </motion.div>
+  );
+}
 
 export default function FeaturedProducts() {
   const { t } = useLanguage();
 
+  const { data: collectionsData } = useCollections();
   const { data: featuredData, isError: featuredError } = useProducts({ collection: 'featured' });
   const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
 
-  // Safely extract, normalize, and fallback
+  // Get collection metadata to check product_count
+  const collections = normalizeCollections(extractArray(collectionsData));
+  const featuredCollection = collections.find(c => c.slug === 'featured');
+  const coupleCollection = collections.find(c => c.slug === 'loveke-for-two');
+
+  const featuredEmpty = featuredCollection && (featuredCollection.product_count ?? 0) === 0;
+  const coupleEmpty = coupleCollection && (coupleCollection.product_count ?? 0) === 0;
+
+  // Only use API products if the collection actually has products
   const featuredRaw = extractArray(featuredData);
-  const featuredProducts = featuredRaw.length > 0 && !featuredError
+  const featuredProducts: Product[] = !featuredEmpty && featuredRaw.length > 0 && !featuredError
     ? normalizeProducts(featuredRaw)
-    : FEATURED_FALLBACK;
+    : [];
 
   const coupleRaw = extractArray(coupleData);
-  const coupleProducts = coupleRaw.length > 0 && !coupleError
+  const coupleProducts: Product[] = !coupleEmpty && coupleRaw.length > 0 && !coupleError
     ? normalizeProducts(coupleRaw)
-    : COUPLE_FALLBACK;
+    : [];
 
   return (
     <>
@@ -43,9 +63,14 @@ export default function FeaturedProducts() {
           </motion.h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-            {featuredProducts.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
+            {featuredProducts.length > 0
+              ? featuredProducts.map((product, i) => (
+                  <ProductCard key={product.id} product={product} index={i} />
+                ))
+              : Array.from({ length: 4 }).map((_, i) => (
+                  <CollectionPlaceholder key={`ph-feat-${i}`} title={featuredCollection?.title || 'Fresh Drops'} />
+                ))
+            }
           </div>
         </div>
       </section>
@@ -67,11 +92,18 @@ export default function FeaturedProducts() {
             </p>
             
             <div className="flex flex-wrap justify-center gap-6 mb-8">
-              {coupleProducts.map((product, i) => (
-                <div key={product.id} className="w-48">
-                  <ProductCard product={product} index={i} />
-                </div>
-              ))}
+              {coupleProducts.length > 0
+                ? coupleProducts.map((product, i) => (
+                    <div key={product.id} className="w-48">
+                      <ProductCard product={product} index={i} />
+                    </div>
+                  ))
+                : Array.from({ length: 2 }).map((_, i) => (
+                    <div key={`ph-couple-${i}`} className="w-48">
+                      <CollectionPlaceholder title={coupleCollection?.title || 'Loveke for Two'} />
+                    </div>
+                  ))
+              }
             </div>
 
             <Link
