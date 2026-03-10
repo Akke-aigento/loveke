@@ -57,7 +57,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           <div className="p-4">
             <h3 className="font-display text-sm mb-1 truncate">{product.title}</h3>
             <div className="flex items-center gap-2">
-              <span className="font-body font-bold text-primary">€{product.price.toFixed(2)}</span>
+              <span className="font-body font-bold text-primary">
+                {product.price === 0 && /cadeaukaart|gift.?card/i.test(product.title)
+                  ? 'Vanaf €5.00'
+                  : `€${product.price.toFixed(2)}`}
+              </span>
               {product.compare_at_price && (
                 <span className="font-body text-xs text-muted-foreground line-through">€{product.compare_at_price.toFixed(2)}</span>
               )}
