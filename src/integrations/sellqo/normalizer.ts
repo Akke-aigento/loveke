@@ -53,8 +53,9 @@ export function normalizeProduct(raw: any): Product {
     });
   }
 
-  // Determine stock_status from in_stock boolean
-  const stockStatus = raw.in_stock === false ? 'out_of_stock'
+  // Determine stock_status: if in_stock=false but stock is null/undefined, treat as available (stock not tracked)
+  const stockStatus = (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0)
+    ? 'out_of_stock'
     : (raw.stock != null && raw.stock > 0 && raw.stock <= 3 ? 'low_stock' : 'in_stock');
 
   return {
