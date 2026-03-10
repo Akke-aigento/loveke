@@ -13,8 +13,12 @@ export function normalizeProduct(raw: any): Product {
 
   console.log('SellQo raw product:', JSON.stringify(raw, null, 2));
 
-  // Normalize images: API returns string[], frontend expects ProductImage[]
-  const rawImages = raw.images || [];
+  // Normalize images: API returns string[] or single image field, frontend expects ProductImage[]
+  let rawImages = raw.images || [];
+  // Related products return { image: "url" } instead of images[]
+  if ((!Array.isArray(rawImages) || rawImages.length === 0) && raw.image) {
+    rawImages = [raw.image];
+  }
   const images: ProductImage[] = (Array.isArray(rawImages) ? rawImages : []).map(
     (img: string | ProductImage, i: number) => {
       if (typeof img === 'string') {

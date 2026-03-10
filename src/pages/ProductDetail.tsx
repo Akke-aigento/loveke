@@ -127,7 +127,11 @@ export default function ProductDetail() {
             <h1 className="font-display text-3xl md:text-4xl mb-2">{product.title}</h1>
             
             <div className="flex items-center gap-3 mb-4">
-              <span className="font-display text-2xl text-primary">€{variantPrice.toFixed(2)}</span>
+              <span className="font-display text-2xl text-primary">
+                {variantPrice === 0 && /cadeaukaart|gift.?card/i.test(product.title)
+                  ? 'Vanaf €5.00'
+                  : `€${variantPrice.toFixed(2)}`}
+              </span>
               {(variant?.compare_at_price || product.compare_at_price) && (
                 <span className="font-body text-muted-foreground line-through">€{(variant?.compare_at_price || product.compare_at_price)?.toFixed(2)}</span>
               )}

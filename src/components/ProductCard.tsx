@@ -39,7 +39,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             {product.images?.[0]?.url ? (
               <img src={product.images[0].url} alt={product.images[0].alt || product.title} className="w-full h-full object-cover" />
             ) : (
-              <span className="text-6xl">🧡</span>
+              <div className="flex flex-col items-center justify-center gap-2">
+                <span className="text-6xl">🧡</span>
+                <span className="font-body text-xs text-muted-foreground">Foto binnenkort</span>
+              </div>
             )}
             {product.compare_at_price && (
               <div className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-xs font-bold px-2 py-1 rounded-full rotate-6">
@@ -57,7 +60,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           <div className="p-4">
             <h3 className="font-display text-sm mb-1 truncate">{product.title}</h3>
             <div className="flex items-center gap-2">
-              <span className="font-body font-bold text-primary">€{product.price.toFixed(2)}</span>
+              <span className="font-body font-bold text-primary">
+                {product.price === 0 && /cadeaukaart|gift.?card/i.test(product.title)
+                  ? 'Vanaf €5.00'
+                  : `€${product.price.toFixed(2)}`}
+              </span>
               {product.compare_at_price && (
                 <span className="font-body text-xs text-muted-foreground line-through">€{product.compare_at_price.toFixed(2)}</span>
               )}
