@@ -34,8 +34,8 @@ export default function FeaturedProducts() {
   const featuredCollection = collections.find(c => c.slug === 'featured');
   const coupleCollection = collections.find(c => c.slug === 'loveke-for-two');
 
-  const featuredEmpty = featuredCollection && (featuredCollection.product_count ?? 0) === 0;
-  const coupleEmpty = coupleCollection && (coupleCollection.product_count ?? 0) === 0;
+  const featuredEmpty = !featuredCollection || (featuredCollection.product_count ?? 0) === 0;
+  const coupleEmpty = !coupleCollection || (coupleCollection.product_count ?? 0) === 0;
 
   // Only use API products if the collection actually has products
   const featuredRaw = extractArray(featuredData);
