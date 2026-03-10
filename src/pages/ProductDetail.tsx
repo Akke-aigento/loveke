@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import { useProduct, useRelatedProducts } from '@/integrations/sellqo/hooks';
+import { extractSingle, extractArray } from '@/integrations/sellqo/client';
+import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
@@ -16,12 +18,23 @@ export default function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  const { data: apiProduct, isLoading } = useProduct(slug || '');
-  const { data: apiRelated } = useRelatedProducts(slug || '');
+  const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
+  const { data: apiRelatedData } = useRelatedProducts(slug || '');
+
+  console.log('Single product API response:', apiProductData);
+
+  // Extract and normalize single product from { success, data: {...} }
+  const rawProduct = extractSingle(apiProductData);
+  const apiProduct = rawProduct ? normalizeProduct(rawProduct) : null;
 
   // Fallback to mock data
   const product: Product | undefined = apiProduct || (MOCK_PRODUCTS.find(p => p.slug === slug) as unknown as Product | undefined);
-  const relatedProducts = apiRelated || (MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3) as unknown as Product[]);
+
+  // Related products
+  const rawRelated = extractArray(apiRelatedData);
+  const relatedProducts = rawRelated.length > 0
+    ? normalizeProducts(rawRelated)
+    : (MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3) as unknown as Product[]);
 
   if (isLoading) {
     return (
@@ -43,20 +56,26 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
-        <p className="font-handwritten text-2xl text-muted-foreground">Product not found 😢</p>
+        <div className="text-center">
+          <p className="font-handwritten text-2xl text-muted-foreground mb-4">Product niet gevonden 😢</p>
+          <Link to="/shop" className="font-body text-primary hover:underline">← Terug naar shop</Link>
+        </div>
       </main>
     );
   }
 
-  const variant = product.variants[selectedVariant];
+  const variant = product.variants?.[selectedVariant] || product.variants?.[0];
+  const variantPrice = variant?.price ?? product.price ?? 0;
+  const variantStockStatus = variant?.stock_status ?? product.stock_status ?? 'in_stock';
 
   const handleAddToCart = () => {
+    if (!variant) return;
     addItem({
       product_id: product.id,
       variant_id: variant.id,
       title: product.title,
       variant_title: variant.title,
-      price: variant.price,
+      price: variantPrice,
       quantity,
       image: product.images?.[0]?.url || '',
     });
@@ -66,9 +85,12 @@ export default function ProductDetail() {
     in_stock: { text: t('product.inStock'), color: 'text-green-600' },
     low_stock: { text: t('product.lowStock'), color: 'text-secondary-foreground' },
     out_of_stock: { text: t('product.outOfStock'), color: 'text-destructive' },
-  }[variant.stock_status];
+  }[variantStockStatus] || { text: '', color: '' };
 
   const mainImage = product.images?.[0]?.url;
+
+  // Strip HTML from description for plain text display
+  const plainDescription = product.description?.replace(/<[^>]*>/g, '') || '';
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -105,39 +127,43 @@ export default function ProductDetail() {
             <h1 className="font-display text-3xl md:text-4xl mb-2">{product.title}</h1>
             
             <div className="flex items-center gap-3 mb-4">
-              <span className="font-display text-2xl text-primary">€{variant.price.toFixed(2)}</span>
-              {(variant.compare_at_price || product.compare_at_price) && (
-                <span className="font-body text-muted-foreground line-through">€{(variant.compare_at_price || product.compare_at_price)?.toFixed(2)}</span>
+              <span className="font-display text-2xl text-primary">€{variantPrice.toFixed(2)}</span>
+              {(variant?.compare_at_price || product.compare_at_price) && (
+                <span className="font-body text-muted-foreground line-through">€{(variant?.compare_at_price || product.compare_at_price)?.toFixed(2)}</span>
               )}
             </div>
 
-            <p className={`text-sm font-body mb-4 ${stockLabel.color}`}>● {stockLabel.text}</p>
+            {stockLabel.text && (
+              <p className={`text-sm font-body mb-4 ${stockLabel.color}`}>● {stockLabel.text}</p>
+            )}
 
-            <p className="font-body text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
+            <p className="font-body text-muted-foreground mb-6 leading-relaxed">{product.short_description || plainDescription}</p>
 
-            {/* Size selector */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-body font-semibold text-sm">{t('product.size')}</span>
-                <Link to="/maatgids" className="font-body text-xs text-primary hover:underline">{t('product.sizeGuide')}</Link>
+            {/* Size selector - only show if more than 1 variant */}
+            {product.variants && product.variants.length > 1 && (
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-body font-semibold text-sm">{t('product.size')}</span>
+                  <Link to="/maatgids" className="font-body text-xs text-primary hover:underline">{t('product.sizeGuide')}</Link>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((v, i) => (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVariant(i)}
+                      className={`px-4 py-2 rounded-lg border-2 font-body text-sm transition-all ${
+                        selectedVariant === i
+                          ? 'border-foreground bg-foreground text-background'
+                          : 'border-border hover:border-foreground'
+                      } ${v.stock_status === 'out_of_stock' ? 'opacity-40 cursor-not-allowed' : ''}`}
+                      disabled={v.stock_status === 'out_of_stock'}
+                    >
+                      {v.options?.size || Object.values(v.options || {})[0] || v.title}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {product.variants.map((v, i) => (
-                  <button
-                    key={v.id}
-                    onClick={() => setSelectedVariant(i)}
-                    className={`px-4 py-2 rounded-lg border-2 font-body text-sm transition-all ${
-                      selectedVariant === i
-                        ? 'border-foreground bg-foreground text-background'
-                        : 'border-border hover:border-foreground'
-                    } ${v.stock_status === 'out_of_stock' ? 'opacity-40 cursor-not-allowed' : ''}`}
-                    disabled={v.stock_status === 'out_of_stock'}
-                  >
-                    {v.options?.size || v.title}
-                  </button>
-                ))}
-              </div>
-            </div>
+            )}
 
             {/* Quantity */}
             <div className="flex items-center gap-4 mb-6">
@@ -156,7 +182,7 @@ export default function ProductDetail() {
             {/* Add to cart */}
             <button
               onClick={handleAddToCart}
-              disabled={variant.stock_status === 'out_of_stock'}
+              disabled={variantStockStatus === 'out_of_stock'}
               className="w-full py-4 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"
             >
               {t('product.addToCart')} 🛒

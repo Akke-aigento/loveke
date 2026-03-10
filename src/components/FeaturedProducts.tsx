@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
+import { normalizeProducts } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
@@ -16,12 +17,16 @@ export default function FeaturedProducts() {
   const { data: featuredData, isError: featuredError } = useProducts({ collection: 'featured' });
   const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
 
-  // Safely extract arrays, fallback to mock data on error or empty
-  const featuredFromApi = extractArray<Product>(featuredData);
-  const featuredProducts = featuredFromApi.length > 0 && !featuredError ? featuredFromApi : FEATURED_FALLBACK;
+  // Safely extract, normalize, and fallback
+  const featuredRaw = extractArray(featuredData);
+  const featuredProducts = featuredRaw.length > 0 && !featuredError
+    ? normalizeProducts(featuredRaw)
+    : FEATURED_FALLBACK;
 
-  const coupleFromApi = extractArray<Product>(coupleData);
-  const coupleProducts = coupleFromApi.length > 0 && !coupleError ? coupleFromApi : COUPLE_FALLBACK;
+  const coupleRaw = extractArray(coupleData);
+  const coupleProducts = coupleRaw.length > 0 && !coupleError
+    ? normalizeProducts(coupleRaw)
+    : COUPLE_FALLBACK;
 
   return (
     <>

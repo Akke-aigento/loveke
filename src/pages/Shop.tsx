@@ -3,8 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
+import { normalizeProducts, normalizeCollections } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS, MOCK_COLLECTIONS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
+import type { Collection } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
 
@@ -23,11 +25,15 @@ export default function Shop() {
 
   const { data: collectionsData, isError: collectionsError } = useCollections();
 
-  // Safely extract products with fallback
+  // Safely extract and normalize products with fallback
   const products: Product[] = useMemo(() => {
-    if (!productsError) {
-      const apiProducts = extractArray<Product>(productsData);
-      if (apiProducts.length > 0) return apiProducts;
+    console.log('SellQo products response:', JSON.stringify(productsData, null, 2));
+    if (!productsError && productsData) {
+      const rawProducts = extractArray(productsData);
+      console.log('First product:', JSON.stringify(rawProducts[0], null, 2));
+      if (rawProducts.length > 0) {
+        return normalizeProducts(rawProducts);
+      }
     }
     // Fallback to mock data
     let filtered = activeCollection === 'all'
@@ -38,13 +44,16 @@ export default function Shop() {
     return filtered as unknown as Product[];
   }, [productsData, productsError, activeCollection, sort]);
 
-  // Safely extract collections with fallback
+  // Safely extract and normalize collections with fallback
   const collections = useMemo(() => {
+    console.log('SellQo collections response:', JSON.stringify(collectionsData, null, 2));
     if (!collectionsError && collectionsData) {
-      const arr = Array.isArray(collectionsData) ? collectionsData : [];
-      if (arr.length > 0) return arr;
+      const rawCollections = extractArray(collectionsData);
+      if (rawCollections.length > 0) {
+        return normalizeCollections(rawCollections);
+      }
     }
-    return MOCK_COLLECTIONS as unknown as typeof collectionsData;
+    return MOCK_COLLECTIONS as unknown as Collection[];
   }, [collectionsData, collectionsError]);
 
   return (
