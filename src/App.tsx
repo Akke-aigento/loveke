@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,7 +16,6 @@ import ProductDetail from "./pages/ProductDetail";
 import Story from "./pages/Story";
 import Comic from "./pages/Comic";
 import SizeGuide from "./pages/SizeGuide";
-import GiftCards from "./pages/GiftCards";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -47,7 +47,7 @@ const App = () => (
               <Route path="/ons-verhaal" element={<Story />} />
               <Route path="/de-strip" element={<Comic />} />
               <Route path="/maatgids" element={<SizeGuide />} />
-              <Route path="/cadeaubon" element={<GiftCards />} />
+              <Route path="/cadeaubon" element={<Navigate to="/shop/cadeaukaart" replace />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
