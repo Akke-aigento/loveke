@@ -48,7 +48,7 @@ export function normalizeProduct(raw: any): Product {
       id: raw.id || 'default',
       title: 'Default',
       price: raw.price ?? 0,
-      stock_status: raw.in_stock === false ? 'out_of_stock' : 'in_stock',
+      stock_status: (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0) ? 'out_of_stock' : 'in_stock',
       options: {},
     });
   }
