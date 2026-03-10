@@ -65,6 +65,12 @@ export default function ProductDetail() {
     );
   }
 
+  // Gift card detection: render special gift card detail page
+  const isGiftCardProduct = product.price === 0 || /cadeaukaart|gift.?card/i.test(product.title);
+  if (isGiftCardProduct) {
+    return <GiftCardDetail product={product} />;
+  }
+
   const variant = product.variants?.[selectedVariant] || product.variants?.[0];
   const variantPrice = variant?.price ?? product.price ?? 0;
   const variantStockStatus = variant?.stock_status ?? product.stock_status ?? 'in_stock';
