@@ -131,7 +131,7 @@ export default function ProductDetail() {
             animate={{ opacity: 1, x: 0 }}
             className="flex flex-col"
           >
-            <h1 className="font-display text-3xl md:text-4xl mb-2">{product.title}</h1>
+            <h1 className="font-display text-3xl md:text-4xl mb-2 break-words">{product.title}</h1>
             
             <div className="flex items-center gap-3 mb-4">
               <span className="font-display text-2xl text-primary">

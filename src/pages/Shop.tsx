@@ -50,7 +50,8 @@ export default function Shop() {
     if (!collectionsError && collectionsData) {
       const rawCollections = extractArray(collectionsData);
       if (rawCollections.length > 0) {
-        return normalizeCollections(rawCollections);
+        const all = normalizeCollections(rawCollections);
+        return all.filter(c => (c.product_count ?? 0) > 0);
       }
     }
     return MOCK_COLLECTIONS as unknown as Collection[];

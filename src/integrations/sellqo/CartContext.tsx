@@ -40,12 +40,18 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
   const closeCart = useCallback(() => setIsOpen(false), []);
 
   const addItem = useCallback(async (item: { product_id: string; variant_id: string; quantity: number; title: string; variant_title: string; price: number; image?: string }) => {
-    await addToCartMutation.mutateAsync({
-      product_id: item.product_id,
-      variant_id: item.variant_id,
-      quantity: item.quantity,
-    });
-    setIsOpen(true);
+    try {
+      await addToCartMutation.mutateAsync({
+        product_id: item.product_id,
+        variant_id: item.variant_id,
+        quantity: item.quantity,
+      });
+      setIsOpen(true);
+    } catch (error) {
+      console.error('Add to cart failed:', error);
+      const { toast } = await import('sonner');
+      toast.error('Er ging iets mis bij het toevoegen aan je winkelwagen. Probeer het later opnieuw.');
+    }
   }, [addToCartMutation]);
 
   const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
