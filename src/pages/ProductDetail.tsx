@@ -8,6 +8,7 @@ import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/norma
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
+import GiftCardDetail from '@/components/GiftCardDetail';
 import { motion } from 'framer-motion';
 import { Minus, Plus } from 'lucide-react';
 
@@ -62,6 +63,12 @@ export default function ProductDetail() {
         </div>
       </main>
     );
+  }
+
+  // Gift card detection: render special gift card detail page
+  const isGiftCardProduct = product.price === 0 || /cadeaukaart|gift.?card/i.test(product.title);
+  if (isGiftCardProduct) {
+    return <GiftCardDetail product={product} />;
   }
 
   const variant = product.variants?.[selectedVariant] || product.variants?.[0];

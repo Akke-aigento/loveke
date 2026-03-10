@@ -36,7 +36,7 @@ export function normalizeProduct(raw: any): Product {
     sku: v.sku || undefined,
     price: v.price ?? raw.price ?? 0,
     compare_at_price: v.compare_at_price || undefined,
-    stock_status: v.in_stock === false ? 'out_of_stock' : (v.stock != null && v.stock > 0 && v.stock <= 3 ? 'low_stock' : 'in_stock'),
+    stock_status: (v.in_stock === false && v.stock !== null && v.stock !== undefined && v.stock <= 0) ? 'out_of_stock' : (v.stock != null && v.stock > 0 && v.stock <= 3 ? 'low_stock' : 'in_stock'),
     stock_quantity: v.stock ?? undefined,
     options: v.attribute_values || {},
     image: v.image_url ? { id: v.id, url: v.image_url, alt: v.title, position: 0 } : undefined,
@@ -48,13 +48,14 @@ export function normalizeProduct(raw: any): Product {
       id: raw.id || 'default',
       title: 'Default',
       price: raw.price ?? 0,
-      stock_status: raw.in_stock === false ? 'out_of_stock' : 'in_stock',
+      stock_status: (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0) ? 'out_of_stock' : 'in_stock',
       options: {},
     });
   }
 
-  // Determine stock_status from in_stock boolean
-  const stockStatus = raw.in_stock === false ? 'out_of_stock'
+  // Determine stock_status: if in_stock=false but stock is null/undefined, treat as available (stock not tracked)
+  const stockStatus = (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0)
+    ? 'out_of_stock'
     : (raw.stock != null && raw.stock > 0 && raw.stock <= 3 ? 'low_stock' : 'in_stock');
 
   return {
