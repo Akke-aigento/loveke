@@ -18,7 +18,8 @@ export function getSellqoLocale(): string {
 /**
  * Safely extract an array from an API response that might be:
  * - An array directly
- * - { data: { products: [...] } } (SellQo paginated)
+ * - { success: true, data: { products: [...] } } (SellQo paginated)
+ * - { success: true, data: [...] } (SellQo collections)
  * - { data: [...] } 
  * - An error object
  * - undefined/null
@@ -27,19 +28,34 @@ export function extractArray<T>(response: unknown): T[] {
   if (Array.isArray(response)) return response;
   if (response && typeof response === 'object') {
     const r = response as Record<string, unknown>;
-    // SellQo nested: { data: { products: [...] } }
+    // SellQo nested: { success, data: { products: [...] } }
     if (r.data && typeof r.data === 'object' && !Array.isArray(r.data)) {
       const inner = r.data as Record<string, unknown>;
       if (Array.isArray(inner.products)) return inner.products as T[];
       if (Array.isArray(inner.items)) return inner.items as T[];
       if (Array.isArray(inner.data)) return inner.data as T[];
     }
+    // SellQo: { success, data: [...] }
     if (Array.isArray(r.data)) return r.data as T[];
     if (Array.isArray(r.products)) return r.products as T[];
     if (Array.isArray(r.items)) return r.items as T[];
     if (Array.isArray(r.results)) return r.results as T[];
   }
   return [];
+}
+
+/**
+ * Extract a single object from API response: { success, data: {...} }
+ */
+export function extractSingle<T>(response: unknown): T | null {
+  if (!response || typeof response !== 'object') return null;
+  const r = response as Record<string, unknown>;
+  if (r.data && typeof r.data === 'object' && !Array.isArray(r.data)) {
+    return r.data as T;
+  }
+  // Maybe response IS the object directly
+  if (r.id) return r as unknown as T;
+  return null;
 }
 
 export async function sellqoFetch<T = unknown>(
