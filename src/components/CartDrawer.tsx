@@ -141,7 +141,7 @@ export default function CartDrawer() {
 
                 {/* Applied discount */}
                 {discount > 0 && (
-                  <div className="flex justify-between text-sm text-green-600">
+                  <div className="flex justify-between text-sm text-primary">
                     <span className="flex items-center gap-1">
                       <Tag size={14} /> Korting
                     </span>
