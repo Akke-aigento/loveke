@@ -1,13 +1,17 @@
-import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { X, Minus, Plus, ShoppingBag, Tag } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import { useCreateCheckout } from '@/integrations/sellqo/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 export default function CartDrawer() {
   const { t } = useLanguage();
-  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount } = useSellQoCart();
+  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount, applyDiscount, discountCode, setDiscountCode, cart } = useSellQoCart();
   const createCheckout = useCreateCheckout();
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   const handleCheckout = () => {
     createCheckout.mutate({
@@ -15,6 +19,21 @@ export default function CartDrawer() {
       cancel_url: window.location.origin + '/shop',
     });
   };
+
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()) return;
+    setIsApplyingDiscount(true);
+    try {
+      await applyDiscount(discountCode.trim());
+      toast.success('Kortingscode toegepast!');
+    } catch {
+      toast.error('Ongeldige kortingscode. Probeer een andere.');
+    } finally {
+      setIsApplyingDiscount(false);
+    }
+  };
+
+  const discount = cart?.discount ?? 0;
 
   return (
     <AnimatePresence>
@@ -97,6 +116,39 @@ export default function CartDrawer() {
             {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-border p-4 space-y-3">
+                {/* Discount code input */}
+                {discount <= 0 && (
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Tag size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        value={discountCode}
+                        onChange={e => setDiscountCode(e.target.value)}
+                        placeholder="Kortingscode"
+                        className="pl-9 h-9 text-sm"
+                        onKeyDown={e => e.key === 'Enter' && handleApplyDiscount()}
+                      />
+                    </div>
+                    <button
+                      onClick={handleApplyDiscount}
+                      disabled={isApplyingDiscount || !discountCode.trim()}
+                      className="px-4 h-9 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+                    >
+                      {isApplyingDiscount ? '...' : 'Toepassen'}
+                    </button>
+                  </div>
+                )}
+
+                {/* Applied discount */}
+                {discount > 0 && (
+                  <div className="flex justify-between text-sm text-green-600">
+                    <span className="flex items-center gap-1">
+                      <Tag size={14} /> Korting
+                    </span>
+                    <span className="font-semibold">-€{discount.toFixed(2)}</span>
+                  </div>
+                )}
+
                 <div className="flex justify-between text-sm">
                   <span>{t('cart.subtotal')}</span>
                   <span className="font-semibold">€{subtotal.toFixed(2)}</span>
