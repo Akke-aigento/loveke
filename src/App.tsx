@@ -15,7 +15,6 @@ import ProductDetail from "./pages/ProductDetail";
 import Story from "./pages/Story";
 import Comic from "./pages/Comic";
 import SizeGuide from "./pages/SizeGuide";
-import GiftCards from "./pages/GiftCards";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
