@@ -164,13 +164,14 @@ export function useAddToCart() {
   const createCart = useCreateCart();
 
   return useMutation({
-    mutationFn: async (item: { product_id: string; variant_id: string; quantity: number }) => {
+    mutationFn: async (item: { product_id: string; variant_id?: string; quantity: number }) => {
       let activeCartId = getStoredCartId();
       if (!activeCartId) {
         const newCart = await createCart.mutateAsync();
         activeCartId = newCart.id;
       }
-      return cartAPI.addItem(activeCartId, item);
+      const result = await cartAPI.addItem(activeCartId, item);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
