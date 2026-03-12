@@ -5,6 +5,7 @@ import {
   settingsAPI, searchAPI
 } from './api';
 import { extractSingle } from './client';
+import { normalizeCart } from './normalizer';
 import type { Cart, ProductsParams } from './types';
 
 // === QUERY KEYS ===

@@ -99,3 +99,60 @@ export function normalizeProducts(rawProducts: any[]): Product[] {
 export function normalizeCollections(rawCollections: any[]): Collection[] {
   return (rawCollections || []).map(normalizeCollection);
 }
+
+// === CART NORMALIZATION ===
+
+/**
+ * Normalize a single cart item from API format to frontend CartItem format.
+ * API returns: { id, product_id, variant_id, unit_price, quantity, line_total, product: { name, image }, variant: { title } | null }
+ * Frontend expects: { id, product_id, variant_id, title, variant_title, price, quantity, image }
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function normalizeCartItem(raw: any): CartItem {
+  if (!raw) return raw;
+
+  // Already normalized (has 'price' and 'title' as direct fields with correct types)
+  if (typeof raw.price === 'number' && typeof raw.title === 'string' && !raw.unit_price && !raw.product) {
+    return raw;
+  }
+
+  return {
+    id: raw.id || '',
+    product_id: raw.product_id || raw.product?.id || '',
+    variant_id: raw.variant_id || raw.variant?.id || '',
+    title: raw.title || raw.product?.name || raw.product?.title || 'Product',
+    variant_title: raw.variant_title || raw.variant?.title || '',
+    price: raw.price ?? raw.unit_price ?? raw.line_total ?? 0,
+    quantity: raw.quantity ?? 1,
+    image: raw.image || raw.product?.image || raw.product?.images?.[0] || undefined,
+    max_quantity: raw.max_quantity ?? undefined,
+  };
+}
+
+/**
+ * Normalize the full cart object from API format.
+ * Ensures items are normalized and top-level fields have safe defaults.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function normalizeCart(raw: any): Cart {
+  if (!raw) return raw;
+
+  const items = (raw.items || []).map(normalizeCartItem);
+  const itemCount = raw.item_count ?? items.reduce((sum: number, i: CartItem) => sum + i.quantity, 0);
+  const subtotal = raw.subtotal ?? items.reduce((sum: number, i: CartItem) => sum + i.price * i.quantity, 0);
+
+  return {
+    id: raw.id || '',
+    items,
+    item_count: itemCount,
+    subtotal,
+    shipping: raw.shipping ?? 0,
+    discount: raw.discount ?? 0,
+    tax: raw.tax ?? 0,
+    total: raw.total ?? subtotal,
+    currency: raw.currency || 'EUR',
+    discount_code: raw.discount_code ?? undefined,
+    free_shipping_eligible: raw.free_shipping_eligible ?? undefined,
+    free_shipping_remaining: raw.free_shipping_remaining ?? undefined,
+  };
+}
