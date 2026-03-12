@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
+import { useProducts } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
-import { normalizeProducts, normalizeCollections } from '@/integrations/sellqo/normalizer';
+import { normalizeProducts } from '@/integrations/sellqo/normalizer';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
@@ -25,26 +25,16 @@ function CollectionPlaceholder({ title }: { title: string }) {
 export default function FeaturedProducts() {
   const { t } = useLanguage();
 
-  const { data: collectionsData } = useCollections();
-  const { data: featuredData, isError: featuredError } = useProducts({ collection: 'featured' });
+  const { data: featuredData, isError: featuredError } = useProducts({ collection: 'fresh-drops' });
   const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
 
-  // Get collection metadata to check product_count
-  const collections = normalizeCollections(extractArray(collectionsData));
-  const featuredCollection = collections.find(c => c.slug === 'featured');
-  const coupleCollection = collections.find(c => c.slug === 'loveke-for-two');
-
-  const featuredEmpty = !featuredCollection || (featuredCollection.product_count ?? 0) === 0;
-  const coupleEmpty = !coupleCollection || (coupleCollection.product_count ?? 0) === 0;
-
-  // Only use API products if the collection actually has products
   const featuredRaw = extractArray(featuredData);
-  const featuredProducts: Product[] = !featuredEmpty && featuredRaw.length > 0 && !featuredError
+  const featuredProducts: Product[] = featuredRaw.length > 0 && !featuredError
     ? normalizeProducts(featuredRaw)
     : [];
 
   const coupleRaw = extractArray(coupleData);
-  const coupleProducts: Product[] = !coupleEmpty && coupleRaw.length > 0 && !coupleError
+  const coupleProducts: Product[] = coupleRaw.length > 0 && !coupleError
     ? normalizeProducts(coupleRaw)
     : [];
 
