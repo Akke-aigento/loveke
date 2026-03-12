@@ -58,7 +58,7 @@ export default function FeaturedProducts() {
                   <ProductCard key={product.id} product={product} index={i} />
                 ))
               : Array.from({ length: 4 }).map((_, i) => (
-                  <CollectionPlaceholder key={`ph-feat-${i}`} title={featuredCollection?.title || 'Fresh Drops'} />
+                  <CollectionPlaceholder key={`ph-feat-${i}`} title="Fresh Drops" />
                 ))
             }
           </div>
