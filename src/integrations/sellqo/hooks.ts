@@ -119,15 +119,27 @@ export function useCategories() {
 // === CART HOOKS ===
 const CART_STORAGE_KEY = 'sellqo_cart_id';
 
+function isValidCartId(id: string | null): id is string {
+  if (!id || id === 'undefined' || id === 'null' || id.trim() === '') return false;
+  return true;
+}
+
 function getStoredCartId(): string | null {
   try {
-    return localStorage.getItem(CART_STORAGE_KEY);
+    const id = localStorage.getItem(CART_STORAGE_KEY);
+    if (!isValidCartId(id)) {
+      // Clean up invalid stored value
+      if (id !== null) localStorage.removeItem(CART_STORAGE_KEY);
+      return null;
+    }
+    return id;
   } catch {
     return null;
   }
 }
 
 function storeCartId(cartId: string) {
+  if (!isValidCartId(cartId)) return;
   try {
     localStorage.setItem(CART_STORAGE_KEY, cartId);
   } catch {
@@ -139,7 +151,10 @@ export function useCartQuery() {
   const cartId = getStoredCartId();
   return useQuery({
     queryKey: sellqoKeys.cart(cartId || ''),
-    queryFn: () => cartAPI.get(cartId!),
+    queryFn: async () => {
+      const result = await cartAPI.get(cartId!);
+      return extractSingle<Cart>(result) || result;
+    },
     enabled: !!cartId,
     staleTime: 1000 * 30,
   });

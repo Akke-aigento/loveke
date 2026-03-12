@@ -42,16 +42,8 @@ export function normalizeProduct(raw: any): Product {
     image: v.image_url ? { id: v.id, url: v.image_url, alt: v.title, position: 0 } : undefined,
   }));
 
-  // If no variants, create a default one
-  if (variants.length === 0) {
-    variants.push({
-      id: raw.id || 'default',
-      title: 'Default',
-      price: raw.price ?? 0,
-      stock_status: (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0) ? 'out_of_stock' : 'in_stock',
-      options: {},
-    });
-  }
+  // Don't create artificial default variants — products without real variants
+  // should be added to cart without variant_id
 
   // Determine stock_status: if in_stock=false but stock is null/undefined, treat as available (stock not tracked)
   const stockStatus = (raw.in_stock === false && raw.stock !== null && raw.stock !== undefined && raw.stock <= 0)
