@@ -5,6 +5,7 @@ import {
   settingsAPI, searchAPI
 } from './api';
 import { extractSingle } from './client';
+import { normalizeCart } from './normalizer';
 import type { Cart, ProductsParams } from './types';
 
 // === QUERY KEYS ===
@@ -153,7 +154,8 @@ export function useCartQuery() {
     queryKey: sellqoKeys.cart(cartId || ''),
     queryFn: async () => {
       const result = await cartAPI.get(cartId!);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     enabled: !!cartId,
     staleTime: 1000 * 30,
@@ -165,7 +167,8 @@ export function useCreateCart() {
   return useMutation({
     mutationFn: async () => {
       const result = await cartAPI.create();
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       storeCartId(cart.id);
@@ -186,7 +189,8 @@ export function useAddToCart() {
         activeCartId = newCart.id;
       }
       const result = await cartAPI.addItem(activeCartId, item);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -202,7 +206,8 @@ export function useUpdateCartItem() {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
       const result = await cartAPI.updateItem(cartId, itemId, quantity);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -218,7 +223,8 @@ export function useRemoveCartItem() {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
       const result = await cartAPI.removeItem(cartId, itemId);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -234,7 +240,8 @@ export function useApplyDiscount() {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
       const result = await cartAPI.applyDiscount(cartId, code);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
