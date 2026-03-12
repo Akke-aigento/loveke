@@ -62,15 +62,37 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
   }, [addToCartMutation]);
 
   const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
-    if (quantity <= 0) {
-      await removeCartItem.mutateAsync(itemId);
-    } else {
-      await updateItem.mutateAsync({ itemId, quantity });
+    try {
+      if (quantity <= 0) {
+        await removeCartItem.mutateAsync(itemId);
+      } else {
+        await updateItem.mutateAsync({ itemId, quantity });
+      }
+    } catch (error) {
+      console.error('Update quantity failed:', error);
+      const { toast } = await import('sonner');
+      const msg = error instanceof Error ? error.message : '';
+      if (msg === 'NETWORK_ERROR') {
+        toast.error('Verbinding onderbroken. Probeer opnieuw.');
+      } else {
+        toast.error('Kon hoeveelheid niet aanpassen. Probeer opnieuw.');
+      }
     }
   }, [updateItem, removeCartItem]);
 
   const removeItemFn = useCallback(async (itemId: string) => {
-    await removeCartItem.mutateAsync(itemId);
+    try {
+      await removeCartItem.mutateAsync(itemId);
+    } catch (error) {
+      console.error('Remove item failed:', error);
+      const { toast } = await import('sonner');
+      const msg = error instanceof Error ? error.message : '';
+      if (msg === 'NETWORK_ERROR') {
+        toast.error('Verbinding onderbroken. Probeer opnieuw.');
+      } else {
+        toast.error('Kon item niet verwijderen. Probeer opnieuw.');
+      }
+    }
   }, [removeCartItem]);
 
   const applyDiscountCode = useCallback(async (code: string) => {

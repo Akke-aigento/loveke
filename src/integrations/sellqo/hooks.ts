@@ -209,8 +209,35 @@ export function useUpdateCartItem() {
       const raw = extractSingle<Cart>(result) || result;
       return normalizeCart(raw);
     },
+    onMutate: async ({ itemId, quantity }) => {
+      const cartId = getStoredCartId();
+      if (!cartId) return;
+      await queryClient.cancelQueries({ queryKey: sellqoKeys.cart(cartId) });
+      const previousCart = queryClient.getQueryData<Cart>(sellqoKeys.cart(cartId));
+      if (previousCart) {
+        queryClient.setQueryData<Cart>(sellqoKeys.cart(cartId), {
+          ...previousCart,
+          items: previousCart.items.map(item =>
+            item.id === itemId ? { ...item, quantity } : item
+          ),
+          item_count: previousCart.items.reduce((sum, item) =>
+            sum + (item.id === itemId ? quantity : item.quantity), 0
+          ),
+        });
+      }
+      return { previousCart, cartId };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previousCart && context.cartId) {
+        queryClient.setQueryData(sellqoKeys.cart(context.cartId), context.previousCart);
+      }
+    },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
+    },
+    onSettled: () => {
+      const cartId = getStoredCartId();
+      if (cartId) queryClient.invalidateQueries({ queryKey: sellqoKeys.cart(cartId) });
     },
   });
 }
@@ -226,8 +253,33 @@ export function useRemoveCartItem() {
       const raw = extractSingle<Cart>(result) || result;
       return normalizeCart(raw);
     },
+    onMutate: async (itemId) => {
+      const cartId = getStoredCartId();
+      if (!cartId) return;
+      await queryClient.cancelQueries({ queryKey: sellqoKeys.cart(cartId) });
+      const previousCart = queryClient.getQueryData<Cart>(sellqoKeys.cart(cartId));
+      if (previousCart) {
+        const newItems = previousCart.items.filter(item => item.id !== itemId);
+        queryClient.setQueryData<Cart>(sellqoKeys.cart(cartId), {
+          ...previousCart,
+          items: newItems,
+          item_count: newItems.reduce((sum, item) => sum + item.quantity, 0),
+          subtotal: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        });
+      }
+      return { previousCart, cartId };
+    },
+    onError: (_err, _itemId, context) => {
+      if (context?.previousCart && context.cartId) {
+        queryClient.setQueryData(sellqoKeys.cart(context.cartId), context.previousCart);
+      }
+    },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
+    },
+    onSettled: () => {
+      const cartId = getStoredCartId();
+      if (cartId) queryClient.invalidateQueries({ queryKey: sellqoKeys.cart(cartId) });
     },
   });
 }
