@@ -147,7 +147,10 @@ export function useCartQuery() {
 export function useCreateCart() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: cartAPI.create,
+    mutationFn: async () => {
+      const result = await cartAPI.create();
+      return extractSingle<Cart>(result) || result;
+    },
     onSuccess: (cart) => {
       storeCartId(cart.id);
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
