@@ -147,7 +147,7 @@ export function normalizeCart(raw: any): Cart {
     item_count: itemCount,
     subtotal,
     shipping: raw.shipping ?? 0,
-    discount: raw.discount ?? 0,
+    discount: raw.discount_amount || raw.discount || 0,
     tax: raw.tax ?? 0,
     total: raw.total ?? subtotal,
     currency: raw.currency || 'EUR',
