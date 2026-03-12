@@ -7,6 +7,9 @@ import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
 
+const FRESH_DROPS_SLOTS = 4;
+const COUPLE_SLOTS = 2;
+
 function CollectionPlaceholder({ title }: { title: string }) {
   return (
     <motion.div
@@ -38,6 +41,16 @@ export default function FeaturedProducts() {
     ? normalizeProducts(coupleRaw)
     : [];
 
+  const freshDropsItems: (Product | null)[] = [
+    ...featuredProducts.slice(0, FRESH_DROPS_SLOTS),
+    ...Array(Math.max(0, FRESH_DROPS_SLOTS - featuredProducts.length)).fill(null),
+  ];
+
+  const coupleItems: (Product | null)[] = [
+    ...coupleProducts.slice(0, COUPLE_SLOTS),
+    ...Array(Math.max(0, COUPLE_SLOTS - coupleProducts.length)).fill(null),
+  ];
+
   return (
     <>
       {/* Featured Collection */}
@@ -53,14 +66,11 @@ export default function FeaturedProducts() {
           </motion.h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-            {featuredProducts.length > 0
-              ? featuredProducts.map((product, i) => (
-                  <ProductCard key={product.id} product={product} index={i} />
-                ))
-              : Array.from({ length: 4 }).map((_, i) => (
-                  <CollectionPlaceholder key={`ph-feat-${i}`} title="Fresh Drops" />
-                ))
-            }
+            {freshDropsItems.map((product, i) =>
+              product
+                ? <ProductCard key={product.id} product={product} index={i} />
+                : <CollectionPlaceholder key={`ph-feat-${i}`} title="Fresh Drops" />
+            )}
           </div>
         </div>
       </section>
@@ -80,20 +90,13 @@ export default function FeaturedProducts() {
             <p className="font-handwritten text-xl text-primary-foreground/80 mb-8">
               {t('featured.forTwo.subtitle')}
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-6 mb-8">
-              {coupleProducts.length > 0
-                ? coupleProducts.map((product, i) => (
-                    <div key={product.id} className="w-48">
-                      <ProductCard product={product} index={i} />
-                    </div>
-                  ))
-                : Array.from({ length: 2 }).map((_, i) => (
-                    <div key={`ph-couple-${i}`} className="w-48">
-                      <CollectionPlaceholder title="Loveke for Two" />
-                    </div>
-                  ))
-              }
+              {coupleItems.map((product, i) =>
+                product
+                  ? <div key={product.id} className="w-48"><ProductCard product={product} index={i} /></div>
+                  : <div key={`ph-couple-${i}`} className="w-48"><CollectionPlaceholder title="Loveke for Two" /></div>
+              )}
             </div>
 
             <Link
