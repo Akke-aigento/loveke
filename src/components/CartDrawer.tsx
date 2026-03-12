@@ -53,6 +53,7 @@ export default function CartDrawer() {
   };
 
   const discount = cart?.discount ?? 0;
+  const activeDiscountCode = cart?.discount_code || '';
 
   return (
     <AnimatePresence>
