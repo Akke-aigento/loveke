@@ -70,13 +70,20 @@ export async function sellqoFetch<T = unknown>(
     'Accept-Language': currentLocale,
   };
 
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      ...headers,
-      ...options?.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...options,
+      headers: {
+        ...headers,
+        ...options?.headers,
+      },
+    });
+  } catch (err) {
+    // Network-level error (Failed to fetch, timeout, etc.)
+    console.error('SellQo network error:', err);
+    throw new Error('NETWORK_ERROR');
+  }
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({ message: `HTTP ${res.status}` }));

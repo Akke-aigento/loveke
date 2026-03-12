@@ -91,8 +91,10 @@ export default function CartDrawer() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {items.map(item => (
-                    <div key={item.id} className="flex gap-3 p-3 rounded-lg bg-card border border-border">
+                    {items.map(item => {
+                    const isPending = pendingItemIds.has(item.id);
+                    return (
+                    <div key={item.id} className={`flex gap-3 p-3 rounded-lg bg-card border border-border transition-opacity ${isPending ? 'opacity-50 pointer-events-none' : ''}`}>
                       <div className="w-16 h-16 rounded-md bg-muted flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
                         {item.image ? (
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
@@ -103,31 +105,35 @@ export default function CartDrawer() {
                       <div className="flex-1 min-w-0">
                         <p className="font-body font-semibold text-sm truncate">{item.title}</p>
                         <p className="text-xs text-muted-foreground">{item.variant_title}</p>
-                        <p className="text-sm font-bold text-primary mt-1">€{item.price.toFixed(2)}</p>
+                        <p className="text-sm font-bold text-primary mt-1">€{(item.price ?? 0).toFixed(2)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                            disabled={isPending}
+                            className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-50"
                           >
                             <Minus size={12} />
                           </button>
                           <span className="text-sm font-medium w-6 text-center">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                            disabled={isPending}
+                            className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-50"
                           >
                             <Plus size={12} />
                           </button>
                           <button
-                            onClick={() => removeItem(item.id)}
-                            className="ml-auto text-xs text-muted-foreground hover:text-destructive transition-colors"
+                            onClick={() => handleRemoveItem(item.id)}
+                            disabled={isPending}
+                            className="ml-auto text-xs text-muted-foreground hover:text-destructive transition-colors disabled:opacity-50"
                           >
-                            {t('cart.remove')}
+                            {isPending ? '...' : t('cart.remove')}
                           </button>
                         </div>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
