@@ -309,9 +309,18 @@ export function useCreateCheckout() {
       if (!cartId) throw new Error('No cart found');
       return checkoutAPI.create(cartId, options);
     },
-    onSuccess: (session) => {
-      if (session.checkout_url) {
-        window.location.href = session.checkout_url;
+    onSuccess: (response: any) => {
+      const url =
+        response?.data?.checkout_url ||
+        response?.checkout_url ||
+        (typeof response === 'string' ? response : null);
+      if (url) {
+        window.location.href = url;
+      } else {
+        console.error('Checkout response missing checkout_url:', response);
+        import('sonner').then(({ toast }) =>
+          toast.error('Checkout kon niet gestart worden. Probeer opnieuw.')
+        );
       }
     },
   });
