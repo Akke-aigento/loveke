@@ -13,7 +13,7 @@ interface CartContextType {
   total: number;
   openCart: () => void;
   closeCart: () => void;
-  addItem: (item: { product_id: string; variant_id?: string; quantity: number; title: string; variant_title: string; price: number; image?: string }) => Promise<void>;
+  addItem: (item: { product_id: string; variant_id?: string; quantity: number; title: string; variant_title: string; price: number; image?: string; amount?: number; gift_card_metadata?: { recipient_name: string; recipient_email: string; message?: string; send_date?: string | null } }) => Promise<void>;
   updateQuantity: (itemId: string, quantity: number) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
   applyDiscount: (code: string) => Promise<void>;
