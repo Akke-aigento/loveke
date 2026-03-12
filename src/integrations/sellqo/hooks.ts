@@ -4,7 +4,8 @@ import {
   giftCardsAPI, pagesAPI, navigationAPI, reviewsAPI, newsletterAPI,
   settingsAPI, searchAPI
 } from './api';
-import type { ProductsParams } from './types';
+import { extractSingle } from './client';
+import type { Cart, ProductsParams } from './types';
 
 // === QUERY KEYS ===
 export const sellqoKeys = {
