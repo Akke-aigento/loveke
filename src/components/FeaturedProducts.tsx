@@ -90,7 +90,7 @@ export default function FeaturedProducts() {
                   ))
                 : Array.from({ length: 2 }).map((_, i) => (
                     <div key={`ph-couple-${i}`} className="w-48">
-                      <CollectionPlaceholder title={coupleCollection?.title || 'Loveke for Two'} />
+                      <CollectionPlaceholder title="Loveke for Two" />
                     </div>
                   ))
               }
