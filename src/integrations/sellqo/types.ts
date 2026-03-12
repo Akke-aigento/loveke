@@ -273,6 +273,7 @@ export interface PaginatedResponse<T> {
 export interface ProductsParams {
   collection?: string;
   category?: string;
+  category_slug?: string;
   search?: string;
   sort?: 'newest' | 'price_asc' | 'price_desc' | 'title_asc' | 'bestselling';
   page?: number;
