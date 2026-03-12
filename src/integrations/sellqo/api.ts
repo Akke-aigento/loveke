@@ -11,6 +11,7 @@ export const productsAPI = {
     const searchParams = new URLSearchParams();
     if (params?.collection) searchParams.set('collection', params.collection);
     if (params?.category) searchParams.set('category', params.category);
+    if (params?.category_slug) searchParams.set('category_slug', params.category_slug);
     if (params?.search) searchParams.set('search', params.search);
     if (params?.sort) searchParams.set('sort', params.sort);
     if (params?.page) searchParams.set('page', String(params.page));
