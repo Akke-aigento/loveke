@@ -25,8 +25,8 @@ function CollectionPlaceholder({ title }: { title: string }) {
 export default function FeaturedProducts() {
   const { t } = useLanguage();
 
-  const { data: featuredData, isError: featuredError } = useProducts({ collection: 'fresh-drops' });
-  const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
+  const { data: featuredData, isError: featuredError } = useProducts({ category: 'fresh-drops' });
+  const { data: coupleData, isError: coupleError } = useProducts({ category: 'loveke-for-two' });
 
   const featuredRaw = extractArray(featuredData);
   const featuredProducts: Product[] = featuredRaw.length > 0 && !featuredError
