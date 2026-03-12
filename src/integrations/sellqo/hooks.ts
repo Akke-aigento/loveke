@@ -183,10 +183,11 @@ export function useUpdateCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ itemId, quantity }: { itemId: string; quantity: number }) => {
+    mutationFn: async ({ itemId, quantity }: { itemId: string; quantity: number }) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.updateItem(cartId, itemId, quantity);
+      const result = await cartAPI.updateItem(cartId, itemId, quantity);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
