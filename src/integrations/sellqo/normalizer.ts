@@ -1,11 +1,8 @@
 /**
- * Normalizes raw SellQo API responses to match the frontend Product/Collection types.
- * 
- * API returns: name, images as string[], in_stock as boolean, variants with in_stock boolean
- * Frontend expects: title, images as {id,url,alt,position}[], stock_status enum, variants with stock_status
+ * Normalizes raw SellQo API responses to match the frontend types.
  */
 
-import type { Product, ProductImage, ProductVariant, Collection } from './types';
+import type { Product, ProductImage, ProductVariant, Collection, Cart, CartItem } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function normalizeProduct(raw: any): Product {
