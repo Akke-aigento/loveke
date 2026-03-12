@@ -189,7 +189,8 @@ export function useAddToCart() {
         activeCartId = newCart.id;
       }
       const result = await cartAPI.addItem(activeCartId, item);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
