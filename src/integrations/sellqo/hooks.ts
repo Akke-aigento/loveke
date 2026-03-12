@@ -182,7 +182,7 @@ export function useAddToCart() {
   const createCart = useCreateCart();
 
   return useMutation({
-    mutationFn: async (item: { product_id: string; variant_id?: string; quantity: number }) => {
+    mutationFn: async (item: { product_id: string; variant_id?: string; quantity: number; amount?: number; gift_card_metadata?: Record<string, unknown> }) => {
       let activeCartId = getStoredCartId();
       if (!activeCartId) {
         const newCart = await createCart.mutateAsync();

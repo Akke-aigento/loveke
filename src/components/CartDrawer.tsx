@@ -105,6 +105,9 @@ export default function CartDrawer() {
                       <div className="flex-1 min-w-0">
                         <p className="font-body font-semibold text-sm truncate">{item.title}</p>
                         <p className="text-xs text-muted-foreground">{item.variant_title}</p>
+                        {(item as any).gift_card_metadata?.recipient_name && (
+                          <p className="text-xs text-muted-foreground">🎁 Voor: {(item as any).gift_card_metadata.recipient_name} ({(item as any).gift_card_metadata.recipient_email})</p>
+                        )}
                         <p className="text-sm font-bold text-primary mt-1">€{(item.price ?? 0).toFixed(2)}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <button

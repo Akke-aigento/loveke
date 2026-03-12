@@ -39,12 +39,14 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
 
-  const addItem = useCallback(async (item: { product_id: string; variant_id?: string; quantity: number; title: string; variant_title: string; price: number; image?: string }) => {
+  const addItem = useCallback(async (item: { product_id: string; variant_id?: string; quantity: number; title: string; variant_title: string; price: number; image?: string; amount?: number; gift_card_metadata?: { recipient_name: string; recipient_email: string; message?: string; send_date?: string | null } }) => {
     try {
       await addToCartMutation.mutateAsync({
         product_id: item.product_id,
         variant_id: item.variant_id,
         quantity: item.quantity,
+        amount: item.amount,
+        gift_card_metadata: item.gift_card_metadata ? item.gift_card_metadata as Record<string, unknown> : undefined,
       });
       setIsOpen(true);
     } catch (error) {
