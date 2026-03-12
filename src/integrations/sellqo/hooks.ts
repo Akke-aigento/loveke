@@ -154,7 +154,8 @@ export function useCartQuery() {
     queryKey: sellqoKeys.cart(cartId || ''),
     queryFn: async () => {
       const result = await cartAPI.get(cartId!);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     enabled: !!cartId,
     staleTime: 1000 * 30,
