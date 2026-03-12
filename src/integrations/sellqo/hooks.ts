@@ -167,7 +167,8 @@ export function useCreateCart() {
   return useMutation({
     mutationFn: async () => {
       const result = await cartAPI.create();
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       storeCartId(cart.id);
