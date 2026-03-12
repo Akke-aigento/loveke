@@ -9,9 +9,28 @@ import { toast } from 'sonner';
 
 export default function CartDrawer() {
   const { t } = useLanguage();
-  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount, applyDiscount, discountCode, setDiscountCode, cart } = useSellQoCart();
+  const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount, applyDiscount, discountCode, setDiscountCode, cart, isAddingItem } = useSellQoCart();
   const createCheckout = useCreateCheckout();
   const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
+  const [pendingItemIds, setPendingItemIds] = useState<Set<string>>(new Set());
+
+  const handleUpdateQuantity = async (itemId: string, quantity: number) => {
+    setPendingItemIds(prev => new Set(prev).add(itemId));
+    try {
+      await updateQuantity(itemId, quantity);
+    } finally {
+      setPendingItemIds(prev => { const next = new Set(prev); next.delete(itemId); return next; });
+    }
+  };
+
+  const handleRemoveItem = async (itemId: string) => {
+    setPendingItemIds(prev => new Set(prev).add(itemId));
+    try {
+      await removeItem(itemId);
+    } finally {
+      setPendingItemIds(prev => { const next = new Set(prev); next.delete(itemId); return next; });
+    }
+  };
 
   const handleCheckout = () => {
     createCheckout.mutate({
