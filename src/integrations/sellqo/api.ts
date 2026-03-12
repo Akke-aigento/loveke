@@ -64,9 +64,11 @@ export const cartAPI = {
   get: (cartId: string) =>
     sellqoFetch<Cart>(`/cart/${cartId}`),
 
-  addItem: (cartId: string, item: { product_id: string; variant_id?: string; quantity: number }) => {
+  addItem: (cartId: string, item: { product_id: string; variant_id?: string; quantity: number; amount?: number; gift_card_metadata?: Record<string, unknown> }) => {
     const body: Record<string, unknown> = { product_id: item.product_id, quantity: item.quantity };
     if (item.variant_id) body.variant_id = item.variant_id;
+    if (item.amount != null) body.amount = item.amount;
+    if (item.gift_card_metadata) body.gift_card_metadata = item.gift_card_metadata;
     return sellqoFetch<Cart>(`/cart/${cartId}/items`, {
       method: 'POST',
       body: JSON.stringify(body),
