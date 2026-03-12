@@ -71,17 +71,17 @@ export default function ProductDetail() {
     return <GiftCardDetail product={product} />;
   }
 
-  const variant = product.variants?.[selectedVariant] || product.variants?.[0];
+  const hasRealVariants = product.variants && product.variants.length > 0;
+  const variant = hasRealVariants ? (product.variants![selectedVariant] || product.variants![0]) : undefined;
   const variantPrice = variant?.price ?? product.price ?? 0;
   const variantStockStatus = variant?.stock_status ?? product.stock_status ?? 'in_stock';
 
   const handleAddToCart = () => {
-    if (!variant) return;
     addItem({
       product_id: product.id,
-      variant_id: variant.id,
+      variant_id: hasRealVariants ? variant!.id : undefined,
       title: product.title,
-      variant_title: variant.title,
+      variant_title: variant?.title || '',
       price: variantPrice,
       quantity,
       image: product.images?.[0]?.url || '',

@@ -50,7 +50,14 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
     } catch (error) {
       console.error('Add to cart failed:', error);
       const { toast } = await import('sonner');
-      toast.error('Er ging iets mis bij het toevoegen aan je winkelwagen. Probeer het later opnieuw.');
+      const msg = error instanceof Error ? error.message : '';
+      if (/insufficient stock/i.test(msg)) {
+        toast.error('Deze maat is momenteel niet op voorraad.');
+      } else if (/variant not found/i.test(msg)) {
+        toast.error('Productconfiguratie klopt niet. Probeer het later opnieuw.');
+      } else {
+        toast.error('Er ging iets mis bij het toevoegen aan je winkelwagen. Probeer het later opnieuw.');
+      }
     }
   }, [addToCartMutation]);
 
