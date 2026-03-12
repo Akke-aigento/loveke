@@ -240,7 +240,8 @@ export function useApplyDiscount() {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
       const result = await cartAPI.applyDiscount(cartId, code);
-      return extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result) || result;
+      return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
