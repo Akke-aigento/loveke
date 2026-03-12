@@ -47,7 +47,7 @@ export default function GiftCardDetail({ product }: GiftCardDetailProps) {
     if (activeAmount <= 0) return;
     addItem({
       product_id: product.id,
-      variant_id: product.variants?.[0]?.id || product.id,
+      variant_id: product.variants?.length ? product.variants[0].id : undefined,
       title: product.title,
       variant_title: `€${activeAmount.toFixed(2)}`,
       price: activeAmount,

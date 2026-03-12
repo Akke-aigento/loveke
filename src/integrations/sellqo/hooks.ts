@@ -4,7 +4,8 @@ import {
   giftCardsAPI, pagesAPI, navigationAPI, reviewsAPI, newsletterAPI,
   settingsAPI, searchAPI
 } from './api';
-import type { ProductsParams } from './types';
+import { extractSingle } from './client';
+import type { Cart, ProductsParams } from './types';
 
 // === QUERY KEYS ===
 export const sellqoKeys = {
@@ -147,7 +148,10 @@ export function useCartQuery() {
 export function useCreateCart() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: cartAPI.create,
+    mutationFn: async () => {
+      const result = await cartAPI.create();
+      return extractSingle<Cart>(result) || result;
+    },
     onSuccess: (cart) => {
       storeCartId(cart.id);
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -160,13 +164,14 @@ export function useAddToCart() {
   const createCart = useCreateCart();
 
   return useMutation({
-    mutationFn: async (item: { product_id: string; variant_id: string; quantity: number }) => {
+    mutationFn: async (item: { product_id: string; variant_id?: string; quantity: number }) => {
       let activeCartId = getStoredCartId();
       if (!activeCartId) {
         const newCart = await createCart.mutateAsync();
         activeCartId = newCart.id;
       }
-      return cartAPI.addItem(activeCartId, item);
+      const result = await cartAPI.addItem(activeCartId, item);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -178,10 +183,11 @@ export function useUpdateCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ itemId, quantity }: { itemId: string; quantity: number }) => {
+    mutationFn: async ({ itemId, quantity }: { itemId: string; quantity: number }) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.updateItem(cartId, itemId, quantity);
+      const result = await cartAPI.updateItem(cartId, itemId, quantity);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -193,10 +199,11 @@ export function useRemoveCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (itemId: string) => {
+    mutationFn: async (itemId: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.removeItem(cartId, itemId);
+      const result = await cartAPI.removeItem(cartId, itemId);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
@@ -208,10 +215,11 @@ export function useApplyDiscount() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (code: string) => {
+    mutationFn: async (code: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.applyDiscount(cartId, code);
+      const result = await cartAPI.applyDiscount(cartId, code);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
