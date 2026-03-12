@@ -291,7 +291,9 @@ export function useApplyDiscount() {
     mutationFn: async (code: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      const result = await cartAPI.applyDiscount(cartId, code);
+      const result = code
+        ? await cartAPI.applyDiscount(cartId, code)
+        : await cartAPI.removeDiscount(cartId);
       const raw = extractSingle<Cart>(result) || result;
       return normalizeCart(raw);
     },
