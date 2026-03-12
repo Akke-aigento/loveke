@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
+import { useCollectionProducts } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
-import { normalizeProducts, normalizeCollections } from '@/integrations/sellqo/normalizer';
+import { normalizeProducts } from '@/integrations/sellqo/normalizer';
 import type { Product } from '@/integrations/sellqo/types';
 import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
@@ -25,28 +25,11 @@ function CollectionPlaceholder({ title }: { title: string }) {
 export default function FeaturedProducts() {
   const { t } = useLanguage();
 
-  const { data: collectionsData } = useCollections();
-  const { data: featuredData, isError: featuredError } = useProducts({ collection: 'featured' });
-  const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
+  const { data: featuredData } = useCollectionProducts('featured');
+  const { data: coupleData } = useCollectionProducts('loveke-for-two');
 
-  // Get collection metadata to check product_count
-  const collections = normalizeCollections(extractArray(collectionsData));
-  const featuredCollection = collections.find(c => c.slug === 'featured');
-  const coupleCollection = collections.find(c => c.slug === 'loveke-for-two');
-
-  const featuredEmpty = !featuredCollection || (featuredCollection.product_count ?? 0) === 0;
-  const coupleEmpty = !coupleCollection || (coupleCollection.product_count ?? 0) === 0;
-
-  // Only use API products if the collection actually has products
-  const featuredRaw = extractArray(featuredData);
-  const featuredProducts: Product[] = !featuredEmpty && featuredRaw.length > 0 && !featuredError
-    ? normalizeProducts(featuredRaw)
-    : [];
-
-  const coupleRaw = extractArray(coupleData);
-  const coupleProducts: Product[] = !coupleEmpty && coupleRaw.length > 0 && !coupleError
-    ? normalizeProducts(coupleRaw)
-    : [];
+  const featuredProducts: Product[] = normalizeProducts(extractArray(featuredData));
+  const coupleProducts: Product[] = normalizeProducts(extractArray(coupleData));
 
   return (
     <>
@@ -68,7 +51,7 @@ export default function FeaturedProducts() {
                   <ProductCard key={product.id} product={product} index={i} />
                 ))
               : Array.from({ length: 4 }).map((_, i) => (
-                  <CollectionPlaceholder key={`ph-feat-${i}`} title={featuredCollection?.title || 'Fresh Drops'} />
+                  <CollectionPlaceholder key={`ph-feat-${i}`} title="Fresh Drops" />
                 ))
             }
           </div>
@@ -100,7 +83,7 @@ export default function FeaturedProducts() {
                   ))
                 : Array.from({ length: 2 }).map((_, i) => (
                     <div key={`ph-couple-${i}`} className="w-48">
-                      <CollectionPlaceholder title={coupleCollection?.title || 'Loveke for Two'} />
+                      <CollectionPlaceholder title="Loveke for Two" />
                     </div>
                   ))
               }
