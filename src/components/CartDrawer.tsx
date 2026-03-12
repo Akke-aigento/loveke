@@ -53,6 +53,7 @@ export default function CartDrawer() {
   };
 
   const discount = cart?.discount ?? 0;
+  const activeDiscountCode = cart?.discount_code || '';
 
   return (
     <AnimatePresence>
@@ -144,8 +145,21 @@ export default function CartDrawer() {
             {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-border p-4 space-y-3">
-                {/* Discount code input */}
-                {discount <= 0 && (
+                {/* Discount code input or active badge */}
+                {activeDiscountCode ? (
+                  <div className="flex items-center justify-between p-2 rounded-md bg-primary/10 border border-primary/20">
+                    <span className="flex items-center gap-1.5 text-sm text-primary font-medium">
+                      <Tag size={14} /> ✓ "{activeDiscountCode}" toegepast
+                    </span>
+                    <button
+                      onClick={async () => { setIsApplyingDiscount(true); try { await applyDiscount(''); setDiscountCode(''); } catch { /* noop */ } finally { setIsApplyingDiscount(false); } }}
+                      disabled={isApplyingDiscount}
+                      className="text-muted-foreground hover:text-destructive transition-colors text-lg leading-none px-1 disabled:opacity-50"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ) : (
                   <div className="flex gap-2">
                     <div className="relative flex-1">
                       <Tag size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -167,11 +181,11 @@ export default function CartDrawer() {
                   </div>
                 )}
 
-                {/* Applied discount */}
+                {/* Applied discount line */}
                 {discount > 0 && (
                   <div className="flex justify-between text-sm text-primary">
                     <span className="flex items-center gap-1">
-                      <Tag size={14} /> Korting
+                      <Tag size={14} /> Korting {activeDiscountCode && `(${activeDiscountCode})`}
                     </span>
                     <span className="font-semibold">-€{discount.toFixed(2)}</span>
                   </div>
