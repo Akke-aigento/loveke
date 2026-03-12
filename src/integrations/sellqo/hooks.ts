@@ -199,10 +199,11 @@ export function useRemoveCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (itemId: string) => {
+    mutationFn: async (itemId: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.removeItem(cartId, itemId);
+      const result = await cartAPI.removeItem(cartId, itemId);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
