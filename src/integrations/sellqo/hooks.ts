@@ -215,10 +215,11 @@ export function useApplyDiscount() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (code: string) => {
+    mutationFn: async (code: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      return cartAPI.applyDiscount(cartId, code);
+      const result = await cartAPI.applyDiscount(cartId, code);
+      return extractSingle<Cart>(result) || result;
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);

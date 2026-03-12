@@ -39,7 +39,7 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
 
-  const addItem = useCallback(async (item: { product_id: string; variant_id: string; quantity: number; title: string; variant_title: string; price: number; image?: string }) => {
+  const addItem = useCallback(async (item: { product_id: string; variant_id?: string; quantity: number; title: string; variant_title: string; price: number; image?: string }) => {
     try {
       await addToCartMutation.mutateAsync({
         product_id: item.product_id,
