@@ -22,7 +22,7 @@ export default function Footer() {
   ].filter(s => s.url && String(s.url).trim() !== '');
 
   // Normalize legal pages from various response shapes
-  const pages: Array<{ slug: string; title: string; enabled?: boolean }> =
+  const pages: Array<{ slug: string; title: string; url?: string; enabled?: boolean }> =
     Array.isArray(legalPages) ? legalPages
     : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
     : [];
