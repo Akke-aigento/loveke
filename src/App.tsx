@@ -20,6 +20,7 @@ import Story from "./pages/Story";
 import Comic from "./pages/Comic";
 import SizeGuide from "./pages/SizeGuide";
 import Contact from "./pages/Contact";
+import Bedankt from "./pages/Bedankt";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
