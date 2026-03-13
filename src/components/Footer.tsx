@@ -22,7 +22,7 @@ export default function Footer() {
   ].filter(s => s.url && String(s.url).trim() !== '');
 
   // Normalize legal pages from various response shapes
-  const pages: Array<{ slug: string; title: string; enabled?: boolean }> =
+  const pages: Array<{ slug: string; title: string; url?: string; enabled?: boolean }> =
     Array.isArray(legalPages) ? legalPages
     : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
     : [];
@@ -86,7 +86,7 @@ export default function Footer() {
                 {visibleLegal.map(page => (
                   <a
                     key={page.slug}
-                    href={`https://sellqo.app/shop/loveke/legal/${page.slug}`}
+                    href={page.url || `https://sellqo.app/shop/loveke/legal/${page.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-primary transition-colors"
