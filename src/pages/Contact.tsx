@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
+import { sellqoFetch } from '@/integrations/sellqo/client';
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -20,12 +20,17 @@ export default function Contact() {
     setError('');
 
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('send-contact-email', {
-        body: form,
+      const response = await sellqoFetch<{ success?: boolean; error?: string }>('/contact', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
       });
 
-      if (fnError) throw fnError;
-      if (data?.error) throw new Error(data.error);
+      if ((response as any)?.error) throw new Error((response as any).error);
 
       setSent(true);
     } catch (err: any) {
