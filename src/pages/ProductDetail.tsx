@@ -21,6 +21,13 @@ export default function ProductDetail() {
 
   const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
   const { data: apiRelatedData } = useRelatedProducts(slug || '');
+  const { data: reviewsData } = useProductReviews(slug || '');
+
+  // Extract reviews
+  const reviewsRaw = (reviewsData as any)?.data ?? reviewsData ?? {};
+  const reviews: Review[] = reviewsRaw?.reviews ?? [];
+  const reviewsSummary: ReviewsSummary | null = reviewsRaw?.summary ?? null;
+  const hasReviews = reviewsSummary && reviewsSummary.total_count > 0;
 
   console.log('Single product API response:', apiProductData);
 
