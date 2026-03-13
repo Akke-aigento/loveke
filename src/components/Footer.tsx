@@ -86,7 +86,7 @@ export default function Footer() {
                 {visibleLegal.map(page => (
                   <a
                     key={page.slug}
-                    href={`https://sellqo.app/shop/loveke/legal/${page.slug}`}
+                    href={page.url || `https://sellqo.app/shop/loveke/legal/${page.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-primary transition-colors"
