@@ -418,7 +418,6 @@ export function useSocialLinks() {
   return useQuery({
     queryKey: sellqoKeys.settings.social,
     queryFn: settingsAPI.getSocial,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
