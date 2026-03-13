@@ -1,25 +1,49 @@
 import { Link } from 'react-router-dom';
-import { Instagram } from 'lucide-react';
+import { Instagram, Facebook, Music } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLegalPages, useSocialLinks } from '@/integrations/sellqo/hooks';
 
 export default function Footer() {
   const { t } = useLanguage();
+  const { data: legalPages } = useLegalPages();
+  const { data: socialData } = useSocialLinks();
+
+  // Normalize social links from various response shapes
+  const social = (socialData as any)?.data ?? socialData ?? {};
+
+  const socialItems = [
+    { key: 'instagram', url: social.instagram, icon: Instagram },
+    { key: 'facebook', url: social.facebook, icon: Facebook },
+    { key: 'tiktok', url: social.tiktok, icon: Music },
+  ].filter(s => s.url && String(s.url).trim() !== '');
+
+  // Normalize legal pages from various response shapes
+  const pages: Array<{ slug: string; title: string; enabled?: boolean }> =
+    Array.isArray(legalPages) ? legalPages
+    : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
+    : [];
+  const visibleLegal = pages.filter(p => p.enabled !== false);
 
   return (
     <footer className="bg-foreground text-background">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Logo & Social */}
           <div className="col-span-2 md:col-span-1">
             <span className="font-display text-3xl gradient-text">Loveke</span>
             <p className="mt-3 text-sm opacity-70 font-body">Born from Love. Worn on the Street.</p>
-            <div className="flex gap-3 mt-4">
-              <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                <Instagram size={20} />
-              </a>
-              <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-sm font-bold">
-                @loveke.shop
-              </a>
+            <div className="flex gap-3 mt-4 items-center">
+              {socialItems.length > 0 ? (
+                socialItems.map(({ key, url, icon: Icon }) => (
+                  <a key={key} href={url} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                    <Icon size={20} />
+                  </a>
+                ))
+              ) : (
+                <a href="https://www.instagram.com/loveke.shop/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  <Instagram size={20} />
+                </a>
+              )}
             </div>
           </div>
 
@@ -49,6 +73,26 @@ export default function Footer() {
               <Link to="/contact" className="hover:text-primary transition-colors">{t('footer.contact')}</Link>
             </div>
           </div>
+
+          {/* Juridisch */}
+          {visibleLegal.length > 0 && (
+            <div>
+              <h4 className="font-display text-sm mb-3">Juridisch</h4>
+              <div className="flex flex-col gap-2 text-sm opacity-70 font-body">
+                {visibleLegal.map(page => (
+                  <a
+                    key={page.slug}
+                    href={`https://sellqo.app/shop/loveke/legal/${page.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                  >
+                    {page.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom */}
