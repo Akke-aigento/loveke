@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Music } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLegalPages, useSocialLinks } from '@/integrations/sellqo/hooks';
+import { useLegalPages, useSocialLinks, useStorefrontSettings } from '@/integrations/sellqo/hooks';
+import { extractSingle } from '@/integrations/sellqo/client';
 
 export default function Footer() {
   const { t } = useLanguage();
-  const { data: legalPages } = useLegalPages();
+  const { data: legalPages, isError: legalError } = useLegalPages();
   const { data: socialData } = useSocialLinks();
+  const { data: settingsData } = useStorefrontSettings();
+  const settings = (extractSingle(settingsData) ?? settingsData) as any;
+  const storeName = settings?.store?.name;
 
   // Normalize social links from various response shapes
   const social = (socialData as any)?.data ?? socialData ?? {};
