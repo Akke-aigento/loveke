@@ -26,7 +26,7 @@ export default function Footer() {
     Array.isArray(legalPages) ? legalPages
     : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
     : [];
-  const visibleLegal = pages.filter(p => p.enabled !== false);
+  const visibleLegal = !legalError ? pages.filter(p => p.enabled !== false) : [];
 
   return (
     <footer className="bg-foreground text-background">
