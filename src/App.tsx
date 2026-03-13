@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,21 +7,23 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { SellQoCartProvider } from "@/integrations/sellqo/CartContext";
-import { productsAPI, collectionsAPI } from "@/integrations/sellqo/api";
+import { productsAPI, collectionsAPI, settingsAPI, pagesAPI } from "@/integrations/sellqo/api";
 import { sellqoKeys } from "@/integrations/sellqo/hooks";
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import Index from "./pages/Index";
-import Shop from "./pages/Shop";
-import ProductDetail from "./pages/ProductDetail";
-import Story from "./pages/Story";
-import Comic from "./pages/Comic";
-import SizeGuide from "./pages/SizeGuide";
-import Contact from "./pages/Contact";
-import Bedankt from "./pages/Bedankt";
-import NotFound from "./pages/NotFound";
+
+// Lazy-loaded routes
+const Shop = lazy(() => import("./pages/Shop"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Story = lazy(() => import("./pages/Story"));
+const Comic = lazy(() => import("./pages/Comic"));
+const SizeGuide = lazy(() => import("./pages/SizeGuide"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Bedankt = lazy(() => import("./pages/Bedankt"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,8 +47,24 @@ function AppPrefetcher() {
       queryKey: sellqoKeys.collections.all,
       queryFn: () => collectionsAPI.getAll(),
     });
+    queryClient.prefetchQuery({
+      queryKey: sellqoKeys.settings.all,
+      queryFn: () => settingsAPI.getAll(),
+    });
+    queryClient.prefetchQuery({
+      queryKey: sellqoKeys.pages.legal,
+      queryFn: () => pagesAPI.getLegal(),
+    });
   }, []);
   return null;
+}
+
+function PageLoader() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
 }
 
 const App = () => (
@@ -60,18 +78,20 @@ const App = () => (
           <BrowserRouter>
             <Navbar />
             <CartDrawer />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/shop/:slug" element={<ProductDetail />} />
-              <Route path="/ons-verhaal" element={<Story />} />
-              <Route path="/de-strip" element={<Comic />} />
-              <Route path="/maatgids" element={<SizeGuide />} />
-              <Route path="/cadeaubon" element={<Navigate to="/shop/cadeaukaart" replace />} />
-              <Route path="/bedankt" element={<Bedankt />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/shop/:slug" element={<ProductDetail />} />
+                <Route path="/ons-verhaal" element={<Story />} />
+                <Route path="/de-strip" element={<Comic />} />
+                <Route path="/maatgids" element={<SizeGuide />} />
+                <Route path="/cadeaubon" element={<Navigate to="/shop/cadeaukaart" replace />} />
+                <Route path="/bedankt" element={<Bedankt />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
             <Footer />
             <CookieBanner />
           </BrowserRouter>
