@@ -395,7 +395,6 @@ export function useReviewsSummary() {
   return useQuery({
     queryKey: sellqoKeys.reviews.summary,
     queryFn: reviewsAPI.getSummary,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
