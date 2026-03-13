@@ -35,7 +35,7 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <Link
-              to="/shop/cadeaukaart"
+              to="/shop/loveke-cadeaukaart"
               className="block text-center bg-accent/20 border-2 border-accent rounded-2xl p-6 hover:scale-105 transition-transform shadow-sticker"
             >
               <span className="font-display text-xl">{t('giftCardTeaser.title')}</span>
