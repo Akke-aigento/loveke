@@ -83,17 +83,21 @@ export default function Footer() {
             <div>
               <h4 className="font-display text-sm mb-3">Juridisch</h4>
               <div className="flex flex-col gap-2 text-sm opacity-70 font-body">
-                {visibleLegal.map(page => (
-                  <a
-                    key={page.slug}
-                    href={page.url || `https://sellqo.app/shop/loveke/legal/${page.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {page.title}
-                  </a>
-                ))}
+                {visibleLegal.map(page => {
+                  const baseUrl = page.url || `https://sellqo.app/shop/loveke/legal/${page.slug}`;
+                  const separator = baseUrl.includes('?') ? '&' : '?';
+                  return (
+                    <a
+                      key={page.slug}
+                      href={`${baseUrl}${separator}from=loveke.be`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-primary transition-colors"
+                    >
+                      {page.title}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           )}
