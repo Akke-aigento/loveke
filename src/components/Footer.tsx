@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Music } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLegalPages, useSocialLinks } from '@/integrations/sellqo/hooks';
+import { useLegalPages, useSocialLinks, useStorefrontSettings } from '@/integrations/sellqo/hooks';
+import { extractSingle } from '@/integrations/sellqo/client';
 
 export default function Footer() {
   const { t } = useLanguage();
-  const { data: legalPages } = useLegalPages();
+  const { data: legalPages, isError: legalError } = useLegalPages();
   const { data: socialData } = useSocialLinks();
+  const { data: settingsData } = useStorefrontSettings();
+  const settings = (extractSingle(settingsData) ?? settingsData) as any;
+  const storeName = settings?.store?.name;
 
   // Normalize social links from various response shapes
   const social = (socialData as any)?.data ?? socialData ?? {};
@@ -22,7 +26,7 @@ export default function Footer() {
     Array.isArray(legalPages) ? legalPages
     : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
     : [];
-  const visibleLegal = pages.filter(p => p.enabled !== false);
+  const visibleLegal = !legalError ? pages.filter(p => p.enabled !== false) : [];
 
   return (
     <footer className="bg-foreground text-background">
@@ -97,7 +101,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-background/20 flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-50 font-body">
-          <span>{t('footer.copyright')}</span>
+          <span>{storeName ? `© ${new Date().getFullYear()} ${storeName}` : t('footer.copyright')}</span>
           <div className="flex gap-4">
             <span>Visa</span>
             <span>Mastercard</span>

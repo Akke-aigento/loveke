@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
-import { useProduct, useRelatedProducts } from '@/integrations/sellqo/hooks';
+import { useProduct, useRelatedProducts, useProductReviews } from '@/integrations/sellqo/hooks';
 import { extractSingle, extractArray } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
-import type { Product } from '@/integrations/sellqo/types';
+import type { Product, Review, ReviewsSummary } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import GiftCardDetail from '@/components/GiftCardDetail';
 import { motion } from 'framer-motion';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, Star } from 'lucide-react';
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,6 +21,13 @@ export default function ProductDetail() {
 
   const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
   const { data: apiRelatedData } = useRelatedProducts(slug || '');
+  const { data: reviewsData } = useProductReviews(slug || '');
+
+  // Extract reviews
+  const reviewsRaw = (reviewsData as any)?.data ?? reviewsData ?? {};
+  const reviews: Review[] = reviewsRaw?.reviews ?? [];
+  const reviewsSummary: ReviewsSummary | null = reviewsRaw?.summary ?? null;
+  const hasReviews = reviewsSummary && reviewsSummary.total_count > 0;
 
   console.log('Single product API response:', apiProductData);
 
@@ -209,6 +216,50 @@ export default function ProductDetail() {
             </div>
           </motion.div>
         </div>
+
+        {/* Reviews */}
+        {hasReviews && (
+          <div className="mt-20">
+            <h2 className="font-display text-2xl mb-2">{t('product.reviews') || 'Reviews'}</h2>
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map(star => (
+                  <Star
+                    key={star}
+                    size={18}
+                    className={star <= Math.round(reviewsSummary!.average_rating) ? 'text-primary fill-primary' : 'text-muted-foreground'}
+                  />
+                ))}
+              </div>
+              <span className="font-body text-sm text-muted-foreground">
+                {reviewsSummary!.average_rating.toFixed(1)} ({reviewsSummary!.total_count})
+              </span>
+            </div>
+            <div className="space-y-4">
+              {reviews.map(review => (
+                <div key={review.id} className="bg-card border border-border rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <Star
+                          key={star}
+                          size={14}
+                          className={star <= review.rating ? 'text-primary fill-primary' : 'text-muted-foreground'}
+                        />
+                      ))}
+                    </div>
+                    <span className="font-body text-sm font-semibold">{review.author}</span>
+                    {review.is_verified && (
+                      <span className="text-xs font-body text-primary">✓ Geverifieerd</span>
+                    )}
+                  </div>
+                  {review.title && <p className="font-body font-semibold text-sm">{review.title}</p>}
+                  <p className="font-body text-sm text-muted-foreground">{review.content}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Related */}
         {relatedProducts.length > 0 && (

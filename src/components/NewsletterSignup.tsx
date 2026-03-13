@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useNewsletterSubscribe } from '@/integrations/sellqo/hooks';
+import { useNewsletterSubscribe, useStorefrontSettings } from '@/integrations/sellqo/hooks';
+import { extractSingle } from '@/integrations/sellqo/client';
 import { motion } from 'framer-motion';
 
 export default function NewsletterSignup() {
   const { t, locale } = useLanguage();
+  const { data: settingsData } = useStorefrontSettings();
+  const settings = (extractSingle(settingsData) ?? settingsData) as any;
+  const newsletterEnabled = settings?.newsletter?.enabled ?? settings?.data?.newsletter?.enabled ?? true;
+
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const subscribe = useNewsletterSubscribe();
+
+  if (newsletterEnabled === false) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
