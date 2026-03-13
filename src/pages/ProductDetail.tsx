@@ -210,6 +210,50 @@ export default function ProductDetail() {
           </motion.div>
         </div>
 
+        {/* Reviews */}
+        {hasReviews && (
+          <div className="mt-20">
+            <h2 className="font-display text-2xl mb-2">{t('product.reviews') || 'Reviews'}</h2>
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map(star => (
+                  <Star
+                    key={star}
+                    size={18}
+                    className={star <= Math.round(reviewsSummary!.average_rating) ? 'text-primary fill-primary' : 'text-muted-foreground'}
+                  />
+                ))}
+              </div>
+              <span className="font-body text-sm text-muted-foreground">
+                {reviewsSummary!.average_rating.toFixed(1)} ({reviewsSummary!.total_count})
+              </span>
+            </div>
+            <div className="space-y-4">
+              {reviews.map(review => (
+                <div key={review.id} className="bg-card border border-border rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <Star
+                          key={star}
+                          size={14}
+                          className={star <= review.rating ? 'text-primary fill-primary' : 'text-muted-foreground'}
+                        />
+                      ))}
+                    </div>
+                    <span className="font-body text-sm font-semibold">{review.author}</span>
+                    {review.is_verified && (
+                      <span className="text-xs font-body text-primary">✓ Geverifieerd</span>
+                    )}
+                  </div>
+                  {review.title && <p className="font-body font-semibold text-sm">{review.title}</p>}
+                  <p className="font-body text-sm text-muted-foreground">{review.content}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Related */}
         {relatedProducts.length > 0 && (
           <div className="mt-20">

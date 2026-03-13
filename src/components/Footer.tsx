@@ -101,7 +101,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-background/20 flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-50 font-body">
-          <span>{t('footer.copyright')}</span>
+          <span>{storeName ? `© ${new Date().getFullYear()} ${storeName}` : t('footer.copyright')}</span>
           <div className="flex gap-4">
             <span>Visa</span>
             <span>Mastercard</span>
