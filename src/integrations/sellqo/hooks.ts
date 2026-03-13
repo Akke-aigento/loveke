@@ -78,7 +78,6 @@ export function useProductSearch(query: string) {
     queryKey: sellqoKeys.products.search(query),
     queryFn: () => productsAPI.search(query),
     enabled: query.length >= 2,
-    staleTime: 1000 * 30,
   });
 }
 
