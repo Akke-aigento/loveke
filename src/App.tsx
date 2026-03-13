@@ -74,10 +74,10 @@ const App = () => (
       <SellQoCartProvider>
         <TooltipProvider>
           <AppPrefetcher />
-          <ScrollToTop />
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <Navbar />
             <CartDrawer />
             <Suspense fallback={<PageLoader />}>
