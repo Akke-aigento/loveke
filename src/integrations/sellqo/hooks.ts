@@ -110,7 +110,6 @@ export function useCategories() {
   return useQuery({
     queryKey: sellqoKeys.categories.all,
     queryFn: categoriesAPI.getAll,
-    staleTime: 1000 * 60 * 5,
   });
 }
 
