@@ -74,6 +74,7 @@ const App = () => (
       <SellQoCartProvider>
         <TooltipProvider>
           <AppPrefetcher />
+          <ScrollToTop />
           <Toaster />
           <Sonner />
           <BrowserRouter>
