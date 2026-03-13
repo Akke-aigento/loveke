@@ -357,7 +357,6 @@ export function usePage(slug: string) {
     queryKey: sellqoKeys.pages.detail(slug),
     queryFn: () => pagesAPI.getBySlug(slug),
     enabled: !!slug,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
