@@ -432,7 +432,6 @@ export function useConversionSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.conversion,
     queryFn: settingsAPI.getConversion,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
