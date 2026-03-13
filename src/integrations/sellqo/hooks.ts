@@ -54,7 +54,6 @@ export function useProducts(params?: ProductsParams) {
   return useQuery({
     queryKey: sellqoKeys.products.list(params),
     queryFn: () => productsAPI.getAll(params),
-    staleTime: 1000 * 60 * 2,
   });
 }
 
@@ -79,7 +78,6 @@ export function useProductSearch(query: string) {
     queryKey: sellqoKeys.products.search(query),
     queryFn: () => productsAPI.search(query),
     enabled: query.length >= 2,
-    staleTime: 1000 * 30,
   });
 }
 
@@ -88,7 +86,6 @@ export function useCollections() {
   return useQuery({
     queryKey: sellqoKeys.collections.all,
     queryFn: collectionsAPI.getAll,
-    staleTime: 1000 * 60 * 5,
   });
 }
 
@@ -113,7 +110,6 @@ export function useCategories() {
   return useQuery({
     queryKey: sellqoKeys.categories.all,
     queryFn: categoriesAPI.getAll,
-    staleTime: 1000 * 60 * 5,
   });
 }
 
@@ -158,7 +154,6 @@ export function useCartQuery() {
       return normalizeCart(raw);
     },
     enabled: !!cartId,
-    staleTime: 1000 * 30,
   });
 }
 
@@ -354,7 +349,6 @@ export function usePages() {
   return useQuery({
     queryKey: sellqoKeys.pages.all,
     queryFn: pagesAPI.getAll,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
@@ -363,7 +357,6 @@ export function usePage(slug: string) {
     queryKey: sellqoKeys.pages.detail(slug),
     queryFn: () => pagesAPI.getBySlug(slug),
     enabled: !!slug,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
@@ -371,7 +364,6 @@ export function useLegalPages() {
   return useQuery({
     queryKey: sellqoKeys.pages.legal,
     queryFn: pagesAPI.getLegal,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
@@ -380,7 +372,6 @@ export function useNavigation() {
   return useQuery({
     queryKey: sellqoKeys.navigation,
     queryFn: navigationAPI.get,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
@@ -404,7 +395,6 @@ export function useReviewsSummary() {
   return useQuery({
     queryKey: sellqoKeys.reviews.summary,
     queryFn: reviewsAPI.getSummary,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
@@ -421,7 +411,6 @@ export function useStorefrontSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.all,
     queryFn: settingsAPI.getAll,
-    staleTime: 1000 * 60 * 15,
   });
 }
 
@@ -429,7 +418,6 @@ export function useSocialLinks() {
   return useQuery({
     queryKey: sellqoKeys.settings.social,
     queryFn: settingsAPI.getSocial,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
@@ -437,7 +425,6 @@ export function useTrustSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.trust,
     queryFn: settingsAPI.getTrust,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
@@ -445,7 +432,6 @@ export function useConversionSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.conversion,
     queryFn: settingsAPI.getConversion,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
@@ -453,7 +439,6 @@ export function useLanguages() {
   return useQuery({
     queryKey: sellqoKeys.settings.languages,
     queryFn: settingsAPI.getLanguages,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
@@ -463,6 +448,5 @@ export function useGlobalSearch(query: string) {
     queryKey: sellqoKeys.search(query),
     queryFn: () => searchAPI.global(query),
     enabled: query.length >= 2,
-    staleTime: 1000 * 60,
   });
 }
