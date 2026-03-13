@@ -425,7 +425,6 @@ export function useTrustSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.trust,
     queryFn: settingsAPI.getTrust,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
