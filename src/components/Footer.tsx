@@ -55,7 +55,7 @@ export default function Footer() {
             <h4 className="font-display text-sm mb-3">{t('footer.shop')}</h4>
             <div className="flex flex-col gap-2 text-sm opacity-70 font-body">
               <Link to="/shop" className="hover:text-primary transition-colors">{t('footer.allProducts')}</Link>
-              <Link to="/cadeaubon" className="hover:text-primary transition-colors">{t('footer.giftCards')}</Link>
+              <Link to="/shop/cadeaukaart" className="hover:text-primary transition-colors">{t('footer.giftCards')}</Link>
             </div>
           </div>
 
