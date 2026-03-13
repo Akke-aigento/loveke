@@ -27,12 +27,21 @@ function isGiftCard(product: Product): boolean {
 
 export default function ProductCard({ product, index }: ProductCardProps) {
   const { t } = useLanguage();
+  const queryClient = useQueryClient();
   const rotation = randomRotation();
   const borderColor = borderColors[index % borderColors.length];
   const giftCard = isGiftCard(product);
 
+  const handleMouseEnter = () => {
+    queryClient.prefetchQuery({
+      queryKey: sellqoKeys.products.detail(product.slug),
+      queryFn: () => productsAPI.getBySlug(product.slug),
+    });
+  };
+
   return (
     <motion.div
+      onMouseEnter={handleMouseEnter}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

@@ -54,7 +54,6 @@ export function useProducts(params?: ProductsParams) {
   return useQuery({
     queryKey: sellqoKeys.products.list(params),
     queryFn: () => productsAPI.getAll(params),
-    staleTime: 1000 * 60 * 2,
   });
 }
 
