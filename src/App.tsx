@@ -20,6 +20,7 @@ import Story from "./pages/Story";
 import Comic from "./pages/Comic";
 import SizeGuide from "./pages/SizeGuide";
 import Contact from "./pages/Contact";
+import Bedankt from "./pages/Bedankt";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -67,6 +68,7 @@ const App = () => (
               <Route path="/de-strip" element={<Comic />} />
               <Route path="/maatgids" element={<SizeGuide />} />
               <Route path="/cadeaubon" element={<Navigate to="/shop/cadeaukaart" replace />} />
+              <Route path="/bedankt" element={<Bedankt />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
