@@ -439,7 +439,6 @@ export function useLanguages() {
   return useQuery({
     queryKey: sellqoKeys.settings.languages,
     queryFn: settingsAPI.getLanguages,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
