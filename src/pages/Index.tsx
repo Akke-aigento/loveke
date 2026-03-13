@@ -1,12 +1,15 @@
+import { lazy, Suspense } from 'react';
 import HeroSection from '@/components/HeroSection';
-import StoryTeaser from '@/components/StoryTeaser';
-import FeaturedProducts from '@/components/FeaturedProducts';
 import USPMarquee from '@/components/USPMarquee';
-import ComicBanner from '@/components/ComicBanner';
-import NewsletterSignup from '@/components/NewsletterSignup';
+import FeaturedProducts from '@/components/FeaturedProducts';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
+
+// Lazy load below-the-fold components
+const StoryTeaser = lazy(() => import('@/components/StoryTeaser'));
+const ComicBanner = lazy(() => import('@/components/ComicBanner'));
+const NewsletterSignup = lazy(() => import('@/components/NewsletterSignup'));
 
 const Index = () => {
   const { t } = useLanguage();
@@ -15,9 +18,13 @@ const Index = () => {
     <main>
       <HeroSection />
       <USPMarquee />
-      <StoryTeaser />
+      <Suspense fallback={null}>
+        <StoryTeaser />
+      </Suspense>
       <FeaturedProducts />
-      <ComicBanner />
+      <Suspense fallback={null}>
+        <ComicBanner />
+      </Suspense>
 
       {/* Gift Card Teaser */}
       <section className="py-12 px-4">
@@ -69,7 +76,9 @@ const Index = () => {
         </div>
       </section>
 
-      <NewsletterSignup />
+      <Suspense fallback={null}>
+        <NewsletterSignup />
+      </Suspense>
     </main>
   );
 };
