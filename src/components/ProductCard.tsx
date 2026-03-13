@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Product } from '@/integrations/sellqo/types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { productsAPI } from '@/integrations/sellqo/api';
+import { sellqoKeys } from '@/integrations/sellqo/hooks';
 
 const randomRotation = () => (Math.random() - 0.5) * 6;
 const borderColors = [
