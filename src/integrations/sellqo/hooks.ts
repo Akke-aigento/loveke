@@ -154,7 +154,6 @@ export function useCartQuery() {
       return normalizeCart(raw);
     },
     enabled: !!cartId,
-    staleTime: 1000 * 30,
   });
 }
 
