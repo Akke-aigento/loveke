@@ -448,6 +448,5 @@ export function useGlobalSearch(query: string) {
     queryKey: sellqoKeys.search(query),
     queryFn: () => searchAPI.global(query),
     enabled: query.length >= 2,
-    staleTime: 1000 * 60,
   });
 }
