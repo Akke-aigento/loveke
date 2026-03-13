@@ -88,7 +88,7 @@ const App = () => (
                 <Route path="/ons-verhaal" element={<Story />} />
                 <Route path="/de-strip" element={<Comic />} />
                 <Route path="/maatgids" element={<SizeGuide />} />
-                <Route path="/cadeaubon" element={<Navigate to="/shop/cadeaukaart" replace />} />
+                <Route path="/cadeaubon" element={<Navigate to="/shop/loveke-cadeaukaart" replace />} />
                 <Route path="/bedankt" element={<Bedankt />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
