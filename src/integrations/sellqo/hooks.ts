@@ -364,7 +364,6 @@ export function useLegalPages() {
   return useQuery({
     queryKey: sellqoKeys.pages.legal,
     queryFn: pagesAPI.getLegal,
-    staleTime: 1000 * 60 * 30,
   });
 }
 
