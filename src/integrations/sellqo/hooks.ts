@@ -349,7 +349,6 @@ export function usePages() {
   return useQuery({
     queryKey: sellqoKeys.pages.all,
     queryFn: pagesAPI.getAll,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
