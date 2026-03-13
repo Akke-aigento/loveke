@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
+import { sellqoFetch } from '@/integrations/sellqo/client';
 
 export default function Contact() {
   const { t } = useLanguage();
