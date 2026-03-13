@@ -411,7 +411,6 @@ export function useStorefrontSettings() {
   return useQuery({
     queryKey: sellqoKeys.settings.all,
     queryFn: settingsAPI.getAll,
-    staleTime: 1000 * 60 * 15,
   });
 }
 
