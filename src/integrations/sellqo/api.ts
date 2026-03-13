@@ -144,7 +144,7 @@ export const pagesAPI = {
     sellqoFetch<Page>(`/pages/${slug}`),
 
   getLegal: () =>
-    sellqoFetch<Page[]>('/pages?type=legal'),
+    sellqoFetch<{ success: boolean; data: Page[] }>('/legal'),
 };
 
 // === NAVIGATION ===
