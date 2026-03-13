@@ -372,7 +372,6 @@ export function useNavigation() {
   return useQuery({
     queryKey: sellqoKeys.navigation,
     queryFn: navigationAPI.get,
-    staleTime: 1000 * 60 * 10,
   });
 }
 
