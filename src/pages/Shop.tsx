@@ -27,10 +27,8 @@ export default function Shop() {
 
   // Safely extract and normalize products with fallback
   const products: Product[] = useMemo(() => {
-    console.log('SellQo products response:', JSON.stringify(productsData, null, 2));
     if (!productsError && productsData) {
       const rawProducts = extractArray(productsData);
-      console.log('First product:', JSON.stringify(rawProducts[0], null, 2));
       if (rawProducts.length > 0) {
         return normalizeProducts(rawProducts);
       }
