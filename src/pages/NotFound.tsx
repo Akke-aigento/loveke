@@ -11,7 +11,7 @@ export default function NotFound() {
         {/* Animated door sign */}
         <motion.div
           initial={{ rotate: -10 }}
-          animate={{ rotate: [−10, 10, -10] }}
+          animate={{ rotate: [-10, 10, -10] }}
           transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
           className="inline-block mb-8"
         >
