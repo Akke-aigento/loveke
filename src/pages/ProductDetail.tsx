@@ -29,8 +29,6 @@ export default function ProductDetail() {
   const reviewsSummary: ReviewsSummary | null = reviewsRaw?.summary ?? null;
   const hasReviews = reviewsSummary && reviewsSummary.total_count > 0;
 
-  console.log('Single product API response:', apiProductData);
-
   // Extract and normalize single product from { success, data: {...} }
   const rawProduct = extractSingle(apiProductData);
   const apiProduct = rawProduct ? normalizeProduct(rawProduct) : null;

@@ -100,6 +100,7 @@ export default function Navbar() {
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25 }}
             className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-6"
+            onClick={() => setMobileOpen(false)}
           >
             {navLinks.map(link => (
               <Link

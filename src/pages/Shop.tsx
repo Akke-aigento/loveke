@@ -44,7 +44,7 @@ export default function Shop() {
 
   // Safely extract and normalize collections with fallback
   const collections = useMemo(() => {
-    console.log('SellQo collections response:', JSON.stringify(collectionsData, null, 2));
+    
     if (!collectionsError && collectionsData) {
       const rawCollections = extractArray(collectionsData);
       if (rawCollections.length > 0) {
