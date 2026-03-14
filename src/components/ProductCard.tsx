@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
@@ -25,7 +26,7 @@ function isGiftCard(product: Product): boolean {
   return product.price === 0 || /cadeaukaart|gift.?card/i.test(product.title);
 }
 
-export default function ProductCard({ product, index }: ProductCardProps) {
+const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({ product, index }, ref) => {
   const { t } = useLanguage();
   const queryClient = useQueryClient();
   const rotation = randomRotation();
@@ -41,6 +42,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
   return (
     <motion.div
+      ref={ref}
       onMouseEnter={handleMouseEnter}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -121,4 +123,8 @@ export default function ProductCard({ product, index }: ProductCardProps) {
       </Link>
     </motion.div>
   );
-}
+});
+
+ProductCard.displayName = 'ProductCard';
+
+export default ProductCard;
