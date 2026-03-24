@@ -128,9 +128,7 @@
   "comic": {
     "title": "La BD",
     "subtitle": "L'histoire Loveke en bande dessinée",
-    "freeReminder": "📖 GRATUITE avec votre première commande !",
-    "buyDigital": "Acheter en digital",
-    "buyPrinted": "Acheter en imprimé"
+    "freeReminder": "📖 GRATUITE avec votre première commande !"
   },
   "sizeGuide": {
     "title": "Guide des tailles",
