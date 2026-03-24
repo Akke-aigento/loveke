@@ -53,21 +53,6 @@ export default function Comic() {
           </span>
         </div>
 
-        {/* Purchase options */}
-        <div className="grid sm:grid-cols-2 gap-6 max-w-lg mx-auto">
-          <Link
-            to="/shop"
-            className="block text-center px-6 py-4 rounded-xl font-display gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform"
-          >
-            {t('comic.buyDigital')} 📱
-          </Link>
-          <Link
-            to="/shop"
-            className="block text-center px-6 py-4 rounded-xl font-display border-2 border-foreground bg-background shadow-sticker hover:scale-105 transition-transform"
-          >
-            {t('comic.buyPrinted')} 📖
-          </Link>
-        </div>
       </div>
     </main>
   );

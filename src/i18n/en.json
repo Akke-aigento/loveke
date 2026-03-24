@@ -128,9 +128,7 @@
   "comic": {
     "title": "The Comic",
     "subtitle": "The Loveke story as a comic book",
-    "freeReminder": "📖 FREE with your first clothing order!",
-    "buyDigital": "Buy digital",
-    "buyPrinted": "Buy printed"
+    "freeReminder": "📖 FREE with your first clothing order!"
   },
   "sizeGuide": {
     "title": "Size Guide",
