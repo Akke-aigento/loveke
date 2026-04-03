@@ -33,10 +33,8 @@ export default function CartDrawer() {
   };
 
   const handleCheckout = () => {
-    createCheckout.mutate({
-      success_url: window.location.origin + '/bedankt',
-      cancel_url: window.location.origin + '/shop',
-    });
+    closeCart();
+    navigate('/checkout');
   };
 
   const handleApplyDiscount = async () => {
