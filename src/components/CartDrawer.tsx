@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Minus, Plus, ShoppingBag, Tag } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
-import { useCreateCheckout } from '@/integrations/sellqo/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
