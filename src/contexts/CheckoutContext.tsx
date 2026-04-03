@@ -57,6 +57,7 @@ function extractData<T>(response: unknown): T {
 export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<CheckoutState>(initialState);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const setLoading = (isLoading: boolean) => setState(s => ({ ...s, isLoading }));
   const setFieldErrors = (fieldErrors: Record<string, string>) => setState(s => ({ ...s, fieldErrors }));
