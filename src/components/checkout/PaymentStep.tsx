@@ -28,7 +28,7 @@ export default function PaymentStep() {
 
   const visibleMethods = useMemo(() =>
     availablePaymentMethods
-      .filter(m => !(m.type === 'qr' && isMobile))
+      .filter(m => !((m.type === 'qr' || m.type === 'manual') && isMobile))
       .sort((a, b) => (SORT_ORDER[a.type] ?? 99) - (SORT_ORDER[b.type] ?? 99)),
     [availablePaymentMethods, isMobile]
   );
