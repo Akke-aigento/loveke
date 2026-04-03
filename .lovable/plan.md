@@ -1,69 +1,42 @@
 
 
-## Plan: Checkout bugs fixen — 8 fixes in 1
+## Plan: Fix 3 checkout bugs (ronde 3)
 
-### Overzicht
+### Bug 1: "Bankoverschrijving" label hernoemen
 
-| Bug | Fix |
-|---|---|
-| 1. 3 stappen → 2 | Combineer Gegevens + Adres in 1 component, stepper wordt 2 stappen |
-| 2. QR volgorde/naam/device | Sort QR eerst, rename, filter op desktop-only |
-| 3. QR code niet getoond | Al geïmplementeerd in Bedankt.tsx — werkt al |
-| 4. Totaal €0.00 | Computed total met Number() fallbacks |
-| 5. NaN in items | Fallback `Number(item.price) \|\| 0` in OrderSummary |
-| 6. Success bij fout | Al correct: `handleApiError` check zit voor navigate in `completeCheckout` — extra hardening in default case |
-| 7. Stripe opties badges | Toon iDEAL/Bancontact/Creditcard/Apple Pay badges bij Stripe methode |
-| 8. Kortingscode UI | Al geïmplementeerd in OrderSummary.tsx — werkt al |
+De PaymentStep toont al "Scan QR code met je bankapp" voor `type === 'qr'`, maar de `manual` type (bankoverschrijving) wordt nog getoond met de API-naam. Aangezien de gebruiker wil dat ALLE niet-Stripe methodes (zowel `manual` als `qr`) hernoemen naar "QR code met je bankapp":
+
+**`src/components/checkout/PaymentStep.tsx`** — Pas de label-logica aan:
+- `isQR` check uitbreiden: `method.type === 'qr' || method.type === 'manual'` 
+- Beide types krijgen naam "QR code met je bankapp", beschrijving "Gratis — scan de code en betaal direct", groene badge "Geen transactiekosten"
+- Beide types worden gefilterd op mobile (alleen desktop)
+- Icon voor `manual` ook `QrCode` maken i.p.v. `Building2`
+
+### Bug 2: Winkelmandje badge niet leeggemaakt na succes
+
+Het probleem: `completeCheckout` in CheckoutContext doet `localStorage.removeItem('sellqo_cart_id')`, maar invalideert de React Query cart cache NIET. De `useSellQoCart()` hook in de Navbar leest nog steeds de gecachte cart data met items.
+
+**`src/contexts/CheckoutContext.tsx`** — Na succesvolle manual/qr betaling:
+- Naast `localStorage.removeItem`, ook de React Query cache invalideren via `queryClient.invalidateQueries({ queryKey: ['sellqo-cart'] })` of `queryClient.removeQueries({ queryKey: ['sellqo-cart'] })`
+- Import `useQueryClient` from `@tanstack/react-query`
+
+**`src/pages/Bedankt.tsx`** — Na Stripe polling succes:
+- Zelfde: naast localStorage remove, ook query cache clearen
+- Import `useQueryClient`
+
+### Bug 3: QR code niet getoond
+
+De code in CheckoutContext en Bedankt.tsx ziet er correct uit — `qr_data` wordt doorgegeven via navigate state en Bedankt.tsx rendert het. Het probleem is waarschijnlijk dat de API `qr_data` **niet als nested object** teruggeeft, of dat `extractData` het verkeerd uitpakt.
+
+**`src/contexts/CheckoutContext.tsx`** — In `completeCheckout`, log de volledige `data` response voor debugging. Zorg dat `data.qr_data` correct wordt doorgegeven (niet `undefined`).
+
+**`src/pages/Bedankt.tsx`** — Voeg een fallback toe als `qrData` bestaat maar `image_url` ontbreekt (bijv. als de API `payload` geeft i.p.v. `image_url`, genereer dan een QR code client-side).
 
 ### Bestanden
 
-| Bestand | Actie |
+| Bestand | Wijziging |
 |---|---|
-| `src/components/checkout/CustomerAddressStep.tsx` | **Nieuw** — gecombineerd formulier met klantgegevens + adres in 1 scroll |
-| `src/components/checkout/PaymentStep.tsx` | Wijzig: QR filtering (desktop-only), sortering (QR eerst), rename, Stripe badges |
-| `src/components/checkout/OrderSummary.tsx` | Wijzig: NaN fix met `Number()` fallbacks op `item.price` |
-| `src/contexts/CheckoutContext.tsx` | Wijzig: `saveCustomerAndAddress` functie (2 API calls sequentieel), `getSteps` → 2 stappen, `goBack` logica, computed total |
-| `src/pages/Checkout.tsx` | Wijzig: renderStep switch naar 2 stappen, import CustomerAddressStep |
-| `src/components/checkout/CustomerStep.tsx` | Niet meer gebruikt (kan blijven als dead code) |
-| `src/components/checkout/AddressStep.tsx` | Niet meer gebruikt (kan blijven als dead code) |
-
-### Detail per fix
-
-**Fix 1 — Gecombineerde stap:**
-- Nieuw `CustomerAddressStep.tsx` met: email, naam (2 kolommen), telefoon, dan `<h2>Bezorgadres</h2>`, straat, postcode+gemeente (2 kolommen), land select, bedrijf, billing toggle
-- Bij submit: sequentieel `saveCustomer` → `saveAddress` → auto-select shipping als 1 methode → ga naar stap 2 (betaling)
-- Context `getSteps()` wordt: `[{id:1, label:"Gegevens & Adres"}, {id:2, label:"Betaling"}]`
-- `currentStep` mapping: stap 1 = gegevens+adres, stap 2 = betaling (intern nog stap 4 voor de shipping auto-select logica)
-
-**Fix 2 — QR in PaymentStep:**
-- `useIsMobile` hook (al aanwezig in project) of inline check `window.innerWidth < 1024 || 'ontouchstart' in window`
-- Filter: verberg `method.type === 'qr'` op mobiel
-- Sort: QR (type qr) eerst, dan rest
-- Rename: als `method.type === 'qr'` → naam "Scan QR code met je bankapp", beschrijving "Gratis — direct betalen via je bankapp" + groene badge "Geen transactiekosten"
-
-**Fix 4 — Computed total:**
-- In CheckoutContext: `useMemo` computed total = `Math.max(0, (Number(subtotal)||0) + (Number(shippingCost)||0) - (Number(discount?.amount)||0))`
-- Gebruik API total als die beschikbaar is, anders computed
-
-**Fix 5 — NaN items:**
-- In OrderSummary: `const price = Number(item.price) || 0;`
-
-**Fix 7 — Stripe badges:**
-- In PaymentStep: als `method.type === 'redirect'` of `method.id === 'stripe'`, toon kleine badges: iDEAL, Bancontact, Creditcard, Apple Pay
-
-### Stap-navigatie na refactor
-
-```text
-Stap 1: CustomerAddressStep
-  → POST /checkout/customer
-  → POST /checkout/address  
-  → POST /checkout/shipping (auto als 1 methode)
-  → setCurrentStep(2)
-
-Stap 2: PaymentStep (was stap 4)
-  → POST /checkout/complete
-  → redirect/navigate
-```
-
-De shipping step component (`ShippingStep.tsx`) wordt alleen getoond als er >1 verzendmethodes zijn, als tussenstap voor stap 2. In de context wordt dit intern afgehandeld.
+| `src/components/checkout/PaymentStep.tsx` | Manual + QR samenvoegen onder "QR code met je bankapp" label, beide desktop-only |
+| `src/contexts/CheckoutContext.tsx` | React Query cache clearen bij manual/qr succes via `queryClient` |
+| `src/pages/Bedankt.tsx` | React Query cache clearen bij Stripe polling succes + QR fallback rendering |
 
