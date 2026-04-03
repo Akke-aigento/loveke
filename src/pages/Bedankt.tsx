@@ -158,6 +158,7 @@ export default function Bedankt() {
       if (result?.success && result.data) {
         setStripeOrder(result.data);
         try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+        queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
         setIsLoading(false);
         return;
       }
