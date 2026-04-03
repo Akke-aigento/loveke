@@ -23,13 +23,13 @@ function CheckoutContent() {
   }, [closeCart]);
 
   useEffect(() => {
-    const cartId = localStorage.getItem('sellqo_cart_id');
-    if (!cartId || !items.length) {
+    const storedCartId = localStorage.getItem('sellqo_cart_id');
+    if (!storedCartId || !items.length) {
       navigate('/shop', { replace: true });
       return;
     }
     if (!cartId) {
-      startCheckout(cartId).then(ok => {
+      startCheckout(storedCartId).then(ok => {
         if (!ok) navigate('/shop', { replace: true });
         setInitializing(false);
       });
