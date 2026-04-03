@@ -241,6 +241,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const result = await checkoutFlowAPI.complete(state.cartId, paymentMethodId);
       if (handleApiError(result)) { setLoading(false); return; }
       const data = extractData<any>(result);
+      console.log('[Checkout] complete response data:', JSON.stringify(data));
 
       switch (data.payment_type) {
         case 'redirect':
@@ -248,6 +249,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           break;
         case 'manual':
           try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+          queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
