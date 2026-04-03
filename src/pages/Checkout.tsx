@@ -13,7 +13,7 @@ import { ShoppingBag } from 'lucide-react';
 
 function CheckoutContent() {
   const checkout = useCheckout();
-  const { currentStep, startCheckout, getSteps, orderId, goToStep } = checkout;
+  const { currentStep, startCheckout, getSteps, cartId, goToStep } = checkout;
   const { items, closeCart } = useSellQoCart();
   const navigate = useNavigate();
   const [initializing, setInitializing] = useState(true);

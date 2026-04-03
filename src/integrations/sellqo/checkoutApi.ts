@@ -7,7 +7,7 @@ import type {
   CheckoutAddress,
 } from './checkoutTypes';
 
-const SUCCESS_URL = `${window.location.origin}/bedankt`;
+const SUCCESS_URL = `${window.location.origin}/bedankt?session_id={CHECKOUT_SESSION_ID}`;
 const CANCEL_URL = `${window.location.origin}/shop`;
 
 export const checkoutFlowAPI = {
@@ -17,49 +17,52 @@ export const checkoutFlowAPI = {
       body: JSON.stringify({ cart_id: cartId }),
     }),
 
-  saveCustomer: (orderId: string, customer: CheckoutCustomer) =>
+  saveCustomer: (cartId: string, customer: CheckoutCustomer) =>
     sellqoFetch<{ success: boolean; data: unknown; error?: { code: string; message: string; fields?: Record<string, string> } }>('/checkout/customer', {
       method: 'POST',
-      body: JSON.stringify({ order_id: orderId, customer }),
+      body: JSON.stringify({ cart_id: cartId, customer }),
     }),
 
-  saveAddress: (orderId: string, shippingAddress: CheckoutAddress, billingSameAsShipping: boolean, billingAddress?: CheckoutAddress | null) =>
+  saveAddress: (cartId: string, shippingAddress: CheckoutAddress, billingSameAsShipping: boolean, billingAddress?: CheckoutAddress | null) =>
     sellqoFetch<{ success: boolean; data: unknown; error?: { code: string; message: string; fields?: Record<string, string> } }>('/checkout/address', {
       method: 'POST',
       body: JSON.stringify({
-        order_id: orderId,
+        cart_id: cartId,
         shipping_address: shippingAddress,
         billing_same_as_shipping: billingSameAsShipping,
         billing_address: billingSameAsShipping ? null : billingAddress,
       }),
     }),
 
-  selectShipping: (orderId: string, shippingMethodId: string) =>
+  selectShipping: (cartId: string, shippingMethodId: string) =>
     sellqoFetch<{ success: boolean; data: { shipping_cost: number; total: number } }>('/checkout/shipping', {
       method: 'POST',
-      body: JSON.stringify({ order_id: orderId, shipping_method_id: shippingMethodId }),
+      body: JSON.stringify({ cart_id: cartId, shipping_method_id: shippingMethodId }),
     }),
 
-  complete: (orderId: string, paymentMethodId: string) =>
+  complete: (cartId: string, paymentMethodId: string) =>
     sellqoFetch<{ success: boolean; data: CheckoutCompleteResponse }>('/checkout/complete', {
       method: 'POST',
       body: JSON.stringify({
-        order_id: orderId,
+        cart_id: cartId,
         payment_method_id: paymentMethodId,
         success_url: SUCCESS_URL,
         cancel_url: CANCEL_URL,
       }),
     }),
 
-  applyDiscount: (orderId: string, code: string) =>
+  applyDiscount: (cartId: string, code: string) =>
     sellqoFetch<{ success: boolean; data: { discount_code: string; discount_amount: number; total: number }; error?: { code: string; message: string } }>('/checkout/discount', {
       method: 'POST',
-      body: JSON.stringify({ order_id: orderId, discount_code: code }),
+      body: JSON.stringify({ cart_id: cartId, discount_code: code }),
     }),
 
-  removeDiscount: (orderId: string) =>
+  removeDiscount: (cartId: string) =>
     sellqoFetch<{ success: boolean }>('/checkout/discount', {
       method: 'DELETE',
-      body: JSON.stringify({ order_id: orderId }),
+      body: JSON.stringify({ cart_id: cartId }),
     }),
+
+  getOrderBySession: (stripeSessionId: string) =>
+    sellqoFetch<{ success: boolean; data: any }>(`/checkout/order?stripe_session_id=${encodeURIComponent(stripeSessionId)}`),
 };
