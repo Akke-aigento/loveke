@@ -28,7 +28,7 @@ function CheckoutContent() {
       navigate('/shop', { replace: true });
       return;
     }
-    if (!orderId) {
+    if (!cartId) {
       startCheckout(cartId).then(ok => {
         if (!ok) navigate('/shop', { replace: true });
         setInitializing(false);
