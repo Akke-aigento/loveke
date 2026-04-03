@@ -10,6 +10,7 @@ import type {
 
 interface CheckoutContextType extends CheckoutState {
   startCheckout: (cartId: string) => Promise<boolean>;
+  saveCustomerAndAddress: (customer: CheckoutCustomer, shipping: CheckoutAddress, billingSame: boolean, billing?: CheckoutAddress | null) => Promise<boolean>;
   saveCustomer: (customer: CheckoutCustomer) => Promise<boolean>;
   saveAddress: (shipping: CheckoutAddress, billingSame: boolean, billing?: CheckoutAddress | null) => Promise<boolean>;
   selectShipping: (methodId: string) => Promise<boolean>;
@@ -85,8 +86,8 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
         items: data.items || [],
         availablePaymentMethods: data.available_payment_methods || [],
         availableShippingMethods: data.available_shipping_methods || [],
-        subtotal: data.subtotal || 0,
-        total: data.subtotal || 0,
+        subtotal: Number(data.subtotal) || 0,
+        total: Number(data.subtotal) || 0,
         currency: data.currency || 'EUR',
         currentStep: 1,
         isLoading: false,
@@ -108,7 +109,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
     try {
       const result = await checkoutFlowAPI.saveCustomer(state.cartId, customer);
       if (handleApiError(result)) { setLoading(false); return false; }
-      setState(s => ({ ...s, customer, currentStep: 2, isLoading: false, fieldErrors: {} }));
+      setState(s => ({ ...s, customer, isLoading: false, fieldErrors: {} }));
       return true;
     } catch {
       toast.error('Verbinding onderbroken. Probeer opnieuw.');
@@ -124,36 +125,11 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
     try {
       const result = await checkoutFlowAPI.saveAddress(state.cartId, shipping, billingSame, billing);
       if (handleApiError(result)) { setLoading(false); return false; }
-
-      const hasShipping = state.availableShippingMethods.length > 0;
-      let nextStep = hasShipping ? 3 : 4;
-
-      // Auto-select if only 1 shipping method
-      if (hasShipping && state.availableShippingMethods.length === 1) {
-        const method = state.availableShippingMethods[0];
-        const shippingResult = await checkoutFlowAPI.selectShipping(state.cartId, method.id);
-        const shippingData = extractData<any>(shippingResult);
-        setState(s => ({
-          ...s,
-          shippingAddress: shipping,
-          billingAddress: billingSame ? null : (billing || null),
-          billingSameAsShipping: billingSame,
-          selectedShippingMethod: method.id,
-          shippingCost: shippingData?.shipping_cost ?? method.price ?? 0,
-          total: shippingData?.total ?? s.total,
-          currentStep: 4,
-          isLoading: false,
-          fieldErrors: {},
-        }));
-        return true;
-      }
-
       setState(s => ({
         ...s,
         shippingAddress: shipping,
         billingAddress: billingSame ? null : (billing || null),
         billingSameAsShipping: billingSame,
-        currentStep: nextStep,
         isLoading: false,
         fieldErrors: {},
       }));
@@ -163,7 +139,75 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       return false;
     }
-  }, [state.cartId, state.availableShippingMethods, handleApiError]);
+  }, [state.cartId, handleApiError]);
+
+  // Combined: save customer + address + auto-select shipping → go to payment
+  const saveCustomerAndAddress = useCallback(async (
+    customer: CheckoutCustomer,
+    shipping: CheckoutAddress,
+    billingSame: boolean,
+    billing?: CheckoutAddress | null,
+  ): Promise<boolean> => {
+    if (!state.cartId) return false;
+    setLoading(true);
+    setFieldErrors({});
+
+    try {
+      // 1. Save customer
+      const custResult = await checkoutFlowAPI.saveCustomer(state.cartId, customer);
+      if (handleApiError(custResult)) { setLoading(false); return false; }
+
+      // 2. Save address
+      const addrResult = await checkoutFlowAPI.saveAddress(state.cartId, shipping, billingSame, billing);
+      if (handleApiError(addrResult)) { setLoading(false); return false; }
+
+      // 3. Auto-select shipping if only 1 method
+      let shippingCost = 0;
+      let newTotal = state.subtotal;
+      let selectedShippingMethod: string | null = null;
+
+      if (state.availableShippingMethods.length === 1) {
+        const method = state.availableShippingMethods[0];
+        const shippingResult = await checkoutFlowAPI.selectShipping(state.cartId, method.id);
+        const shippingData = extractData<any>(shippingResult);
+        shippingCost = Number(shippingData?.shipping_cost) || Number(method.price) || 0;
+        newTotal = Number(shippingData?.total) || (state.subtotal + shippingCost);
+        selectedShippingMethod = method.id;
+      } else if (state.availableShippingMethods.length > 1) {
+        // Multiple shipping methods — show shipping step (step 3) before payment
+        setState(s => ({
+          ...s,
+          customer,
+          shippingAddress: shipping,
+          billingAddress: billingSame ? null : (billing || null),
+          billingSameAsShipping: billingSame,
+          currentStep: 3,
+          isLoading: false,
+          fieldErrors: {},
+        }));
+        return true;
+      }
+
+      setState(s => ({
+        ...s,
+        customer,
+        shippingAddress: shipping,
+        billingAddress: billingSame ? null : (billing || null),
+        billingSameAsShipping: billingSame,
+        selectedShippingMethod,
+        shippingCost,
+        total: newTotal,
+        currentStep: 2, // Go to payment
+        isLoading: false,
+        fieldErrors: {},
+      }));
+      return true;
+    } catch {
+      toast.error('Verbinding onderbroken. Probeer opnieuw.');
+      setLoading(false);
+      return false;
+    }
+  }, [state.cartId, state.availableShippingMethods, state.subtotal, handleApiError]);
 
   const selectShipping = useCallback(async (methodId: string): Promise<boolean> => {
     if (!state.cartId) return false;
@@ -175,9 +219,9 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setState(s => ({
         ...s,
         selectedShippingMethod: methodId,
-        shippingCost: data?.shipping_cost ?? 0,
-        total: data?.total ?? s.total,
-        currentStep: 4,
+        shippingCost: Number(data?.shipping_cost) || 0,
+        total: Number(data?.total) || s.total,
+        currentStep: 2, // Go to payment
         isLoading: false,
       }));
       return true;
@@ -198,7 +242,6 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
 
       switch (data.payment_type) {
         case 'redirect':
-          // Stripe — redirect, do NOT clear cart (bedankt page handles it after polling)
           window.location.href = data.checkout_url;
           break;
         case 'manual':
@@ -229,7 +272,8 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           if (data.checkout_url) {
             window.location.href = data.checkout_url;
           } else {
-            navigate('/bedankt');
+            toast.error('Onbekende betaalmethode. Neem contact op.');
+            setLoading(false);
           }
       }
     } catch {
@@ -246,8 +290,8 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const data = extractData<any>(result);
       setState(s => ({
         ...s,
-        discount: { code: data.discount_code || code, amount: data.discount_amount || 0 },
-        total: data.total ?? s.total,
+        discount: { code: data.discount_code || code, amount: Number(data.discount_amount) || 0 },
+        total: Number(data.total) ?? s.total,
       }));
       return true;
     } catch {
@@ -260,7 +304,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
     if (!state.cartId) return;
     try {
       await checkoutFlowAPI.removeDiscount(state.cartId);
-      setState(s => ({ ...s, discount: null, total: s.subtotal + s.shippingCost }));
+      setState(s => ({ ...s, discount: null, total: (Number(s.subtotal) || 0) + (Number(s.shippingCost) || 0) }));
     } catch { /* noop */ }
   }, [state.cartId]);
 
@@ -270,31 +314,36 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
 
   const goBack = useCallback(() => {
     setState(s => {
-      let prevStep = s.currentStep - 1;
-      if (prevStep === 3 && s.availableShippingMethods.length <= 1) {
-        prevStep = 2;
-      }
-      return { ...s, currentStep: Math.max(1, prevStep), fieldErrors: {} };
+      if (s.currentStep === 2) return { ...s, currentStep: 1, fieldErrors: {} };
+      if (s.currentStep === 3) return { ...s, currentStep: 1, fieldErrors: {} };
+      return { ...s, currentStep: Math.max(1, s.currentStep - 1), fieldErrors: {} };
     });
   }, []);
 
   const getSteps = useCallback(() => {
-    const steps = [
-      { id: 1, label: 'Gegevens' },
-      { id: 2, label: 'Adres' },
+    return [
+      { id: 1, label: 'Gegevens & Adres' },
+      { id: 2, label: 'Betaling' },
     ];
-    if (state.availableShippingMethods.length > 1) {
-      steps.push({ id: 3, label: 'Verzending' });
-    }
-    steps.push({ id: 4, label: 'Betaling' });
-    return steps;
-  }, [state.availableShippingMethods]);
+  }, []);
+
+  // Computed total with fallbacks
+  const computedTotal = useMemo(() => {
+    const apiTotal = Number(state.total) || 0;
+    if (apiTotal > 0) return apiTotal;
+    const sub = Number(state.subtotal) || 0;
+    const ship = Number(state.shippingCost) || 0;
+    const disc = Number(state.discount?.amount) || 0;
+    return Math.max(0, sub + ship - disc);
+  }, [state.total, state.subtotal, state.shippingCost, state.discount]);
 
   const value = useMemo<CheckoutContextType>(() => ({
     ...state,
+    total: computedTotal,
     startCheckout,
     saveCustomer,
     saveAddress,
+    saveCustomerAndAddress,
     selectShipping,
     completeCheckout,
     applyDiscount: applyDiscountFn,
@@ -302,7 +351,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
     goToStep,
     goBack,
     getSteps,
-  }), [state, startCheckout, saveCustomer, saveAddress, selectShipping, completeCheckout, applyDiscountFn, removeDiscountFn, goToStep, goBack, getSteps]);
+  }), [state, computedTotal, startCheckout, saveCustomer, saveAddress, saveCustomerAndAddress, selectShipping, completeCheckout, applyDiscountFn, removeDiscountFn, goToStep, goBack, getSteps]);
 
   return <CheckoutContext.Provider value={value}>{children}</CheckoutContext.Provider>;
 }

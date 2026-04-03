@@ -57,7 +57,7 @@ export default function OrderSummary() {
                 <p className="text-sm font-medium truncate">{item.title}</p>
                 {item.variant_title && <p className="text-xs text-muted-foreground">{item.variant_title}</p>}
               </div>
-              <span className="text-sm font-semibold whitespace-nowrap">€{((item.price ?? 0) * item.quantity).toFixed(2)}</span>
+              <span className="text-sm font-semibold whitespace-nowrap">€{((Number(item.price) || 0) * (Number(item.quantity) || 1)).toFixed(2)}</span>
             </div>
           ))}
         </div>
@@ -108,7 +108,7 @@ export default function OrderSummary() {
 
           <div className="flex justify-between text-sm">
             <span>Verzending</span>
-            <span>{currentStep < 3 ? 'Wordt berekend' : shippingCost === 0 ? '🎉 Gratis!' : `€${shippingCost.toFixed(2)}`}</span>
+            <span>{currentStep < 2 ? 'Wordt berekend' : shippingCost === 0 ? '🎉 Gratis!' : `€${shippingCost.toFixed(2)}`}</span>
           </div>
 
           <div className="flex justify-between text-base font-bold border-t border-border pt-2">

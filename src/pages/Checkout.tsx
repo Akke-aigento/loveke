@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CheckoutProvider, useCheckout } from '@/contexts/CheckoutContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import StepIndicator from '@/components/checkout/StepIndicator';
-import CustomerStep from '@/components/checkout/CustomerStep';
-import AddressStep from '@/components/checkout/AddressStep';
+import CustomerAddressStep from '@/components/checkout/CustomerAddressStep';
 import ShippingStep from '@/components/checkout/ShippingStep';
 import PaymentStep from '@/components/checkout/PaymentStep';
 import OrderSummary from '@/components/checkout/OrderSummary';
@@ -46,8 +45,6 @@ function CheckoutContent() {
             <Skeleton className="w-8 h-8 rounded-full" />
             <Skeleton className="w-20 h-2 rounded" />
             <Skeleton className="w-8 h-8 rounded-full" />
-            <Skeleton className="w-20 h-2 rounded" />
-            <Skeleton className="w-8 h-8 rounded-full" />
           </div>
           <div className="grid md:grid-cols-5 gap-8">
             <div className="md:col-span-3 space-y-4">
@@ -69,11 +66,10 @@ function CheckoutContent() {
 
   const renderStep = () => {
     switch (currentStep) {
-      case 1: return <CustomerStep />;
-      case 2: return <AddressStep />;
-      case 3: return <ShippingStep />;
-      case 4: return <PaymentStep />;
-      default: return <CustomerStep />;
+      case 1: return <CustomerAddressStep />;
+      case 2: return <PaymentStep />;
+      case 3: return <ShippingStep />; // Only shown when >1 shipping methods
+      default: return <CustomerAddressStep />;
     }
   };
 
@@ -91,12 +87,9 @@ function CheckoutContent() {
         />
 
         <div className="grid md:grid-cols-5 gap-8">
-          {/* Mobile: order summary first */}
           <div className="md:col-span-2 md:order-2">
             <OrderSummary />
           </div>
-
-          {/* Form steps */}
           <div className="md:col-span-3 md:order-1">
             {renderStep()}
           </div>
