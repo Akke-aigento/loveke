@@ -12,8 +12,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ShoppingBag } from 'lucide-react';
 
 function CheckoutContent() {
-  const { currentStep, startCheckout, getSteps, orderId, isLoading: ctxLoading } = useCheckout();
-  const { cart, items, closeCart } = useSellQoCart();
+  const checkout = useCheckout();
+  const { currentStep, startCheckout, getSteps, orderId, goToStep } = checkout;
+  const { items, closeCart } = useSellQoCart();
   const navigate = useNavigate();
   const [initializing, setInitializing] = useState(true);
 
@@ -24,7 +25,6 @@ function CheckoutContent() {
   useEffect(() => {
     const cartId = localStorage.getItem('sellqo_cart_id');
     if (!cartId || !items.length) {
-      // No cart — redirect to shop
       navigate('/shop', { replace: true });
       return;
     }
@@ -36,7 +36,7 @@ function CheckoutContent() {
     } else {
       setInitializing(false);
     }
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (initializing) {
     return (
@@ -84,12 +84,11 @@ function CheckoutContent() {
           <ShoppingBag size={24} /> Checkout
         </h1>
 
-        <StepIndicator steps={steps} currentStep={currentStep} onStepClick={(step) => {
-          // Only allow going back to completed steps
-          if (step < currentStep) {
-            const { goToStep } = useCheckout();
-          }
-        }} />
+        <StepIndicator
+          steps={steps}
+          currentStep={currentStep}
+          onStepClick={(step) => { if (step < currentStep) goToStep(step); }}
+        />
 
         <div className="grid md:grid-cols-5 gap-8">
           {/* Mobile: order summary first */}
