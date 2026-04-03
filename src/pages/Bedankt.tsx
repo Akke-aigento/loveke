@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Building2, QrCode } from 'lucide-react';
 import { sellqoFetch, extractSingle } from '@/integrations/sellqo/client';
