@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 export default function CartDrawer() {
   const { t } = useLanguage();
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount, applyDiscount, discountCode, setDiscountCode, cart, isAddingItem } = useSellQoCart();
-  const createCheckout = useCreateCheckout();
+  const navigate = useNavigate();
   const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
   const [pendingItemIds, setPendingItemIds] = useState<Set<string>>(new Set());
 
