@@ -7,9 +7,6 @@ import type {
   CheckoutState,
   CheckoutCustomer,
   CheckoutAddress,
-  PaymentMethod,
-  ShippingMethod,
-  CartItem,
 } from '@/integrations/sellqo/checkoutTypes';
 
 interface CheckoutContextType extends CheckoutState {

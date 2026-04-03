@@ -206,10 +206,9 @@ export default function CartDrawer() {
                 </div>
                 <button
                   onClick={handleCheckout}
-                  disabled={createCheckout.isPending}
                   className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50"
                 >
-                  {createCheckout.isPending ? '...' : `${t('cart.checkout')} →`}
+                  {`${t('cart.checkout')} →`}
                 </button>
               </div>
             )}
