@@ -4,7 +4,7 @@ import { ArrowLeft, CreditCard, Building2, QrCode } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   redirect: <CreditCard size={20} />,
-  manual: <Building2 size={20} />,
+  manual: <QrCode size={20} />,
   qr: <QrCode size={20} />,
 };
 
