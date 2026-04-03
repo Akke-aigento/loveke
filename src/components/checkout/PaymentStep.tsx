@@ -52,10 +52,10 @@ export default function PaymentStep() {
 
       <div className="space-y-3">
         {visibleMethods.map(method => {
-          const isQR = method.type === 'qr';
+          const isQR = method.type === 'qr' || method.type === 'manual';
           const isStripe = method.type === 'redirect';
           const name = isQR ? 'Scan QR code met je bankapp' : method.name;
-          const description = isQR ? 'Gratis — direct betalen via je bankapp' : method.description;
+          const description = isQR ? 'Gratis — scan de code en betaal direct' : method.description;
 
           return (
             <label

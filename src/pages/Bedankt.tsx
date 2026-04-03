@@ -110,6 +110,10 @@ function BankTransferInfo({ bankDetails, orderNumber, total, currency }: { bankD
 
 // QR payment component
 function QRPaymentInfo({ qrData, orderNumber, total }: { qrData: QRData; orderNumber: string; total: number }) {
+  // Try to get image URL from various possible API response shapes
+  const imageUrl = qrData.image_url || (qrData as any).qr_image || (qrData as any).url || (qrData as any).image;
+  const payload = (qrData as any).payload || (qrData as any).data;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -120,12 +124,20 @@ function QRPaymentInfo({ qrData, orderNumber, total }: { qrData: QRData; orderNu
       <h2 className="font-display text-lg mb-4 flex items-center justify-center gap-2">
         <QrCode size={18} /> Scan om te betalen
       </h2>
-      {qrData.image_url && (
-        <img src={qrData.image_url} alt="QR Code" className="w-48 h-48 mx-auto mb-4 rounded-lg" />
-      )}
-      <p className="text-sm text-muted-foreground mb-2">Scan de QR code met je bank-app</p>
+      {imageUrl ? (
+        <img src={imageUrl} alt="QR Code" className="w-48 h-48 mx-auto mb-4 rounded-lg border-2 border-border p-2 bg-white" />
+      ) : payload ? (
+        <div className="my-4 p-4 bg-muted rounded-lg">
+          <p className="text-sm text-muted-foreground mb-2">Gebruik deze gegevens in je bankapp:</p>
+          <p className="font-mono text-sm break-all">{payload}</p>
+        </div>
+      ) : null}
+      <p className="text-sm text-muted-foreground mb-2">Open je bankapp, kies 'QR code scannen', en bevestig de betaling.</p>
       <p className="font-bold text-primary text-lg">€{total.toFixed(2)}</p>
       <p className="text-xs text-muted-foreground mt-1">Bestelling: {orderNumber}</p>
+      <p className="text-xs text-muted-foreground mt-3">
+        Je ontvangt een bevestiging per email zodra de betaling is ontvangen.
+      </p>
     </motion.div>
   );
 }

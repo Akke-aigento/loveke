@@ -262,6 +262,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           break;
         case 'qr':
           try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+          queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
