@@ -24,6 +24,7 @@ const Comic = lazy(() => import("./pages/Comic"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Bedankt = lazy(() => import("./pages/Bedankt"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -88,6 +89,7 @@ const App = () => (
                 <Route path="/ons-verhaal" element={<Story />} />
                 <Route path="/de-strip" element={<Comic />} />
                 <Route path="/maatgids" element={<SizeGuide />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="/cadeaubon" element={<Navigate to="/shop/loveke-cadeaukaart" replace />} />
                 <Route path="/bedankt" element={<Bedankt />} />
                 <Route path="/contact" element={<Contact />} />

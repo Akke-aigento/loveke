@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Minus, Plus, ShoppingBag, Tag } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
-import { useCreateCheckout } from '@/integrations/sellqo/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 export default function CartDrawer() {
   const { t } = useLanguage();
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, shipping, total, itemCount, applyDiscount, discountCode, setDiscountCode, cart, isAddingItem } = useSellQoCart();
-  const createCheckout = useCreateCheckout();
+  const navigate = useNavigate();
   const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
   const [pendingItemIds, setPendingItemIds] = useState<Set<string>>(new Set());
 
@@ -33,10 +33,8 @@ export default function CartDrawer() {
   };
 
   const handleCheckout = () => {
-    createCheckout.mutate({
-      success_url: window.location.origin + '/bedankt',
-      cancel_url: window.location.origin + '/shop',
-    });
+    closeCart();
+    navigate('/checkout');
   };
 
   const handleApplyDiscount = async () => {
@@ -208,10 +206,9 @@ export default function CartDrawer() {
                 </div>
                 <button
                   onClick={handleCheckout}
-                  disabled={createCheckout.isPending}
                   className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50"
                 >
-                  {createCheckout.isPending ? '...' : `${t('cart.checkout')} →`}
+                  {`${t('cart.checkout')} →`}
                 </button>
               </div>
             )}

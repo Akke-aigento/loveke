@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag, Building2, QrCode } from 'lucide-react';
 import { sellqoFetch, extractSingle } from '@/integrations/sellqo/client';
 import { normalizeCart } from '@/integrations/sellqo/normalizer';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Cart } from '@/integrations/sellqo/types';
+import type { BankDetails, QRData } from '@/integrations/sellqo/checkoutTypes';
 
 // Floating heart animation component
 function FloatingHearts() {
@@ -62,13 +63,93 @@ function OrderSkeleton() {
   );
 }
 
+// Bank transfer details component
+function BankTransferInfo({ bankDetails, orderNumber, total, currency }: { bankDetails: BankDetails; orderNumber: string; total: number; currency: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.8 }}
+      className="bg-card border border-border rounded-xl p-6 shadow-card"
+    >
+      <h2 className="font-display text-lg mb-4 flex items-center gap-2">
+        <Building2 size={18} /> Betaling via overschrijving
+      </h2>
+      <p className="text-sm text-muted-foreground mb-4">
+        Maak het bedrag over naar onderstaand rekeningnummer. Je bestelling wordt verwerkt zodra we de betaling ontvangen.
+      </p>
+      <div className="space-y-3 bg-background rounded-lg p-4 border border-border">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">IBAN</span>
+          <span className="font-mono font-semibold">{bankDetails.iban}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Rekeninghouder</span>
+          <span className="font-semibold">{bankDetails.account_holder}</span>
+        </div>
+        {bankDetails.bank_name && (
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Bank</span>
+            <span className="font-semibold">{bankDetails.bank_name}</span>
+          </div>
+        )}
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Mededeling</span>
+          <span className="font-mono font-semibold text-primary">{bankDetails.reference || orderNumber}</span>
+        </div>
+        <div className="flex justify-between text-sm border-t border-border pt-2">
+          <span className="text-muted-foreground">Bedrag</span>
+          <span className="font-bold text-primary text-base">€{total.toFixed(2)}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// QR payment component
+function QRPaymentInfo({ qrData, orderNumber, total }: { qrData: QRData; orderNumber: string; total: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.8 }}
+      className="bg-card border border-border rounded-xl p-6 shadow-card text-center"
+    >
+      <h2 className="font-display text-lg mb-4 flex items-center justify-center gap-2">
+        <QrCode size={18} /> Scan om te betalen
+      </h2>
+      {qrData.image_url && (
+        <img src={qrData.image_url} alt="QR Code" className="w-48 h-48 mx-auto mb-4 rounded-lg" />
+      )}
+      <p className="text-sm text-muted-foreground mb-2">Scan de QR code met je bank-app</p>
+      <p className="font-bold text-primary text-lg">€{total.toFixed(2)}</p>
+      <p className="text-xs text-muted-foreground mt-1">Bestelling: {orderNumber}</p>
+    </motion.div>
+  );
+}
+
 export default function Bedankt() {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const cartId = searchParams.get('cart_id');
+  const sessionId = searchParams.get('session_id');
   const [order, setOrder] = useState<Cart | null>(null);
   const [isLoading, setIsLoading] = useState(!!cartId);
 
+  // Data from navigation state (bank transfer / QR)
+  const navState = (location.state || {}) as {
+    orderNumber?: string;
+    total?: number;
+    currency?: string;
+    bankDetails?: BankDetails;
+    qrData?: QRData;
+    paymentType?: 'manual' | 'qr';
+  };
+
   useEffect(() => {
+    // Clear cart on any successful checkout
+    try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+
     if (!cartId) return;
 
     sellqoFetch(`/cart/${cartId}`)
@@ -80,12 +161,19 @@ export default function Bedankt() {
         console.error('Failed to fetch order:', err);
       })
       .finally(() => setIsLoading(false));
-
-    // Clear cart so badge resets to 0
-    try {
-      localStorage.removeItem('sellqo_cart_id');
-    } catch { /* noop */ }
   }, [cartId]);
+
+  const heroMessage = navState.paymentType === 'manual'
+    ? 'Bedankt voor je bestelling! 🧡'
+    : navState.paymentType === 'qr'
+      ? 'Scan en betaal! 🧡'
+      : 'Bedankt voor je bestelling! 🧡';
+
+  const heroSubtext = navState.paymentType === 'manual'
+    ? 'Maak de betaling over en we sturen je bestelling zo snel mogelijk op.'
+    : sessionId
+      ? 'Je betaling is ontvangen! We sturen je bestelling zo snel mogelijk op.'
+      : 'Je ontvangt een bevestigingsmail. We sturen je bestelling zo snel mogelijk op.';
 
   return (
     <main className="min-h-screen bg-background">
@@ -108,7 +196,7 @@ export default function Bedankt() {
             transition={{ delay: 0.4 }}
             className="font-display text-3xl md:text-5xl text-foreground mb-4"
           >
-            Bedankt voor je bestelling! 🧡
+            {heroMessage}
           </motion.h1>
 
           <motion.p
@@ -117,13 +205,33 @@ export default function Bedankt() {
             transition={{ delay: 0.6 }}
             className="font-body text-lg text-muted-foreground max-w-md mx-auto"
           >
-            Je ontvangt een bevestigingsmail. We sturen je bestelling zo snel mogelijk op.
+            {heroSubtext}
           </motion.p>
         </div>
       </section>
 
-      {/* Order Summary */}
+      {/* Content based on payment type */}
       <section className="max-w-lg mx-auto px-4 pb-16">
+        {/* Bank transfer details */}
+        {navState.paymentType === 'manual' && navState.bankDetails && (
+          <BankTransferInfo
+            bankDetails={navState.bankDetails}
+            orderNumber={navState.orderNumber || ''}
+            total={navState.total || 0}
+            currency={navState.currency || 'EUR'}
+          />
+        )}
+
+        {/* QR payment */}
+        {navState.paymentType === 'qr' && navState.qrData && (
+          <QRPaymentInfo
+            qrData={navState.qrData}
+            orderNumber={navState.orderNumber || ''}
+            total={navState.total || 0}
+          />
+        )}
+
+        {/* Order Summary from cart_id (legacy/Stripe redirect) */}
         {isLoading ? (
           <div className="bg-card border border-border rounded-xl p-6 shadow-card">
             <h2 className="font-display text-lg mb-4">Bestellingsoverzicht</h2>
@@ -140,54 +248,43 @@ export default function Bedankt() {
               <ShoppingBag size={18} /> Bestellingsoverzicht
             </h2>
 
-            {/* Items */}
             <div className="space-y-3 mb-4">
               {order.items.map(item => (
                 <div key={item.id} className="flex gap-3 p-3 rounded-lg bg-background border border-border">
                   <div className="w-16 h-16 rounded-md bg-muted flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
                     {item.image ? (
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                    ) : (
-                      '🧡'
-                    )}
+                    ) : '🧡'}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-body font-semibold text-sm truncate">{item.title}</p>
-                    {item.variant_title && (
-                      <p className="text-xs text-muted-foreground">{item.variant_title}</p>
-                    )}
+                    {item.variant_title && <p className="text-xs text-muted-foreground">{item.variant_title}</p>}
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xs text-muted-foreground">{item.quantity}×</span>
-                      <span className="text-sm font-bold text-primary">
-                        €{((item.price ?? 0) * item.quantity).toFixed(2)}
-                      </span>
+                      <span className="text-sm font-bold text-primary">€{((item.price ?? 0) * item.quantity).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Totals */}
             <div className="space-y-2 border-t border-border pt-3">
               <div className="flex justify-between text-sm">
                 <span>Subtotaal</span>
                 <span className="font-semibold">€{(order.subtotal ?? 0).toFixed(2)}</span>
               </div>
-
               {(order.discount ?? 0) > 0 && (
                 <div className="flex justify-between text-sm text-primary">
                   <span>Korting {order.discount_code && `(${order.discount_code})`}</span>
                   <span className="font-semibold">-€{(order.discount ?? 0).toFixed(2)}</span>
                 </div>
               )}
-
               <div className="flex justify-between text-sm">
                 <span>Verzending</span>
                 <span className="font-semibold">
                   {(order.shipping ?? 0) === 0 ? '🎉 Gratis!' : `€${(order.shipping ?? 0).toFixed(2)}`}
                 </span>
               </div>
-
               <div className="flex justify-between text-lg font-bold border-t border-border pt-3">
                 <span>Totaal</span>
                 <span className="text-primary">€{(order.total ?? 0).toFixed(2)}</span>
