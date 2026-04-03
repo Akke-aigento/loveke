@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Building2, QrCode } from 'lucide-react';
 import { sellqoFetch, extractSingle } from '@/integrations/sellqo/client';
+import { checkoutFlowAPI } from '@/integrations/sellqo/checkoutApi';
 import { normalizeCart } from '@/integrations/sellqo/normalizer';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Cart } from '@/integrations/sellqo/types';
@@ -134,7 +135,9 @@ export default function Bedankt() {
   const cartId = searchParams.get('cart_id');
   const sessionId = searchParams.get('session_id');
   const [order, setOrder] = useState<Cart | null>(null);
-  const [isLoading, setIsLoading] = useState(!!cartId);
+  const [stripeOrder, setStripeOrder] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(!!cartId || !!sessionId);
+  const [showGenericThankYou, setShowGenericThankYou] = useState(false);
 
   // Data from navigation state (bank transfer / QR)
   const navState = (location.state || {}) as {
@@ -146,22 +149,53 @@ export default function Bedankt() {
     paymentType?: 'manual' | 'qr';
   };
 
+  // Poll for Stripe order after redirect
+  const pollForOrder = useCallback(async (sid: string, attempts = 0) => {
+    try {
+      const result = await checkoutFlowAPI.getOrderBySession(sid);
+      if (result?.success && result.data) {
+        setStripeOrder(result.data);
+        try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+        setIsLoading(false);
+        return;
+      }
+    } catch { /* webhook may still be processing */ }
+
+    if (attempts < 5) {
+      setTimeout(() => pollForOrder(sid, attempts + 1), 2000);
+    } else {
+      setShowGenericThankYou(true);
+      try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    // Clear cart on any successful checkout
-    try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+    // Stripe redirect: poll for order via session_id
+    if (sessionId) {
+      pollForOrder(sessionId);
+      return;
+    }
 
-    if (!cartId) return;
+    // Legacy: fetch cart by cart_id query param
+    if (cartId) {
+      try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+      sellqoFetch(`/cart/${cartId}`)
+        .then(raw => {
+          const cart = extractSingle<Cart>(raw) || (raw as Cart);
+          setOrder(normalizeCart(cart));
+        })
+        .catch(err => {
+          console.error('Failed to fetch order:', err);
+        })
+        .finally(() => setIsLoading(false));
+      return;
+    }
 
-    sellqoFetch(`/cart/${cartId}`)
-      .then(raw => {
-        const cart = extractSingle<Cart>(raw) || (raw as Cart);
-        setOrder(normalizeCart(cart));
-      })
-      .catch(err => {
-        console.error('Failed to fetch order:', err);
-      })
-      .finally(() => setIsLoading(false));
-  }, [cartId]);
+    // Manual/QR: cart already cleared by CheckoutContext
+    // No-op, just show nav state data
+    setIsLoading(false);
+  }, [cartId, sessionId, pollForOrder]);
 
   const heroMessage = navState.paymentType === 'manual'
     ? 'Bedankt voor je bestelling! 🧡'
@@ -231,7 +265,44 @@ export default function Bedankt() {
           />
         )}
 
-        {/* Order Summary from cart_id (legacy/Stripe redirect) */}
+        {/* Stripe order details (after polling) */}
+        {stripeOrder && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="bg-card border border-border rounded-xl p-6 shadow-card"
+          >
+            <h2 className="font-display text-lg mb-4 flex items-center gap-2">
+              <ShoppingBag size={18} /> Bestellingsoverzicht
+            </h2>
+            {stripeOrder.order_number && (
+              <p className="text-sm text-muted-foreground mb-3">Bestelnummer: <span className="font-semibold text-foreground">{stripeOrder.order_number}</span></p>
+            )}
+            {stripeOrder.total != null && (
+              <div className="flex justify-between text-lg font-bold border-t border-border pt-3">
+                <span>Totaal</span>
+                <span className="text-primary">€{Number(stripeOrder.total).toFixed(2)}</span>
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        {/* Generic thank you (polling timed out) */}
+        {showGenericThankYou && !stripeOrder && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="bg-card border border-border rounded-xl p-6 shadow-card text-center"
+          >
+            <p className="text-sm text-muted-foreground">
+              Je betaling wordt verwerkt. Je ontvangt een bevestigingsmail zodra alles in orde is.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Order Summary from cart_id (legacy) */}
         {isLoading ? (
           <div className="bg-card border border-border rounded-xl p-6 shadow-card">
             <h2 className="font-display text-lg mb-4">Bestellingsoverzicht</h2>

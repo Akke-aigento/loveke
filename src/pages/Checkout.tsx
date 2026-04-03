@@ -13,7 +13,7 @@ import { ShoppingBag } from 'lucide-react';
 
 function CheckoutContent() {
   const checkout = useCheckout();
-  const { currentStep, startCheckout, getSteps, orderId, goToStep } = checkout;
+  const { currentStep, startCheckout, getSteps, cartId, goToStep } = checkout;
   const { items, closeCart } = useSellQoCart();
   const navigate = useNavigate();
   const [initializing, setInitializing] = useState(true);
@@ -23,13 +23,13 @@ function CheckoutContent() {
   }, [closeCart]);
 
   useEffect(() => {
-    const cartId = localStorage.getItem('sellqo_cart_id');
-    if (!cartId || !items.length) {
+    const storedCartId = localStorage.getItem('sellqo_cart_id');
+    if (!storedCartId || !items.length) {
       navigate('/shop', { replace: true });
       return;
     }
-    if (!orderId) {
-      startCheckout(cartId).then(ok => {
+    if (!cartId) {
+      startCheckout(storedCartId).then(ok => {
         if (!ok) navigate('/shop', { replace: true });
         setInitializing(false);
       });

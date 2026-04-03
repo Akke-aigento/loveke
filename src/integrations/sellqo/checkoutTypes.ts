@@ -3,7 +3,6 @@
 import type { CartItem } from './types';
 
 export interface CheckoutStartResponse {
-  order_id: string;
   items: CartItem[];
   available_payment_methods: PaymentMethod[];
   available_shipping_methods: ShippingMethod[];
@@ -66,7 +65,7 @@ export interface CheckoutAddress {
 }
 
 export interface CheckoutState {
-  orderId: string | null;
+  cartId: string | null;
   items: CartItem[];
   availablePaymentMethods: PaymentMethod[];
   availableShippingMethods: ShippingMethod[];

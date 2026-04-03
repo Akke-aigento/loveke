@@ -2,7 +2,6 @@ import React, { createContext, useContext, useCallback, useMemo, useState } from
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { checkoutFlowAPI } from '@/integrations/sellqo/checkoutApi';
-import { extractSingle } from '@/integrations/sellqo/client';
 import type {
   CheckoutState,
   CheckoutCustomer,
@@ -25,7 +24,7 @@ interface CheckoutContextType extends CheckoutState {
 const CheckoutContext = createContext<CheckoutContextType | null>(null);
 
 const initialState: CheckoutState = {
-  orderId: null,
+  cartId: null,
   items: [],
   availablePaymentMethods: [],
   availableShippingMethods: [],
@@ -82,7 +81,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const data = extractData<any>(result);
       setState(s => ({
         ...s,
-        orderId: data.order_id,
+        cartId,
         items: data.items || [],
         availablePaymentMethods: data.available_payment_methods || [],
         availableShippingMethods: data.available_shipping_methods || [],
@@ -103,11 +102,11 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   }, [handleApiError]);
 
   const saveCustomer = useCallback(async (customer: CheckoutCustomer): Promise<boolean> => {
-    if (!state.orderId) return false;
+    if (!state.cartId) return false;
     setLoading(true);
     setFieldErrors({});
     try {
-      const result = await checkoutFlowAPI.saveCustomer(state.orderId, customer);
+      const result = await checkoutFlowAPI.saveCustomer(state.cartId, customer);
       if (handleApiError(result)) { setLoading(false); return false; }
       setState(s => ({ ...s, customer, currentStep: 2, isLoading: false, fieldErrors: {} }));
       return true;
@@ -116,24 +115,23 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       return false;
     }
-  }, [state.orderId, handleApiError]);
+  }, [state.cartId, handleApiError]);
 
   const saveAddress = useCallback(async (shipping: CheckoutAddress, billingSame: boolean, billing?: CheckoutAddress | null): Promise<boolean> => {
-    if (!state.orderId) return false;
+    if (!state.cartId) return false;
     setLoading(true);
     setFieldErrors({});
     try {
-      const result = await checkoutFlowAPI.saveAddress(state.orderId, shipping, billingSame, billing);
+      const result = await checkoutFlowAPI.saveAddress(state.cartId, shipping, billingSame, billing);
       if (handleApiError(result)) { setLoading(false); return false; }
 
-      // Determine next step
       const hasShipping = state.availableShippingMethods.length > 0;
       let nextStep = hasShipping ? 3 : 4;
 
       // Auto-select if only 1 shipping method
       if (hasShipping && state.availableShippingMethods.length === 1) {
         const method = state.availableShippingMethods[0];
-        const shippingResult = await checkoutFlowAPI.selectShipping(state.orderId, method.id);
+        const shippingResult = await checkoutFlowAPI.selectShipping(state.cartId, method.id);
         const shippingData = extractData<any>(shippingResult);
         setState(s => ({
           ...s,
@@ -165,13 +163,13 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       return false;
     }
-  }, [state.orderId, state.availableShippingMethods, handleApiError]);
+  }, [state.cartId, state.availableShippingMethods, handleApiError]);
 
   const selectShipping = useCallback(async (methodId: string): Promise<boolean> => {
-    if (!state.orderId) return false;
+    if (!state.cartId) return false;
     setLoading(true);
     try {
-      const result = await checkoutFlowAPI.selectShipping(state.orderId, methodId);
+      const result = await checkoutFlowAPI.selectShipping(state.cartId, methodId);
       if (handleApiError(result)) { setLoading(false); return false; }
       const data = extractData<any>(result);
       setState(s => ({
@@ -188,24 +186,23 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       return false;
     }
-  }, [state.orderId, handleApiError]);
+  }, [state.cartId, handleApiError]);
 
   const completeCheckout = useCallback(async (paymentMethodId: string) => {
-    if (!state.orderId) return;
+    if (!state.cartId) return;
     setLoading(true);
     try {
-      const result = await checkoutFlowAPI.complete(state.orderId, paymentMethodId);
+      const result = await checkoutFlowAPI.complete(state.cartId, paymentMethodId);
       if (handleApiError(result)) { setLoading(false); return; }
       const data = extractData<any>(result);
 
-      // Clear cart
-      try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
-
       switch (data.payment_type) {
         case 'redirect':
+          // Stripe — redirect, do NOT clear cart (bedankt page handles it after polling)
           window.location.href = data.checkout_url;
           break;
         case 'manual':
+          try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
@@ -217,6 +214,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           });
           break;
         case 'qr':
+          try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
@@ -228,7 +226,6 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           });
           break;
         default:
-          // Fallback — try redirect
           if (data.checkout_url) {
             window.location.href = data.checkout_url;
           } else {
@@ -239,12 +236,12 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       toast.error('Er ging iets mis bij het afronden. Probeer opnieuw.');
       setLoading(false);
     }
-  }, [state.orderId, navigate, handleApiError]);
+  }, [state.cartId, navigate, handleApiError]);
 
   const applyDiscountFn = useCallback(async (code: string): Promise<boolean> => {
-    if (!state.orderId) return false;
+    if (!state.cartId) return false;
     try {
-      const result = await checkoutFlowAPI.applyDiscount(state.orderId, code);
+      const result = await checkoutFlowAPI.applyDiscount(state.cartId, code);
       if (handleApiError(result)) return false;
       const data = extractData<any>(result);
       setState(s => ({
@@ -257,15 +254,15 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       toast.error('Kortingscode kon niet worden toegepast.');
       return false;
     }
-  }, [state.orderId, handleApiError]);
+  }, [state.cartId, handleApiError]);
 
   const removeDiscountFn = useCallback(async () => {
-    if (!state.orderId) return;
+    if (!state.cartId) return;
     try {
-      await checkoutFlowAPI.removeDiscount(state.orderId);
+      await checkoutFlowAPI.removeDiscount(state.cartId);
       setState(s => ({ ...s, discount: null, total: s.subtotal + s.shippingCost }));
     } catch { /* noop */ }
-  }, [state.orderId]);
+  }, [state.cartId]);
 
   const goToStep = useCallback((step: number) => {
     setState(s => ({ ...s, currentStep: step, fieldErrors: {} }));
@@ -274,7 +271,6 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const goBack = useCallback(() => {
     setState(s => {
       let prevStep = s.currentStep - 1;
-      // Skip shipping step if no methods
       if (prevStep === 3 && s.availableShippingMethods.length <= 1) {
         prevStep = 2;
       }
