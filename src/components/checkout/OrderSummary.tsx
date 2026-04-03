@@ -108,7 +108,7 @@ export default function OrderSummary() {
 
           <div className="flex justify-between text-sm">
             <span>Verzending</span>
-            <span>{currentStep < 3 ? 'Wordt berekend' : shippingCost === 0 ? '🎉 Gratis!' : `€${shippingCost.toFixed(2)}`}</span>
+            <span>{currentStep < 2 ? 'Wordt berekend' : shippingCost === 0 ? '🎉 Gratis!' : `€${shippingCost.toFixed(2)}`}</span>
           </div>
 
           <div className="flex justify-between text-base font-bold border-t border-border pt-2">
