@@ -4,7 +4,7 @@ import { ArrowLeft, CreditCard, Building2, QrCode } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
   redirect: <CreditCard size={20} />,
-  manual: <Building2 size={20} />,
+  manual: <QrCode size={20} />,
   qr: <QrCode size={20} />,
 };
 
@@ -28,7 +28,7 @@ export default function PaymentStep() {
 
   const visibleMethods = useMemo(() =>
     availablePaymentMethods
-      .filter(m => !(m.type === 'qr' && isMobile))
+      .filter(m => !((m.type === 'qr' || m.type === 'manual') && isMobile))
       .sort((a, b) => (SORT_ORDER[a.type] ?? 99) - (SORT_ORDER[b.type] ?? 99)),
     [availablePaymentMethods, isMobile]
   );
@@ -52,10 +52,10 @@ export default function PaymentStep() {
 
       <div className="space-y-3">
         {visibleMethods.map(method => {
-          const isQR = method.type === 'qr';
+          const isQR = method.type === 'qr' || method.type === 'manual';
           const isStripe = method.type === 'redirect';
           const name = isQR ? 'Scan QR code met je bankapp' : method.name;
-          const description = isQR ? 'Gratis — direct betalen via je bankapp' : method.description;
+          const description = isQR ? 'Gratis — scan de code en betaal direct' : method.description;
 
           return (
             <label

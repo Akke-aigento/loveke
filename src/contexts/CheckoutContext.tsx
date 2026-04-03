@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { checkoutFlowAPI } from '@/integrations/sellqo/checkoutApi';
 import type {
@@ -56,6 +57,7 @@ function extractData<T>(response: unknown): T {
 export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<CheckoutState>(initialState);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const setLoading = (isLoading: boolean) => setState(s => ({ ...s, isLoading }));
   const setFieldErrors = (fieldErrors: Record<string, string>) => setState(s => ({ ...s, fieldErrors }));
@@ -239,6 +241,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const result = await checkoutFlowAPI.complete(state.cartId, paymentMethodId);
       if (handleApiError(result)) { setLoading(false); return; }
       const data = extractData<any>(result);
+      console.log('[Checkout] complete response data:', JSON.stringify(data));
 
       switch (data.payment_type) {
         case 'redirect':
@@ -246,6 +249,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           break;
         case 'manual':
           try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+          queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
@@ -258,6 +262,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           break;
         case 'qr':
           try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
+          queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
           navigate('/bedankt', {
             state: {
               orderNumber: data.order_number,
