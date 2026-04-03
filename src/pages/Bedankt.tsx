@@ -133,6 +133,7 @@ function QRPaymentInfo({ qrData, orderNumber, total }: { qrData: QRData; orderNu
 export default function Bedankt() {
   const [searchParams] = useSearchParams();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const cartId = searchParams.get('cart_id');
   const sessionId = searchParams.get('session_id');
   const [order, setOrder] = useState<Cart | null>(null);
