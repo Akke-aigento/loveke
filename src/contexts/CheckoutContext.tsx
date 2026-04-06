@@ -263,13 +263,13 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
         case 'qr':
           try { localStorage.removeItem('sellqo_cart_id'); } catch { /* noop */ }
           queryClient.removeQueries({ queryKey: ['sellqo-cart'] });
-          navigate('/bedankt', {
+          navigate('/checkout/qr-betaling', {
             state: {
               orderNumber: data.order_number,
               total: data.total,
               currency: data.currency,
               qrData: data.qr_data,
-              paymentType: 'qr',
+              bankDetails: data.bank_details,
             },
           });
           break;
