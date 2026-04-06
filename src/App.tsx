@@ -25,6 +25,7 @@ const SizeGuide = lazy(() => import("./pages/SizeGuide"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Bedankt = lazy(() => import("./pages/Bedankt"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const QRPayment = lazy(() => import("./pages/QRPayment"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
