@@ -92,6 +92,7 @@ const App = () => (
                 <Route path="/maatgids" element={<SizeGuide />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/cadeaubon" element={<Navigate to="/shop/loveke-cadeaukaart" replace />} />
+                <Route path="/checkout/qr-betaling" element={<QRPayment />} />
                 <Route path="/bedankt" element={<Bedankt />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
