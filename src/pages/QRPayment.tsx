@@ -182,7 +182,7 @@ export default function QRPayment() {
                   >
                     {state.bankDetails.iban}
                     {copiedField === 'iban' ? (
-                      <Check className="w-3.5 h-3.5 text-green-600" />
+                      <Check className="w-3.5 h-3.5 text-primary" />
                     ) : (
                       <Copy className="w-3.5 h-3.5 text-muted-foreground" />
                     )}
@@ -202,7 +202,7 @@ export default function QRPayment() {
                   >
                     {state.bankDetails.reference || state.orderNumber}
                     {copiedField === 'ref' ? (
-                      <Check className="w-3.5 h-3.5 text-green-600" />
+                      <Check className="w-3.5 h-3.5 text-primary" />
                     ) : (
                       <Copy className="w-3.5 h-3.5 text-muted-foreground" />
                     )}
