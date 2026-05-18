@@ -293,10 +293,19 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const result = await checkoutFlowAPI.applyDiscount(state.cartId, code);
       if (handleApiError(result)) return false;
       const data = extractData<any>(result);
+      const firstDiscount = Array.isArray(data?.applied_discounts) && data.applied_discounts.length > 0
+        ? data.applied_discounts[0]
+        : null;
       setState(s => ({
         ...s,
-        discount: { code: data.discount_code || code, amount: Number(data.discount_amount) || 0 },
-        total: Number(data.total) ?? s.total,
+        discount: firstDiscount
+          ? { code: firstDiscount.code, amount: Number(firstDiscount.amount) || 0 }
+          : (Number(data?.discount_total) > 0
+              ? { code, amount: Number(data.discount_total) }
+              : null),
+        subtotal: data?.subtotal != null ? Number(data.subtotal) : s.subtotal,
+        shippingCost: data?.shipping_cost != null ? Number(data.shipping_cost) : s.shippingCost,
+        total: data?.total != null ? Number(data.total) : s.total,
       }));
       return true;
     } catch {
@@ -308,8 +317,17 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const removeDiscountFn = useCallback(async () => {
     if (!state.cartId) return;
     try {
-      await checkoutFlowAPI.removeDiscount(state.cartId);
-      setState(s => ({ ...s, discount: null, total: (Number(s.subtotal) || 0) + (Number(s.shippingCost) || 0) }));
+      const result = await checkoutFlowAPI.removeDiscount(state.cartId);
+      const data = extractData<any>(result);
+      setState(s => ({
+        ...s,
+        discount: null,
+        subtotal: data?.subtotal != null ? Number(data.subtotal) : s.subtotal,
+        shippingCost: data?.shipping_cost != null ? Number(data.shipping_cost) : s.shippingCost,
+        total: data?.total != null
+          ? Number(data.total)
+          : (Number(s.subtotal) || 0) + (Number(s.shippingCost) || 0),
+      }));
     } catch { /* noop */ }
   }, [state.cartId]);
 
