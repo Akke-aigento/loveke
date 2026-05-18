@@ -3,12 +3,16 @@ import { useCheckout } from '@/contexts/CheckoutContext';
 import { ArrowLeft, CreditCard, Building2, QrCode } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
-  redirect: <CreditCard size={20} />,
-  manual: <QrCode size={20} />,
-  qr: <QrCode size={20} />,
+  bank_transfer: <QrCode size={20} />,
+  bancontact: <CreditCard size={20} />,
+  ideal: <CreditCard size={20} />,
+  card: <CreditCard size={20} />,
+  klarna: <Building2 size={20} />,
 };
 
-const SORT_ORDER: Record<string, number> = { qr: 0, manual: 1, redirect: 2 };
+const SORT_ORDER: Record<string, number> = {
+  bank_transfer: 0, bancontact: 1, ideal: 2, card: 3, klarna: 4,
+};
 
 export default function PaymentStep() {
   const { availablePaymentMethods, completeCheckout, isLoading, selectedPaymentMethod, goBack, total } = useCheckout();
@@ -28,8 +32,9 @@ export default function PaymentStep() {
 
   const visibleMethods = useMemo(() =>
     availablePaymentMethods
-      .filter(m => !((m.type === 'qr' || m.type === 'manual') && isMobile))
-      .sort((a, b) => (SORT_ORDER[a.type] ?? 99) - (SORT_ORDER[b.type] ?? 99)),
+      .filter(m => m.available !== false)
+      .filter(m => !(m.method === 'bank_transfer' && isMobile))
+      .sort((a, b) => (SORT_ORDER[a.method] ?? 99) - (SORT_ORDER[b.method] ?? 99)),
     [availablePaymentMethods, isMobile]
   );
 
@@ -52,22 +57,22 @@ export default function PaymentStep() {
 
       <div className="space-y-3">
         {visibleMethods.map(method => {
-          const isQR = method.type === 'qr' || method.type === 'manual';
-          const isStripe = method.type === 'redirect';
+          const isSelected = selected === method.method;
+          const isQR = method.method === 'bank_transfer';
           const name = isQR ? 'Scan QR code met je bankapp' : method.name;
           const description = isQR ? 'Gratis — scan de code en betaal direct' : method.description;
 
           return (
             <label
-              key={method.id}
+              key={method.method}
               className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                selected === method.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'
+                isSelected ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'
               }`}
             >
-              <input type="radio" name="payment" value={method.id} checked={selected === method.id}
-                onChange={() => setSelected(method.id)} className="sr-only" />
-              <span className={`mt-0.5 ${selected === method.id ? 'text-primary' : 'text-muted-foreground'}`}>
-                {iconMap[method.type] || <CreditCard size={20} />}
+              <input type="radio" name="payment" value={method.method} checked={isSelected}
+                onChange={() => setSelected(method.method)} className="sr-only" />
+              <span className={`mt-0.5 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`}>
+                {iconMap[method.method] || <CreditCard size={20} />}
               </span>
               <div className="flex-1">
                 <p className="font-semibold text-sm">{name}</p>
@@ -76,13 +81,6 @@ export default function PaymentStep() {
                   <span className="inline-block mt-1 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-medium">
                     Geen transactiekosten
                   </span>
-                )}
-                {isStripe && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {['iDEAL', 'Bancontact', 'Creditcard', 'Apple Pay'].map(label => (
-                      <span key={label} className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded-full">{label}</span>
-                    ))}
-                  </div>
                 )}
               </div>
             </label>
