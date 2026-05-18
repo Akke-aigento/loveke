@@ -11,11 +11,13 @@ export interface CheckoutStartResponse {
 }
 
 export interface PaymentMethod {
-  id: string;
+  method: string;
+  group: 'direct' | 'later' | 'transfer';
   name: string;
-  type: 'redirect' | 'manual' | 'qr';
-  icon?: string;
   description?: string;
+  fee_cents?: number;
+  available: boolean;
+  reason_unavailable?: string | null;
 }
 
 export interface ShippingMethod {
