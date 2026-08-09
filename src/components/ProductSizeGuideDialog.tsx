@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { ProductSizeGuide, SizeGuideTable } from '@/integrations/sellqo/types';
+import { translateMeasurementLabel, translateDescription, type SizeGuideLocale } from '@/lib/sizeGuideI18n';
 
 function formatValue(v?: { value?: string; min_value?: string; max_value?: string }) {
   if (!v) return '–';
@@ -10,10 +11,10 @@ function formatValue(v?: { value?: string; min_value?: string; max_value?: strin
   return v.min_value || v.max_value || '–';
 }
 
-function unitLabel(table: SizeGuideTable) {
+function unitLabel(table: SizeGuideTable, t: (k: string) => string) {
   const u = (table.unit || '').toLowerCase();
-  if (u.includes('inch')) return 'inch';
-  if (u.includes('cm')) return 'cm';
+  if (u.includes('inch')) return t('product.unitInch');
+  if (u.includes('cm')) return t('product.unitCm');
   return table.unit || table.type || '';
 }
 
@@ -22,13 +23,19 @@ export function hasUsableSizeGuide(guide?: ProductSizeGuide | null): guide is Pr
 }
 
 export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGuide }) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const lang = locale as SizeGuideLocale;
   const tables = useMemo(
     () => (guide.size_tables || []).filter(t => (t.measurements?.length ?? 0) > 0),
     [guide]
   );
   const [activeIndex, setActiveIndex] = useState(0);
   const table = tables[activeIndex] || tables[0];
+
+  const paragraphs = useMemo(
+    () => translateDescription(table?.description, lang),
+    [table, lang]
+  );
 
   const sizes = useMemo(() => {
     const set: string[] = [];
@@ -53,7 +60,7 @@ export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGu
       </DialogTrigger>
       <DialogContent className="max-w-2xl border-3 border-foreground rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="font-display text-2xl">{t('product.sizeGuide')}</DialogTitle>
+          <DialogTitle className="font-display text-2xl">{t('product.sizeGuideTitle')}</DialogTitle>
         </DialogHeader>
 
         {tables.length > 1 && (
@@ -68,7 +75,7 @@ export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGu
                     : 'border-border hover:border-foreground'
                 }`}
               >
-                {unitLabel(tb) || `#${i + 1}`}
+                {unitLabel(tb, t) || `#${i + 1}`}
               </button>
             ))}
           </div>
@@ -83,7 +90,7 @@ export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGu
                 </th>
                 {measurements.map((m, i) => (
                   <th key={i} className="text-left p-2 border-b-2 border-foreground font-display whitespace-nowrap">
-                    {m.type_label || `#${i + 1}`}
+                    {m.type_label ? translateMeasurementLabel(m.type_label, lang) : `#${i + 1}`}
                   </th>
                 ))}
               </tr>
@@ -103,11 +110,12 @@ export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGu
           </table>
         </div>
 
-        {table.description && (
-          <div
-            className="font-body text-xs text-muted-foreground leading-relaxed [&_a]:underline"
-            dangerouslySetInnerHTML={{ __html: table.description }}
-          />
+        {paragraphs.length > 0 && (
+          <div className="font-body text-xs text-muted-foreground leading-relaxed space-y-1">
+            {paragraphs.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
         )}
       </DialogContent>
     </Dialog>
