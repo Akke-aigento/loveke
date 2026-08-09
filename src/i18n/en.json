@@ -99,7 +99,10 @@
     "related": "You might also like",
     "belgiumMade": "Made in Belgium 🇧🇪",
     "organicCotton": "Organic Cotton 🌿",
-    "freeComic": "Free comic with 1st order 📖"
+    "freeComic": "Free comic with 1st order 📖",
+    "sizeGuideTitle": "Size guide",
+    "unitCm": "cm",
+    "unitInch": "inch"
   },
   "shop": {
     "title": "Shop",

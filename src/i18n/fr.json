@@ -99,7 +99,10 @@
     "related": "Vous aimerez aussi",
     "belgiumMade": "Made in Belgium 🇧🇪",
     "organicCotton": "Coton Bio 🌿",
-    "freeComic": "BD gratuite avec 1ère commande 📖"
+    "freeComic": "BD gratuite avec 1ère commande 📖",
+    "sizeGuideTitle": "Guide des tailles",
+    "unitCm": "cm",
+    "unitInch": "pouce"
   },
   "shop": {
     "title": "Boutique",
