@@ -8,8 +8,6 @@ import type { Product, ProductImage, ProductVariant, Collection, Cart, CartItem 
 export function normalizeProduct(raw: any): Product {
   if (!raw) return raw;
 
-  console.log('SellQo raw product:', JSON.stringify(raw, null, 2));
-
   // Normalize images: API returns string[] or single image field, frontend expects ProductImage[]
   let rawImages = raw.images || [];
   // Related products return { image: "url" } instead of images[]
@@ -69,6 +67,7 @@ export function normalizeProduct(raw: any): Product {
     weight: raw.weight || undefined,
     seo: raw.seo || undefined,
     related_products: raw.related_products?.map?.((rp: any) => rp.slug || rp.id || rp) || undefined,
+    size_guide: raw.size_guide ?? null,
     created_at: raw.created_at || '',
     updated_at: raw.updated_at || '',
   };
