@@ -8,8 +8,6 @@ import type { Product, ProductImage, ProductVariant, Collection, Cart, CartItem 
 export function normalizeProduct(raw: any): Product {
   if (!raw) return raw;
 
-  console.log('SellQo raw product:', JSON.stringify(raw, null, 2));
-
   // Normalize images: API returns string[] or single image field, frontend expects ProductImage[]
   let rawImages = raw.images || [];
   // Related products return { image: "url" } instead of images[]

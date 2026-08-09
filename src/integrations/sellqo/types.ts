@@ -23,8 +23,34 @@ export interface Product {
   seo?: SEOData;
   reviews_summary?: ReviewsSummary;
   related_products?: string[];
+  size_guide?: ProductSizeGuide | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface SizeGuideValue {
+  size?: string;
+  min_value?: string;
+  max_value?: string;
+  value?: string;
+}
+
+export interface SizeGuideMeasurement {
+  type_label?: string;
+  values?: SizeGuideValue[];
+}
+
+export interface SizeGuideTable {
+  type?: string;
+  unit?: string;
+  description?: string;
+  measurements?: SizeGuideMeasurement[];
+}
+
+export interface ProductSizeGuide {
+  product_id?: number;
+  available_sizes?: string[];
+  size_tables?: SizeGuideTable[];
 }
 
 export interface ProductImage {
