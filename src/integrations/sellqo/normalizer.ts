@@ -67,6 +67,7 @@ export function normalizeProduct(raw: any): Product {
     weight: raw.weight || undefined,
     seo: raw.seo || undefined,
     related_products: raw.related_products?.map?.((rp: any) => rp.slug || rp.id || rp) || undefined,
+    size_guide: raw.size_guide ?? null,
     created_at: raw.created_at || '',
     updated_at: raw.updated_at || '',
   };
