@@ -99,7 +99,10 @@
     "related": "Je vindt dit misschien ook leuk",
     "belgiumMade": "Made in Belgium 🇧🇪",
     "organicCotton": "Biologisch Katoen 🌿",
-    "freeComic": "Gratis strip bij 1e bestelling 📖"
+    "freeComic": "Gratis strip bij 1e bestelling 📖",
+    "sizeGuideTitle": "Maatgids",
+    "unitCm": "cm",
+    "unitInch": "inch"
   },
   "shop": {
     "title": "Shop",
