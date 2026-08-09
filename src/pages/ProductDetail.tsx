@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
@@ -9,6 +9,7 @@ import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product, Review, ReviewsSummary } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import GiftCardDetail from '@/components/GiftCardDetail';
+import ProductSizeGuideDialog, { hasUsableSizeGuide } from '@/components/ProductSizeGuideDialog';
 import { motion } from 'framer-motion';
 import { Minus, Plus, Star } from 'lucide-react';
 
@@ -18,6 +19,12 @@ export default function ProductDetail() {
   const { addItem } = useSellQoCart();
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    setSelectedImage(0);
+    setSelectedVariant(0);
+  }, [slug]);
 
   const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
   const { data: apiRelatedData } = useRelatedProducts(slug || '');
@@ -99,7 +106,10 @@ export default function ProductDetail() {
     out_of_stock: { text: t('product.outOfStock'), color: 'text-destructive' },
   }[variantStockStatus] || { text: '', color: '' };
 
-  const mainImage = product.images?.[0]?.url;
+  const images = product.images ?? [];
+  const activeImage = images[selectedImage] || images[0];
+  const mainImage = activeImage?.url;
+  const showSizeGuideDialog = hasUsableSizeGuide(product.size_guide);
 
   // Strip HTML from description for plain text display
   const plainDescription = product.description?.replace(/<[^>]*>/g, '') || '';
@@ -117,18 +127,45 @@ export default function ProductDetail() {
         </nav>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
-          {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center overflow-hidden"
-          >
-            {mainImage ? (
-              <img src={mainImage} alt={product.images?.[0]?.alt || product.title} className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-8xl">🧡</span>
+          {/* Gallery */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center overflow-hidden"
+            >
+              {mainImage ? (
+                <img
+                  key={mainImage}
+                  src={mainImage}
+                  alt={activeImage?.alt || product.title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-8xl">🧡</span>
+              )}
+            </motion.div>
+
+            {images.length > 1 && (
+              <div className="mt-4 flex gap-3 overflow-x-auto pb-2 snap-x">
+                {images.map((img, i) => (
+                  <button
+                    key={img.id || img.url || i}
+                    type="button"
+                    onClick={() => setSelectedImage(i)}
+                    aria-label={`${product.title} — ${i + 1}`}
+                    className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden bg-card snap-start transition-all ${
+                      i === selectedImage
+                        ? 'border-3 border-foreground shadow-card'
+                        : 'border-2 border-border hover:border-foreground opacity-80 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img.url} alt={img.alt || product.title} className="w-full h-full object-cover" loading="lazy" />
+                  </button>
+                ))}
+              </div>
             )}
-          </motion.div>
+          </div>
 
           {/* Info */}
           <motion.div
@@ -155,12 +192,24 @@ export default function ProductDetail() {
 
             <p className="font-body text-muted-foreground mb-6 leading-relaxed">{product.short_description || plainDescription}</p>
 
+            {/* Size guide only (no variant selector) */}
+            {showSizeGuideDialog && !(product.variants && product.variants.length > 1) && (
+              <div className="mb-4 flex items-center justify-between">
+                <span className="font-body font-semibold text-sm">{t('product.size')}</span>
+                <ProductSizeGuideDialog guide={product.size_guide!} />
+              </div>
+            )}
+
             {/* Size selector - only show if more than 1 variant */}
             {product.variants && product.variants.length > 1 && (
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-body font-semibold text-sm">{t('product.size')}</span>
-                  <Link to="/maatgids" className="font-body text-xs text-primary hover:underline">{t('product.sizeGuide')}</Link>
+                  {showSizeGuideDialog ? (
+                    <ProductSizeGuideDialog guide={product.size_guide!} />
+                  ) : (
+                    <Link to="/maatgids" className="font-body text-xs text-primary hover:underline">{t('product.sizeGuide')}</Link>
+                  )}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.map((v, i) => (
