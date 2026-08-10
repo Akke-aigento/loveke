@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useLegalPages } from '@/integrations/sellqo/hooks';
+import { useLegalPages, usePage } from '@/integrations/sellqo/hooks';
 
 type LegalRecord = Record<string, unknown> & { page_type?: string };
 
@@ -19,6 +19,7 @@ export default function LegalPage() {
   const { slug } = useParams<{ slug: string }>();
   const { locale } = useLanguage();
   const { data: legalPages, isLoading, isError } = useLegalPages();
+  const { data: detailData, isLoading: detailLoading } = usePage(slug ?? '');
 
   const pages: LegalRecord[] = Array.isArray(legalPages)
     ? (legalPages as LegalRecord[])
@@ -26,9 +27,11 @@ export default function LegalPage() {
       ? ((legalPages as any).data as LegalRecord[])
       : [];
 
-  const page = pages.find(p => p.page_type === slug);
+  const indexRecord = pages.find(p => (p.page_type ?? (p as any).slug) === slug);
+  const detail = ((detailData as any)?.data ?? detailData) as LegalRecord | undefined;
+  const page = detail && Object.keys(detail).length > 0 ? detail : indexRecord;
 
-  const title = pick(page, 'title', locale);
+  const title = pick(page, 'title', locale) || pick(indexRecord, 'title', locale);
   const content = pick(page, 'content', locale);
   const metaTitle = pick(page, 'meta_title', locale) || title;
 
@@ -36,7 +39,7 @@ export default function LegalPage() {
     if (metaTitle) document.title = metaTitle;
   }, [metaTitle]);
 
-  if (isLoading) {
+  if (isLoading || detailLoading) {
     return (
       <main className="min-h-[60vh] flex items-center justify-center pt-24 pb-16 overflow-x-hidden">
         <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
