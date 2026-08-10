@@ -76,3 +76,11 @@ via `line_total`, met fallback `price ?? unit_price × quantity`, en titel/varia
 **Niet aangeraakt:** SellQo-backend (rekent correct), `sellqo-proxy`, cart-hooks,
 normalizer, client. B2C ongewijzigd: zonder verlegging vallen alle waarden terug op de
 bestaande state en was `line_total` al aanwezig.
+
+## B2B-CHECKOUT-1d — rehydratie van B2B-status bij terugkeer in checkout
+
+`startCheckout` (`src/contexts/CheckoutContext.tsx`) bewaart nu `customer` (incl. B2B-velden)
+en `reverse_charge` / `vat_text` / `vat_regime` uit de checkout/start-response, zodat een
+server-side nog zakelijke cart bij terugkeer het formulier (toggle, bedrijfsnaam, BTW-nummer,
+✓) en de netto totalen mét verleggingsmelding herstelt. B2C ongewijzigd: `customer` null of
+`is_b2b:false` en falsy `reverse_charge` geven identiek gedrag.
