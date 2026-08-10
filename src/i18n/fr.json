@@ -81,6 +81,10 @@
     "checkout": "Payer",
     "remove": "Supprimer"
   },
+  "checkout": {
+    "phoneRequired": "Le numéro de téléphone est obligatoire",
+    "phoneDisclaimer": "Utilisé uniquement par notre partenaire d'expédition en cas de questions sur ta commande ou livraison."
+  },
   "product": {
     "addToCart": "Ajouter au panier",
     "size": "Taille",
