@@ -86,8 +86,8 @@ export default function Footer() {
               <div className="flex flex-col gap-2 text-sm opacity-70 font-body">
                 {visibleLegal.map(page => (
                   <Link
-                    key={page.page_type}
-                    to={`/juridisch/${page.page_type}`}
+                    key={page.page_type ?? page.slug}
+                    to={`/juridisch/${page.page_type ?? page.slug}`}
                     className="hover:text-primary transition-colors"
                   >
                     {page[`title_${locale}`] || page.title_nl || page.title}
