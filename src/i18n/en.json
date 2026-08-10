@@ -81,6 +81,10 @@
     "checkout": "Checkout",
     "remove": "Remove"
   },
+  "checkout": {
+    "phoneRequired": "Phone number is required",
+    "phoneDisclaimer": "Only used by our shipping partner for questions about your order or delivery."
+  },
   "product": {
     "addToCart": "Add to cart",
     "size": "Size",
