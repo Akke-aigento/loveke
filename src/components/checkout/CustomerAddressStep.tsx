@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCheckout } from '@/contexts/CheckoutContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type { CheckoutCustomer, CheckoutAddress } from '@/integrations/sellqo/checkoutTypes';
 
 const emptyAddress: CheckoutAddress = { street: '', city: '', postal_code: '', country: 'BE', company: '' };
 
 export default function CustomerAddressStep() {
+  const { t } = useLanguage();
   const {
     saveCustomerAndAddress, isLoading, fieldErrors,
     customer, shippingAddress, billingAddress, billingSameAsShipping,
@@ -22,12 +24,18 @@ export default function CustomerAddressStep() {
   const [shipping, setShipping] = useState<CheckoutAddress>(shippingAddress || { ...emptyAddress });
   const [billingSame, setBillingSame] = useState(billingSameAsShipping);
   const [billing, setBilling] = useState<CheckoutAddress>(billingAddress || { ...emptyAddress });
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const updateCustomer = (key: keyof CheckoutCustomer, value: string) =>
     setForm(f => ({ ...f, [key]: value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.phone || !form.phone.trim()) {
+      setPhoneError(t('checkout.phoneRequired'));
+      return;
+    }
+    setPhoneError(null);
     await saveCustomerAndAddress(form, shipping, billingSame, billingSame ? null : billing);
   };
 
@@ -104,11 +112,13 @@ export default function CustomerAddressStep() {
       </div>
 
       <div>
-        <Label htmlFor="phone">Telefoonnummer (optioneel)</Label>
-        <Input id="phone" type="tel" value={form.phone || ''}
-          onChange={e => updateCustomer('phone', e.target.value)} placeholder="+32 4XX XX XX XX"
-          className={fieldErrors.phone ? 'border-destructive' : ''} />
-        {fieldErrors.phone && <p className="text-xs text-destructive mt-1">{fieldErrors.phone}</p>}
+        <Label htmlFor="phone">Telefoonnummer *</Label>
+        <Input id="phone" type="tel" required value={form.phone || ''}
+          onChange={e => { updateCustomer('phone', e.target.value); if (phoneError) setPhoneError(null); }}
+          placeholder="+32 4XX XX XX XX"
+          className={fieldErrors.phone || phoneError ? 'border-destructive' : ''} />
+        {(fieldErrors.phone || phoneError) && <p className="text-xs text-destructive mt-1">{fieldErrors.phone || phoneError}</p>}
+        <p className="text-xs text-muted-foreground mt-1">{t('checkout.phoneDisclaimer')}</p>
       </div>
 
       {/* Shipping address */}
