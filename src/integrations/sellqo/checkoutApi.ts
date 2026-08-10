@@ -74,6 +74,19 @@ export const checkoutFlowAPI = {
   getOrderBySession: (stripeSessionId: string) =>
     sellqoFetch<{ success: boolean; data: any }>(`/checkout/order?stripe_session_id=${encodeURIComponent(stripeSessionId)}`),
 
+  // NOTE: underscore path — the proxy fallback maps '/get_shipping_countries' → action 'get_shipping_countries'
+  getShippingCountries: () =>
+    sellqoFetch<{
+      success?: boolean;
+      data?: { countries?: string[]; unrestricted?: boolean; default_country?: string | null };
+      countries?: string[];
+      unrestricted?: boolean;
+      default_country?: string | null;
+    }>('/get_shipping_countries', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
+
   // NOTE: underscore path — the proxy fallback maps '/checkout/validate_vat' → action 'checkout_validate_vat'
   validateVat: (vatNumber: string) =>
     sellqoFetch<{
