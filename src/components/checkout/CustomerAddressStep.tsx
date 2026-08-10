@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCheckout } from '@/contexts/CheckoutContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { checkoutFlowAPI } from '@/integrations/sellqo/checkoutApi';
 import type { CheckoutCustomer, CheckoutAddress } from '@/integrations/sellqo/checkoutTypes';
 
 const emptyAddress: CheckoutAddress = { street: '', city: '', postal_code: '', country: 'BE', company: '' };
@@ -26,6 +27,38 @@ export default function CustomerAddressStep() {
   const [billing, setBilling] = useState<CheckoutAddress>(billingAddress || { ...emptyAddress });
   const [phoneError, setPhoneError] = useState<string | null>(null);
 
+  // B2B state
+  const [isB2B, setIsB2B] = useState<boolean>(!!customer?.is_b2b);
+  const [companyName, setCompanyName] = useState(customer?.company_name || '');
+  const [vatNumber, setVatNumber] = useState(customer?.vat_number || '');
+  const [vatStatus, setVatStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>(
+    customer?.vat_verified ? 'valid' : 'idle',
+  );
+  const [vatCountry, setVatCountry] = useState(customer?.vat_country || '');
+  const [vatCompanyName, setVatCompanyName] = useState(customer?.vat_company_name || '');
+
+  const runVatValidation = async () => {
+    const value = vatNumber.trim();
+    if (!value) { setVatStatus('idle'); return; }
+    setVatStatus('checking');
+    try {
+      const res: any = await checkoutFlowAPI.validateVat(value);
+      const data = res?.data && typeof res.data === 'object' ? res.data : res;
+      if (data?.valid === true) {
+        setVatStatus('valid');
+        setVatCountry(data.country_code || '');
+        setVatCompanyName(data.company_name || '');
+        if (!companyName.trim() && data.company_name) setCompanyName(data.company_name);
+      } else {
+        setVatStatus('invalid');
+        setVatCountry('');
+        setVatCompanyName('');
+      }
+    } catch {
+      setVatStatus('invalid');
+    }
+  };
+
   const updateCustomer = (key: keyof CheckoutCustomer, value: string) =>
     setForm(f => ({ ...f, [key]: value }));
 
@@ -36,7 +69,25 @@ export default function CustomerAddressStep() {
       return;
     }
     setPhoneError(null);
-    await saveCustomerAndAddress(form, shipping, billingSame, billingSame ? null : billing);
+
+    const customerPayload: CheckoutCustomer = isB2B
+      ? {
+          ...form,
+          is_b2b: true,
+          company_name: companyName.trim(),
+          vat_number: vatNumber.trim(),
+          vat_verified: vatStatus === 'valid',
+          vat_country: vatCountry || undefined,
+          vat_company_name: vatCompanyName || undefined,
+        }
+      : form;
+
+    const shippingPayload: CheckoutAddress =
+      isB2B && companyName.trim() && !(shipping.company || '').trim()
+        ? { ...shipping, company: companyName.trim() }
+        : shipping;
+
+    await saveCustomerAndAddress(customerPayload, shippingPayload, billingSame, billingSame ? null : billing);
   };
 
   const AddressFields = ({ prefix, addr, setAddr }: { prefix: string; addr: CheckoutAddress; setAddr: (a: CheckoutAddress) => void }) => (
@@ -119,6 +170,49 @@ export default function CustomerAddressStep() {
           className={fieldErrors.phone || phoneError ? 'border-destructive' : ''} />
         {(fieldErrors.phone || phoneError) && <p className="text-xs text-destructive mt-1">{fieldErrors.phone || phoneError}</p>}
         <p className="text-xs text-muted-foreground mt-1">{t('checkout.phoneDisclaimer')}</p>
+      </div>
+
+      {/* B2B */}
+      <div className="space-y-3">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" checked={isB2B} onChange={e => setIsB2B(e.target.checked)}
+            className="w-4 h-4 rounded border-border text-primary focus:ring-primary" />
+          <span className="text-sm">{t('checkout.b2bToggle')}</span>
+        </label>
+
+        {isB2B && (
+          <div className="space-y-3 rounded-xl border border-border p-4">
+            <div>
+              <Label htmlFor="company_name">{t('checkout.companyName')} *</Label>
+              <Input id="company_name" required value={companyName}
+                onChange={e => setCompanyName(e.target.value)} placeholder="Loveke BV" />
+            </div>
+            <div>
+              <Label htmlFor="vat_number">{t('checkout.vatNumber')}</Label>
+              <Input id="vat_number" value={vatNumber}
+                onChange={e => { setVatNumber(e.target.value); setVatStatus('idle'); }}
+                onBlur={runVatValidation}
+                placeholder="BE0123456789" />
+              {vatStatus === 'checking' && (
+                <p className="text-xs text-muted-foreground mt-1">{t('checkout.vatChecking')}</p>
+              )}
+              {vatStatus === 'valid' && (
+                <p className="text-xs text-primary mt-1">
+                  ✓ {t('checkout.vatValid')}{vatCompanyName ? ` — ${vatCompanyName}` : ''}
+                </p>
+              )}
+              {vatStatus === 'invalid' && (
+                <p className="text-xs text-destructive mt-1">✗ {t('checkout.vatInvalid')}</p>
+              )}
+              {vatStatus !== 'checking' && vatNumber.trim() !== '' && (
+                <button type="button" onClick={runVatValidation}
+                  className="text-xs underline text-muted-foreground hover:text-foreground mt-1">
+                  {t('checkout.vatRecheck')}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Shipping address */}

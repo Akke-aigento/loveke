@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useCheckout } from '@/contexts/CheckoutContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Input } from '@/components/ui/input';
 import { Tag, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
 
 export default function OrderSummary() {
-  const { items, subtotal, shippingCost, discount, total, applyDiscount, removeDiscount, currentStep } = useCheckout();
+  const { items, subtotal, shippingCost, discount, total, applyDiscount, removeDiscount, currentStep, reverseCharge, vatText } = useCheckout();
+  const { t } = useLanguage();
   const [discountCode, setDiscountCode] = useState('');
   const [isApplying, setIsApplying] = useState(false);
   const [discountError, setDiscountError] = useState('');
@@ -115,6 +117,13 @@ export default function OrderSummary() {
             <span>Totaal</span>
             <span className="text-primary">€{total.toFixed(2)}</span>
           </div>
+
+          {reverseCharge && (
+            <div className="pt-2 border-t border-border space-y-1">
+              <p className="text-xs font-medium">{t('checkout.pricesExclVat')}</p>
+              <p className="text-xs text-muted-foreground">{vatText || t('checkout.reverseChargeNotice')}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
