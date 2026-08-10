@@ -83,7 +83,16 @@
   },
   "checkout": {
     "phoneRequired": "Phone number is required",
-    "phoneDisclaimer": "Only used by our shipping partner for questions about your order or delivery."
+    "phoneDisclaimer": "Only used by our shipping partner for questions about your order or delivery.",
+    "b2bToggle": "I'm ordering as a business",
+    "companyName": "Company name",
+    "vatNumber": "VAT number",
+    "vatChecking": "Checking VAT number...",
+    "vatValid": "VAT number valid",
+    "vatInvalid": "This VAT number could not be validated. You can continue; VAT will then be charged.",
+    "vatRecheck": "Check again",
+    "reverseChargeNotice": "VAT reverse charged - intra-Community supply - art. 39bis Belgian VAT Code",
+    "pricesExclVat": "All prices are excluding VAT (net)."
   },
   "product": {
     "addToCart": "Add to cart",

@@ -83,7 +83,16 @@
   },
   "checkout": {
     "phoneRequired": "Le numéro de téléphone est obligatoire",
-    "phoneDisclaimer": "Utilisé uniquement par notre partenaire d'expédition en cas de questions sur ta commande ou livraison."
+    "phoneDisclaimer": "Utilisé uniquement par notre partenaire d'expédition en cas de questions sur ta commande ou livraison.",
+    "b2bToggle": "Je commande en tant qu'entreprise",
+    "companyName": "Nom de l'entreprise",
+    "vatNumber": "Numéro de TVA",
+    "vatChecking": "Vérification du numéro de TVA...",
+    "vatValid": "Numéro de TVA valide",
+    "vatInvalid": "Ce numéro de TVA n'a pas pu être validé. Tu peux continuer ; la TVA sera alors facturée.",
+    "vatRecheck": "Vérifier à nouveau",
+    "reverseChargeNotice": "TVA autoliquidée - livraison intracommunautaire - art. 39bis du Code TVA",
+    "pricesExclVat": "Tous les prix sont hors TVA (net)."
   },
   "product": {
     "addToCart": "Ajouter au panier",
