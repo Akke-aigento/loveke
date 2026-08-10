@@ -47,6 +47,14 @@ const initialState: CheckoutState = {
   fieldErrors: {},
 };
 
+function readVatFields(data: any) {
+  if (!data || typeof data !== 'object') return null;
+  const hasAny = data.subtotal != null || data.total != null
+    || data.reverse_charge != null || data.vat_text != null || data.vat_regime != null;
+  if (!hasAny) return null;
+  return data;
+}
+
 function extractData<T>(response: unknown): T {
   if (!response || typeof response !== 'object') return response as T;
   const r = response as Record<string, unknown>;

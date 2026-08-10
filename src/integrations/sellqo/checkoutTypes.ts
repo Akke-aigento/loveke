@@ -56,6 +56,12 @@ export interface CheckoutCustomer {
   first_name: string;
   last_name: string;
   phone?: string;
+  is_b2b?: boolean;
+  company_name?: string;
+  vat_number?: string;
+  vat_verified?: boolean;
+  vat_country?: string;
+  vat_company_name?: string;
 }
 
 export interface CheckoutAddress {
@@ -86,4 +92,7 @@ export interface CheckoutState {
   isLoading: boolean;
   errors: Record<string, string>;
   fieldErrors: Record<string, string>;
+  reverseCharge?: boolean;
+  vatText?: string | null;
+  vatRegime?: string | null;
 }

@@ -73,4 +73,19 @@ export const checkoutFlowAPI = {
 
   getOrderBySession: (stripeSessionId: string) =>
     sellqoFetch<{ success: boolean; data: any }>(`/checkout/order?stripe_session_id=${encodeURIComponent(stripeSessionId)}`),
+
+  // NOTE: underscore path — the proxy fallback maps '/checkout/validate_vat' → action 'checkout_validate_vat'
+  validateVat: (vatNumber: string) =>
+    sellqoFetch<{
+      valid?: boolean;
+      company_name?: string | null;
+      address?: string | null;
+      country_code?: string;
+      cached?: boolean;
+      success?: boolean;
+      error?: { code: string; message: string };
+    }>('/checkout/validate_vat', {
+      method: 'POST',
+      body: JSON.stringify({ vat_number: vatNumber }),
+    }),
 };
