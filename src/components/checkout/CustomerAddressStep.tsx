@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCheckout } from '@/contexts/CheckoutContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { checkoutFlowAPI } from '@/integrations/sellqo/checkoutApi';
+import { useShippingCountries } from '@/integrations/sellqo/useShippingCountries';
+import { DEFAULT_COUNTRY_CODES, localizedCountryOptions } from '@/lib/shippingRegions';
 import type { CheckoutCustomer, CheckoutAddress } from '@/integrations/sellqo/checkoutTypes';
 
-const emptyAddress: CheckoutAddress = { street: '', city: '', postal_code: '', country: 'BE', company: '' };
+const emptyAddress: CheckoutAddress = { street: '', city: '', postal_code: '', country: '', company: '' };
 
 export default function CustomerAddressStep() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const {
     saveCustomerAndAddress, isLoading, fieldErrors,
     customer, shippingAddress, billingAddress, billingSameAsShipping,
@@ -36,6 +38,27 @@ export default function CustomerAddressStep() {
   );
   const [vatCountry, setVatCountry] = useState(customer?.vat_country || '');
   const [vatCompanyName, setVatCompanyName] = useState(customer?.vat_company_name || '');
+
+  // Shipping countries come exclusively from the SellQo storefront API.
+  const { countries, unrestricted, defaultCountry, isLoading: countriesLoading } = useShippingCountries();
+
+  const countryOptions = useMemo(
+    () => localizedCountryOptions(unrestricted ? DEFAULT_COUNTRY_CODES : countries, locale),
+    [unrestricted, countries, locale],
+  );
+  const allowedCodes = useMemo(() => countryOptions.map(o => o.code), [countryOptions]);
+  const noShipping = !countriesLoading && !unrestricted && allowedCodes.length === 0;
+  const singleCountry = allowedCodes.length === 1 ? countryOptions[0] : null;
+
+  // Never leave an invalid/stale country selected.
+  useEffect(() => {
+    if (countriesLoading || allowedCodes.length === 0) return;
+    const fallback = (defaultCountry && allowedCodes.includes(defaultCountry))
+      ? defaultCountry
+      : allowedCodes[0];
+    setShipping(a => (a.country && allowedCodes.includes(a.country) ? a : { ...a, country: fallback }));
+    setBilling(a => (a.country && allowedCodes.includes(a.country) ? a : { ...a, country: fallback }));
+  }, [countriesLoading, allowedCodes, defaultCountry]);
 
   const runVatValidation = async () => {
     const value = vatNumber.trim();
@@ -116,18 +139,24 @@ export default function CustomerAddressStep() {
       </div>
       <div>
         <Label htmlFor={`${prefix}_country`}>Land *</Label>
-        <select
-          id={`${prefix}_country`}
-          value={addr.country}
-          onChange={e => setAddr({ ...addr, country: e.target.value })}
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <option value="BE">België</option>
-          <option value="NL">Nederland</option>
-          <option value="LU">Luxemburg</option>
-          <option value="DE">Duitsland</option>
-          <option value="FR">Frankrijk</option>
-        </select>
+        {countriesLoading ? (
+          <p className="text-sm text-muted-foreground">{t('checkout.loadingCountries')}</p>
+        ) : noShipping ? (
+          <p className="text-sm text-destructive">{t('checkout.noShippingAvailable')}</p>
+        ) : singleCountry ? (
+          <p className="text-sm">{t('checkout.shippingTo')}: <strong>{singleCountry.name}</strong></p>
+        ) : (
+          <select
+            id={`${prefix}_country`}
+            value={addr.country}
+            onChange={e => setAddr({ ...addr, country: e.target.value })}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {countryOptions.map(o => (
+              <option key={o.code} value={o.code}>{o.name}</option>
+            ))}
+          </select>
+        )}
       </div>
     </div>
   );
@@ -232,10 +261,14 @@ export default function CustomerAddressStep() {
         </div>
       )}
 
-      <button type="submit" disabled={isLoading}
-        className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50">
-        {isLoading ? 'Even geduld...' : 'Verder naar betaling →'}
-      </button>
+      {noShipping ? (
+        <p className="text-sm text-destructive text-center">{t('checkout.noShippingAvailable')}</p>
+      ) : (
+        <button type="submit" disabled={isLoading || countriesLoading}
+          className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50">
+          {isLoading ? 'Even geduld...' : 'Verder naar betaling →'}
+        </button>
+      )}
     </form>
   );
 }
