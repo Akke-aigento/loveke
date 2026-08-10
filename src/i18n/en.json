@@ -92,7 +92,11 @@
     "vatInvalid": "This VAT number could not be validated. You can continue; VAT will then be charged.",
     "vatRecheck": "Check again",
     "reverseChargeNotice": "VAT reverse charged - intra-Community supply - art. 39bis Belgian VAT Code",
-    "pricesExclVat": "All prices are excluding VAT (net)."
+    "pricesExclVat": "All prices are excluding VAT (net).",
+    "loadingCountries": "Loading shipping countries...",
+    "noShippingAvailable": "This shop is currently not shipping.",
+    "shippingTo": "Shipping to",
+    "countryLabel": "Country"
   },
   "product": {
     "addToCart": "Add to cart",

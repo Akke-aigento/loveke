@@ -84,3 +84,13 @@ en `reverse_charge` / `vat_text` / `vat_regime` uit de checkout/start-response, 
 server-side nog zakelijke cart bij terugkeer het formulier (toggle, bedrijfsnaam, BTW-nummer,
 ✓) en de netto totalen mét verleggingsmelding herstelt. B2C ongewijzigd: `customer` null of
 `is_b2b:false` en falsy `reverse_charge` geven identiek gedrag.
+
+## SHIP-GEO-FE-1 — Dynamische verzendlandenlijst
+De checkout bevat geen hardcoded landenlijst meer. De toegestane landen komen uit de
+storefront-api-action `get_shipping_countries` (5 min gecachet). `unrestricted:true` →
+volledige lijst uit `src/lib/shippingRegions.ts`; anders uitsluitend `countries`. Een
+ongeldig/opgeslagen land wordt automatisch naar `default_country` gecorrigeerd, één land
+toont een vast label, een lege lijst blokkeert de checkout met een melding. Landnamen via
+`Intl.DisplayNames` (NL-fallback); altijd ISO-2 naar de API. Dode componenten
+`AddressStep.tsx` en `CustomerStep.tsx` verwijderd. Geen eigen landvalidatie: de server
+blijft leidend in `checkout_shipping`.
