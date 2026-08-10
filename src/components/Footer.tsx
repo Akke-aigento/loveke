@@ -5,7 +5,7 @@ import { useLegalPages, useStorefrontSettings } from '@/integrations/sellqo/hook
 import { extractSingle } from '@/integrations/sellqo/client';
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { data: legalPages, isError: legalError } = useLegalPages();
   const { data: settingsData } = useStorefrontSettings();
   const settings = (extractSingle(settingsData) ?? settingsData) as any;
@@ -21,11 +21,13 @@ export default function Footer() {
   ].filter(s => s.url && String(s.url).trim() !== '');
 
   // Normalize legal pages from various response shapes
-  const pages: Array<{ slug: string; title: string; url?: string; enabled?: boolean }> =
+  const pages: Array<Record<string, any>> =
     Array.isArray(legalPages) ? legalPages
     : Array.isArray((legalPages as any)?.data) ? (legalPages as any).data
     : [];
-  const visibleLegal = !legalError ? pages.filter(p => p.enabled !== false) : [];
+  const visibleLegal = !legalError
+    ? pages.filter(p => p.enabled !== false && p.is_published !== false)
+    : [];
 
   return (
     <footer className="bg-foreground text-background">
@@ -82,21 +84,15 @@ export default function Footer() {
             <div>
               <h4 className="font-display text-sm mb-3">Juridisch</h4>
               <div className="flex flex-col gap-2 text-sm opacity-70 font-body">
-                {visibleLegal.map(page => {
-                  const baseUrl = page.url || `https://sellqo.app/shop/loveke/legal/${page.slug}`;
-                  const separator = baseUrl.includes('?') ? '&' : '?';
-                  return (
-                    <a
-                      key={page.slug}
-                      href={`${baseUrl}${separator}from=loveke.be`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary transition-colors"
-                    >
-                      {page.title}
-                    </a>
-                  );
-                })}
+                {visibleLegal.map(page => (
+                  <Link
+                    key={page.page_type ?? page.slug}
+                    to={`/juridisch/${page.page_type ?? page.slug}`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {page[`title_${locale}`] || page.title_nl || page.title}
+                  </Link>
+                ))}
               </div>
             </div>
           )}

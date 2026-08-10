@@ -192,5 +192,12 @@
   },
   "loading": {
     "shopNap": "Our shop is taking a nap 😴 Try again soon!"
+  },
+  "changelog": {
+    "legalPages": {
+      "title": "Legal pages on the webshop",
+      "body": "Legal pages (terms and conditions, privacy policy, cookie policy, refund and shipping policy, contact and legal notice) can now be read directly on the webshop.",
+      "type": "Bugfix"
+    }
   }
 }

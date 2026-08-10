@@ -192,5 +192,12 @@
   },
   "loading": {
     "shopNap": "Notre boutique fait une petite sieste 😴 Réessayez bientôt !"
+  },
+  "changelog": {
+    "legalPages": {
+      "title": "Pages juridiques sur la boutique",
+      "body": "Les pages juridiques (conditions générales, politique de confidentialité, politique de cookies, politique de retour et d'expédition, contact et mentions légales) sont désormais consultables directement sur la boutique.",
+      "type": "Correctif"
+    }
   }
 }
