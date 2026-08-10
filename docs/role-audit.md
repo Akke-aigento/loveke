@@ -94,3 +94,26 @@ toont een vast label, een lege lijst blokkeert de checkout met een melding. Land
 `Intl.DisplayNames` (NL-fallback); altijd ISO-2 naar de API. Dode componenten
 `AddressStep.tsx` en `CustomerStep.tsx` verwijderd. Geen eigen landvalidatie: de server
 blijft leidend in `checkout_shipping`.
+
+## MOBILE-OVERFLOW-1 — product/giftcard pagina zoomde uit op mobiel
+
+**Root cause:** de gallery-kolom is een grid-item met default `min-width:auto`. De
+thumbnail-strip (6× `w-20` + gaps ≈ 540px) kon daardoor niet krimpen en blies de kolom
+op van 294px naar 540px → container → body → document `scrollWidth` 588px bij een
+viewport van 390px. De browser schaalde daardoor de hele pagina uit. Het "uitvergrote"
+hoofdbeeld was gevolg, geen oorzaak.
+
+**Fix (2 bestanden, frontend-only):**
+- `src/pages/ProductDetail.tsx`: gallery-kolom-div → `className="min-w-0"` (strip wordt
+  nu correct horizontaal scrollbaar); `overflow-x-hidden` als vangnet op alle drie de
+  `<main>`-returns (loading, niet-gevonden, hoofd).
+- `src/components/GiftCardDetail.tsx`: `min-w-0` op het grid-item met de afbeelding en
+  `overflow-x-hidden` op de `<main>`.
+
+**Gemeten (Playwright, 390px, `/shop/unisex-tank-top`):** voor `documentElement.scrollWidth`
+588 vs clientWidth 390; na: htmlSW 390 / clientW 390 / bodySW 390. Desktop (`md:`) ongewijzigd.
+
+**Niet aangeraakt:** `index.css`, `tailwind.config.ts`, aspect-square/object-cover,
+framer-motion animaties, data-laag.
+
+**Changelog-kandidaat (niet gepubliceerd):** bugfix — "Productpagina's schalen nu correct op mobiel."
