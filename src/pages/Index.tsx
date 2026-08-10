@@ -8,7 +8,6 @@ import { motion } from 'framer-motion';
 
 // Lazy load below-the-fold components
 const StoryTeaser = lazy(() => import('@/components/StoryTeaser'));
-const ComicBanner = lazy(() => import('@/components/ComicBanner'));
 const NewsletterSignup = lazy(() => import('@/components/NewsletterSignup'));
 
 const Index = () => {
@@ -22,9 +21,6 @@ const Index = () => {
         <StoryTeaser />
       </Suspense>
       <FeaturedProducts />
-      <Suspense fallback={null}>
-        <ComicBanner />
-      </Suspense>
 
       {/* Gift Card Teaser */}
       <section className="py-12 px-4">
