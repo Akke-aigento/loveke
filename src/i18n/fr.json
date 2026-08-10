@@ -92,7 +92,11 @@
     "vatInvalid": "Ce numéro de TVA n'a pas pu être validé. Tu peux continuer ; la TVA sera alors facturée.",
     "vatRecheck": "Vérifier à nouveau",
     "reverseChargeNotice": "TVA autoliquidée - livraison intracommunautaire - art. 39bis du Code TVA",
-    "pricesExclVat": "Tous les prix sont hors TVA (net)."
+    "pricesExclVat": "Tous les prix sont hors TVA (net).",
+    "loadingCountries": "Chargement des pays de livraison...",
+    "noShippingAvailable": "Cette boutique ne livre pas pour le moment.",
+    "shippingTo": "Livraison vers",
+    "countryLabel": "Pays"
   },
   "product": {
     "addToCart": "Ajouter au panier",

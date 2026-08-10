@@ -92,7 +92,11 @@
     "vatInvalid": "Dit BTW-nummer kon niet gevalideerd worden. Je kunt gewoon doorgaan; je betaalt dan inclusief btw.",
     "vatRecheck": "Opnieuw controleren",
     "reverseChargeNotice": "Btw verlegd - intracommunautaire levering - art. 39bis WBTW",
-    "pricesExclVat": "Alle prijzen zijn exclusief btw (netto)."
+    "pricesExclVat": "Alle prijzen zijn exclusief btw (netto).",
+    "loadingCountries": "Verzendlanden laden...",
+    "noShippingAvailable": "Deze winkel verzendt momenteel niet.",
+    "shippingTo": "Verzending naar",
+    "countryLabel": "Land"
   },
   "product": {
     "addToCart": "Voeg toe aan winkelwagen",
