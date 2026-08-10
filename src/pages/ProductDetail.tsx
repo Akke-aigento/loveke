@@ -51,7 +51,7 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <main className="pt-24 pb-16 px-4 min-h-screen">
+      <main className="pt-24 pb-16 px-4 min-h-screen overflow-x-hidden">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
             <div className="aspect-square bg-muted rounded-2xl animate-pulse" />
@@ -68,7 +68,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
+      <main className="pt-24 pb-16 px-4 min-h-screen overflow-x-hidden flex items-center justify-center">
         <div className="text-center">
           <p className="font-handwritten text-2xl text-muted-foreground mb-4">Product niet gevonden 😢</p>
           <Link to="/shop" className="font-body text-primary hover:underline">← Terug naar shop</Link>
@@ -115,7 +115,7 @@ export default function ProductDetail() {
   const plainDescription = product.description?.replace(/<[^>]*>/g, '') || '';
 
   return (
-    <main className="pt-24 pb-16 px-4 min-h-screen">
+    <main className="pt-24 pb-16 px-4 min-h-screen overflow-x-hidden">
       <div className="container mx-auto max-w-6xl">
         {/* Breadcrumb */}
         <nav className="font-body text-sm text-muted-foreground mb-8">
@@ -128,7 +128,7 @@ export default function ProductDetail() {
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
           {/* Gallery */}
-          <div>
+          <div className="min-w-0">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
