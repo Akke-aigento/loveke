@@ -28,17 +28,11 @@
       "cta": "Shop for Two"
     }
   },
-  "comicBanner": {
-    "text": "📖 Recevez notre BD GRATUITEMENT avec votre première commande !",
-    "cta": "Commander maintenant →"
-  },
   "usps": {
-    "belgium": "Made in Belgium 🇧🇪",
-    "organic": "100% Coton Bio 🌿",
-    "gots": "Certifié GOTS ✅",
-    "shipping": "Livraison gratuite dès €50 📦",
-    "love": "Imprimé avec amour ❤️",
-    "comic": "BD gratuite avec 1ère commande 📖"
+    "belgium": "Marque belge 🇧🇪",
+    "organic": "Coton bio 🌿",
+    "shipping": "Livraison gratuite 📦",
+    "love": "Imprimé avec amour ❤️"
   },
   "socialWall": {
     "title": "Le Mur Loveke",
@@ -71,7 +65,7 @@
     "shipping": "Livraison",
     "returns": "Retours",
     "contact": "Contact",
-    "copyright": "© 2026 Loveke — Made with ❤️ en Belgique",
+    "copyright": "© 2026 Loveke — Made with ❤️",
     "privacy": "Confidentialité"
   },
   "cart": {
@@ -79,7 +73,7 @@
     "empty": "Votre panier est vide — c'est l'heure du shopping ! 🛒",
     "subtotal": "Sous-total",
     "shipping": "Livraison",
-    "freeShipping": "Livraison gratuite dès €50",
+    "freeShipping": "Livraison gratuite",
     "discount": "Réduction",
     "total": "Total",
     "discountPlaceholder": "Code promo",
@@ -97,9 +91,8 @@
     "outOfStock": "Épuisé",
     "sizeGuide": "Voir le guide des tailles",
     "related": "Vous aimerez aussi",
-    "belgiumMade": "Made in Belgium 🇧🇪",
+    "belgiumMade": "Marque belge 🇧🇪",
     "organicCotton": "Coton Bio 🌿",
-    "freeComic": "BD gratuite avec 1ère commande 📖",
     "sizeGuideTitle": "Guide des tailles",
     "unitCm": "cm",
     "unitInch": "pouce"
@@ -131,7 +124,7 @@
   "comic": {
     "title": "La BD",
     "subtitle": "L'histoire Loveke en bande dessinée",
-    "freeReminder": "📖 GRATUITE avec votre première commande !"
+    "freeReminder": "Découvrez l'histoire Loveke en BD 📖"
   },
   "sizeGuide": {
     "title": "Guide des tailles",

@@ -28,17 +28,11 @@
       "cta": "Shop for Two"
     }
   },
-  "comicBanner": {
-    "text": "📖 Get our comic book FREE with your first order!",
-    "cta": "Order now →"
-  },
   "usps": {
-    "belgium": "Made in Belgium 🇧🇪",
-    "organic": "100% Organic Cotton 🌿",
-    "gots": "GOTS Certified ✅",
-    "shipping": "Free shipping from €50 📦",
-    "love": "Printed with love ❤️",
-    "comic": "Free comic with 1st order 📖"
+    "belgium": "Belgian brand 🇧🇪",
+    "organic": "Organic cotton 🌿",
+    "shipping": "Free shipping 📦",
+    "love": "Printed with love ❤️"
   },
   "socialWall": {
     "title": "The Loveke Wall",
@@ -71,7 +65,7 @@
     "shipping": "Shipping",
     "returns": "Returns",
     "contact": "Contact",
-    "copyright": "© 2026 Loveke — Made with ❤️ in Belgium",
+    "copyright": "© 2026 Loveke — Made with ❤️",
     "privacy": "Privacy"
   },
   "cart": {
@@ -79,7 +73,7 @@
     "empty": "Your cart is empty — time to shop! 🛒",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
-    "freeShipping": "Free shipping from €50",
+    "freeShipping": "Free shipping",
     "discount": "Discount",
     "total": "Total",
     "discountPlaceholder": "Discount code",
@@ -97,9 +91,8 @@
     "outOfStock": "Out of stock",
     "sizeGuide": "View size guide",
     "related": "You might also like",
-    "belgiumMade": "Made in Belgium 🇧🇪",
+    "belgiumMade": "Belgian brand 🇧🇪",
     "organicCotton": "Organic Cotton 🌿",
-    "freeComic": "Free comic with 1st order 📖",
     "sizeGuideTitle": "Size guide",
     "unitCm": "cm",
     "unitInch": "inch"
@@ -131,7 +124,7 @@
   "comic": {
     "title": "The Comic",
     "subtitle": "The Loveke story as a comic book",
-    "freeReminder": "📖 FREE with your first clothing order!"
+    "freeReminder": "Discover the Loveke story in comic form 📖"
   },
   "sizeGuide": {
     "title": "Size Guide",

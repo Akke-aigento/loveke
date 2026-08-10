@@ -255,7 +255,7 @@ export default function ProductDetail() {
 
             {/* USP badges */}
             <div className="flex flex-wrap gap-2 mt-6">
-              {[t('product.belgiumMade'), t('product.organicCotton'), t('product.freeComic')].map(usp => (
+              {[t('product.belgiumMade'), t('product.organicCotton')].map(usp => (
                 <span key={usp} className="px-3 py-1 rounded-full bg-card border border-border font-body text-xs">
                   {usp}
                 </span>

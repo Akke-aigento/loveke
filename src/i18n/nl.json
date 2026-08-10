@@ -28,17 +28,11 @@
       "cta": "Shop for Two"
     }
   },
-  "comicBanner": {
-    "text": "📖 Bij je eerste bestelling krijg je ons stripverhaal GRATIS erbij!",
-    "cta": "Bestel nu →"
-  },
   "usps": {
-    "belgium": "Made in Belgium 🇧🇪",
-    "organic": "100% Biologisch Katoen 🌿",
-    "gots": "GOTS Gecertificeerd ✅",
-    "shipping": "Gratis verzending vanaf €50 📦",
-    "love": "Gedrukt met liefde ❤️",
-    "comic": "Gratis strip bij 1e bestelling 📖"
+    "belgium": "Belgisch merk 🇧🇪",
+    "organic": "Biologisch katoen 🌿",
+    "shipping": "Gratis verzending 📦",
+    "love": "Gedrukt met liefde ❤️"
   },
   "socialWall": {
     "title": "De Loveke Muur",
@@ -71,7 +65,7 @@
     "shipping": "Verzending",
     "returns": "Retourneren",
     "contact": "Contact",
-    "copyright": "© 2026 Loveke — Made with ❤️ in België",
+    "copyright": "© 2026 Loveke — Made with ❤️",
     "privacy": "Privacy"
   },
   "cart": {
@@ -79,7 +73,7 @@
     "empty": "Je winkelwagen is leeg — tijd om te shoppen! 🛒",
     "subtotal": "Subtotaal",
     "shipping": "Verzending",
-    "freeShipping": "Gratis verzending vanaf €50",
+    "freeShipping": "Gratis verzending",
     "discount": "Korting",
     "total": "Totaal",
     "discountPlaceholder": "Kortingscode",
@@ -97,9 +91,8 @@
     "outOfStock": "Uitverkocht",
     "sizeGuide": "Maatgids bekijken",
     "related": "Je vindt dit misschien ook leuk",
-    "belgiumMade": "Made in Belgium 🇧🇪",
+    "belgiumMade": "Belgisch merk 🇧🇪",
     "organicCotton": "Biologisch Katoen 🌿",
-    "freeComic": "Gratis strip bij 1e bestelling 📖",
     "sizeGuideTitle": "Maatgids",
     "unitCm": "cm",
     "unitInch": "inch"
@@ -131,7 +124,7 @@
   "comic": {
     "title": "De Strip",
     "subtitle": "Het Loveke verhaal als stripverhaal",
-    "freeReminder": "📖 GRATIS bij je eerste kledingbestelling!"
+    "freeReminder": "Ontdek het Loveke-verhaal in stripvorm 📖"
   },
   "sizeGuide": {
     "title": "Maatgids",
