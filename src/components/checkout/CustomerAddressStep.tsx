@@ -80,7 +80,7 @@ export default function CustomerAddressStep() {
           vat_country: vatCountry || undefined,
           vat_company_name: vatCompanyName || undefined,
         }
-      : form;
+      : { ...form, is_b2b: false };
 
     const shippingPayload: CheckoutAddress =
       isB2B && companyName.trim() && !(shipping.company || '').trim()

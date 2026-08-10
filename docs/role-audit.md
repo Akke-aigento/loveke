@@ -52,6 +52,12 @@ bestelling niet; de klant betaalt dan gewoon inclusief btw.
 (CART-HEAL-1), normalizer, client. B2C-flow identiek: `isB2B` default false, geen extra
 verplichte velden, geen extra calls.
 
+## B2B-CHECKOUT-1c — expliciete `is_b2b:false`
+
+Frontend stuurt nu expliciet `is_b2b:false` bij uitgevinkte zakelijk-toggle
+(defense-in-depth naast de backend-normalisatie). Alleen de `customerPayload`-constructie
+in `CustomerAddressStep.tsx#handleSubmit`.
+
 ## B2B-CHECKOUT-1b — reverse-charge totalen + line-items fix
 
 **Root cause:** (1) In `saveCustomerAndAddress` overschreef de shipping-autoselect de
