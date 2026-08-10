@@ -81,7 +81,7 @@ export default function GiftCardDetail({ product }: GiftCardDetailProps) {
   const stepLabels = ['Bedrag', 'Ontvanger', 'Bevestiging'];
 
   return (
-    <main className="pt-24 pb-16 px-4 min-h-screen">
+    <main className="pt-24 pb-16 px-4 min-h-screen overflow-x-hidden">
       <div className="container mx-auto max-w-6xl">
         {/* Breadcrumb */}
         <nav className="font-body text-sm text-muted-foreground mb-8">
@@ -97,7 +97,7 @@ export default function GiftCardDetail({ product }: GiftCardDetailProps) {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center overflow-hidden"
+            className="min-w-0 aspect-square bg-card border-3 border-foreground rounded-2xl shadow-card flex items-center justify-center overflow-hidden"
           >
             {mainImage ? (
               <img src={mainImage} alt={product.title} className="w-full h-full object-cover" />
