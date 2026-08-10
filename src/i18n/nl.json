@@ -83,7 +83,16 @@
   },
   "checkout": {
     "phoneRequired": "Telefoonnummer is verplicht",
-    "phoneDisclaimer": "Enkel gebruikt door onze verzendpartner bij vragen over je bestelling of levering."
+    "phoneDisclaimer": "Enkel gebruikt door onze verzendpartner bij vragen over je bestelling of levering.",
+    "b2bToggle": "Ik bestel zakelijk",
+    "companyName": "Bedrijfsnaam",
+    "vatNumber": "BTW-nummer",
+    "vatChecking": "BTW-nummer controleren...",
+    "vatValid": "BTW-nummer geldig",
+    "vatInvalid": "Dit BTW-nummer kon niet gevalideerd worden. Je kunt gewoon doorgaan; je betaalt dan inclusief btw.",
+    "vatRecheck": "Opnieuw controleren",
+    "reverseChargeNotice": "Btw verlegd - intracommunautaire levering - art. 39bis WBTW",
+    "pricesExclVat": "Alle prijzen zijn exclusief btw (netto)."
   },
   "product": {
     "addToCart": "Voeg toe aan winkelwagen",

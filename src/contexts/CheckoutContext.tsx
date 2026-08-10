@@ -45,7 +45,18 @@ const initialState: CheckoutState = {
   isLoading: false,
   errors: {},
   fieldErrors: {},
+  reverseCharge: false,
+  vatText: null,
+  vatRegime: null,
 };
+
+function readVatFields(data: any) {
+  if (!data || typeof data !== 'object') return null;
+  const hasAny = data.subtotal != null || data.total != null
+    || data.reverse_charge != null || data.vat_text != null || data.vat_regime != null;
+  if (!hasAny) return null;
+  return data;
+}
 
 function extractData<T>(response: unknown): T {
   if (!response || typeof response !== 'object') return response as T;
@@ -158,6 +169,19 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       // 1. Save customer
       const custResult = await checkoutFlowAPI.saveCustomer(state.cartId, customer);
       if (handleApiError(custResult)) { setLoading(false); return false; }
+
+      // 1b. B2B / reverse charge: the customer response may already return net totals
+      const custData = readVatFields(extractData<any>(custResult));
+      if (custData) {
+        setState(s => ({
+          ...s,
+          subtotal: custData.subtotal != null ? Number(custData.subtotal) : s.subtotal,
+          total: custData.total != null ? Number(custData.total) : s.total,
+          reverseCharge: !!custData.reverse_charge,
+          vatText: custData.vat_text ?? null,
+          vatRegime: custData.vat_regime ?? null,
+        }));
+      }
 
       // 2. Save address
       const addrResult = await checkoutFlowAPI.saveAddress(state.cartId, shipping, billingSame, billing);
