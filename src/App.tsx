@@ -26,6 +26,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Bedankt = lazy(() => import("./pages/Bedankt"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const QRPayment = lazy(() => import("./pages/QRPayment"));
+const LegalPage = lazy(() => import("./pages/LegalPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -95,6 +96,7 @@ const App = () => (
                 <Route path="/checkout/qr-betaling" element={<QRPayment />} />
                 <Route path="/bedankt" element={<Bedankt />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/juridisch/:slug" element={<LegalPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
