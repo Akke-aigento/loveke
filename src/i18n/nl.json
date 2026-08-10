@@ -192,5 +192,12 @@
   },
   "loading": {
     "shopNap": "Onze winkel doet even een dutje 😴 Probeer het zo opnieuw!"
+  },
+  "changelog": {
+    "legalPages": {
+      "title": "Juridische pagina's op de webshop",
+      "body": "Juridische pagina's (algemene voorwaarden, privacybeleid, cookiebeleid, retour- en verzendbeleid, contact en juridische kennisgeving) zijn nu rechtstreeks raadpleegbaar op de webshop.",
+      "type": "Bugfix"
+    }
   }
 }

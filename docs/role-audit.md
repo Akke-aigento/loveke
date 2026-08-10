@@ -117,3 +117,30 @@ hoofdbeeld was gevolg, geen oorzaak.
 framer-motion animaties, data-laag.
 
 **Changelog-kandidaat (niet gepubliceerd):** bugfix — "Productpagina's schalen nu correct op mobiel."
+
+## LEGAL-ROUTE-1 — juridische pagina's renderen op de site zelf
+
+**Root cause:** de footer bouwde legal-links als externe URL
+`https://sellqo.app/shop/loveke/legal/{page.slug}` met `?from=loveke.be`. Het veld `slug`
+bestaat niet op de legal-records (die hebben `page_type`), dus elke href werd
+`.../legal/undefined` → alle juridische links waren dood. Daarnaast bestond er geen enkele
+route die de al beschikbare content uit `useLegalPages()` (`/legal` via `sellqo-proxy`)
+kon renderen.
+
+**Fix (frontend-only, geen DB-schrijfacties):**
+- Nieuw `src/pages/LegalPage.tsx`: leest `:slug`, matcht op `page_type`, kiest
+  `title_{locale}`/`content_{locale}` met NL-fallback, rendert HTML in een `prose`-container,
+  spinner tijdens laden, nette 404 bij ontbrekend record of `legalError`, en zet
+  `document.title` op `meta_title_{locale}` → `title_{locale}` → `title_nl`.
+- `src/App.tsx`: lazy route `/juridisch/:slug` vóór de catch-all `*`.
+- `src/components/Footer.tsx`: interne `<Link to={/juridisch/${page.page_type}}>`, titel via
+  `title_{locale}` → `title_nl` → `title`, key = `page_type`; oude `slug`/`url`/`baseUrl`/
+  `from=loveke.be`-logica verwijderd, filter nu op `enabled !== false && is_published !== false`.
+- `tailwind.config.ts`: `@tailwindcss/typography` (reeds als dependency aanwezig) geregistreerd
+  voor de `prose`-stijl.
+
+**Niet aangeraakt:** overige routes, products-data, proxy/backend, i18n buiten de nieuwe
+changelog-keys.
+
+**Changelog (tenant-zichtbaar, bugfix):** i18n-keys `changelog.legalPages.*` in NL/EN/FR
+(app-talen) + DE-tekst in `docs/CHANGELOG.md`.
