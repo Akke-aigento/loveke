@@ -45,23 +45,34 @@ export default function OrderSummary() {
       {/* Items - always visible on desktop, toggled on mobile */}
       <div className={`${isExpanded ? 'block' : 'hidden'} md:block`}>
         <div className="space-y-3 mb-4">
-          {items.map(item => (
+          {items.map((rawItem) => {
+            const item = rawItem as typeof rawItem & {
+              name?: string; unit_price?: number | string; line_total?: number | string; variant?: string;
+            };
+            const qty = Number(item.quantity) || 1;
+            const lineTotal = item.line_total != null
+              ? Number(item.line_total)
+              : (Number(item.price ?? item.unit_price) || 0) * qty;
+            return (
             <div key={item.id} className="flex gap-3">
               <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center text-lg flex-shrink-0 overflow-hidden relative">
                 {item.image ? (
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                  <img src={item.image} alt={item.title ?? item.name ?? 'Product'} className="w-full h-full object-cover" />
                 ) : '🧡'}
                 <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {item.quantity}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{item.title}</p>
-                {item.variant_title && <p className="text-xs text-muted-foreground">{item.variant_title}</p>}
+                <p className="text-sm font-medium truncate">{item.title ?? item.name ?? 'Product'}</p>
+                {(item.variant_title ?? item.variant) && (
+                  <p className="text-xs text-muted-foreground">{item.variant_title ?? item.variant}</p>
+                )}
               </div>
-              <span className="text-sm font-semibold whitespace-nowrap">€{((Number(item.price) || 0) * (Number(item.quantity) || 1)).toFixed(2)}</span>
+              <span className="text-sm font-semibold whitespace-nowrap">€{lineTotal.toFixed(2)}</span>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Discount code */}
