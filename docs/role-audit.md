@@ -51,3 +51,22 @@ bestelling niet; de klant betaalt dan gewoon inclusief btw.
 **Niet aangeraakt:** SellQo-backend, `supabase/functions/sellqo-proxy`, cart-hooks
 (CART-HEAL-1), normalizer, client. B2C-flow identiek: `isB2B` default false, geen extra
 verplichte velden, geen extra calls.
+
+## B2B-CHECKOUT-1b — reverse-charge totalen + line-items fix
+
+**Root cause:** (1) In `saveCustomerAndAddress` overschreef de shipping-autoselect de
+netto-total uit de customer-response met `Number(shippingData?.total) || (state.subtotal + shippingCost)`,
+waarbij `state.subtotal` stale/bruto was → subtotaal netto (€22,31) maar totaal bruto (€26,99).
+(2) `OrderSummary` las `item.price`/`item.title`, terwijl de backend-items (`buildCartResponse`)
+`unit_price`, `line_total` en `name` leveren → line-item €0,00.
+
+**Fix (frontend-only):** nieuwe helper `readCartTotals()`; de server-response
+(shipping- resp. customer-response) is nu bron van waarheid voor `subtotal`, `total`,
+`shipping_cost`, `items`, `reverse_charge`, `vat_text`, `vat_regime` — in de autoselect-tak,
+de multi-methode-tak (stap 3) en in `selectShipping`. `OrderSummary` toont het line-bedrag
+via `line_total`, met fallback `price ?? unit_price × quantity`, en titel/variant via
+`title ?? name` / `variant_title ?? variant`.
+
+**Niet aangeraakt:** SellQo-backend (rekent correct), `sellqo-proxy`, cart-hooks,
+normalizer, client. B2C ongewijzigd: zonder verlegging vallen alle waarden terug op de
+bestaande state en was `line_total` al aanwezig.

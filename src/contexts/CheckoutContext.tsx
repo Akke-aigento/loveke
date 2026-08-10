@@ -65,6 +65,14 @@ function extractData<T>(response: unknown): T {
   return response as T;
 }
 
+function readCartTotals(data: any) {
+  if (!data || typeof data !== 'object') return null;
+  const has = ['subtotal', 'total', 'shipping_cost', 'items', 'reverse_charge', 'vat_text', 'vat_regime']
+    .some(k => data[k] != null);
+  if (!has) return null;
+  return data;
+}
+
 export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<CheckoutState>(initialState);
   const navigate = useNavigate();
@@ -189,44 +197,66 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
 
       // 3. Auto-select shipping if only 1 method
       let shippingCost = 0;
-      let newTotal = state.subtotal;
       let selectedShippingMethod: string | null = null;
+      let shippingData: any = null;
 
       if (state.availableShippingMethods.length === 1) {
         const method = state.availableShippingMethods[0];
         const shippingResult = await checkoutFlowAPI.selectShipping(state.cartId, method.id);
-        const shippingData = extractData<any>(shippingResult);
-        shippingCost = Number(shippingData?.shipping_cost) || Number(method.price) || 0;
-        newTotal = Number(shippingData?.total) || (state.subtotal + shippingCost);
+        shippingData = extractData<any>(shippingResult);
+        const st = readCartTotals(shippingData);
+        shippingCost = st?.shipping_cost != null
+          ? Number(st.shipping_cost)
+          : (Number(shippingData?.shipping_cost) || Number(method.price) || 0);
         selectedShippingMethod = method.id;
       } else if (state.availableShippingMethods.length > 1) {
         // Multiple shipping methods — show shipping step (step 3) before payment
-        setState(s => ({
+        setState(s => {
+          const src: any = custData || {};
+          return {
+            ...s,
+            customer,
+            shippingAddress: shipping,
+            billingAddress: billingSame ? null : (billing || null),
+            billingSameAsShipping: billingSame,
+            subtotal: src.subtotal != null ? Number(src.subtotal) : s.subtotal,
+            total: src.total != null ? Number(src.total) : s.total,
+            items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
+            reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
+            vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
+            vatRegime: src.vat_regime !== undefined ? (src.vat_regime ?? null) : s.vatRegime,
+            currentStep: 3,
+            isLoading: false,
+            fieldErrors: {},
+          };
+        });
+        return true;
+      }
+
+      setState(s => {
+        const src: any = readCartTotals(shippingData) || {};
+        const nextSubtotal = src.subtotal != null ? Number(src.subtotal) : s.subtotal;
+        const nextShipping = src.shipping_cost != null ? Number(src.shipping_cost) : shippingCost;
+        const nextTotal = src.total != null ? Number(src.total) : (nextSubtotal + nextShipping);
+        return {
           ...s,
           customer,
           shippingAddress: shipping,
           billingAddress: billingSame ? null : (billing || null),
           billingSameAsShipping: billingSame,
-          currentStep: 3,
+          selectedShippingMethod,
+          subtotal: nextSubtotal,
+          shippingCost: nextShipping,
+          total: nextTotal,
+          items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
+          reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
+          vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
+          vatRegime: src.vat_regime !== undefined ? (src.vat_regime ?? null) : s.vatRegime,
+          currentStep: 2, // Go to payment
           isLoading: false,
           fieldErrors: {},
-        }));
-        return true;
-      }
-
-      setState(s => ({
-        ...s,
-        customer,
-        shippingAddress: shipping,
-        billingAddress: billingSame ? null : (billing || null),
-        billingSameAsShipping: billingSame,
-        selectedShippingMethod,
-        shippingCost,
-        total: newTotal,
-        currentStep: 2, // Go to payment
-        isLoading: false,
-        fieldErrors: {},
-      }));
+        };
+      });
       return true;
     } catch {
       toast.error('Verbinding onderbroken. Probeer opnieuw.');
@@ -242,14 +272,25 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       const result = await checkoutFlowAPI.selectShipping(state.cartId, methodId);
       if (handleApiError(result)) { setLoading(false); return false; }
       const data = extractData<any>(result);
-      setState(s => ({
-        ...s,
-        selectedShippingMethod: methodId,
-        shippingCost: Number(data?.shipping_cost) || 0,
-        total: Number(data?.total) || s.total,
-        currentStep: 2, // Go to payment
-        isLoading: false,
-      }));
+      setState(s => {
+        const src: any = readCartTotals(data) || {};
+        const nextSubtotal = src.subtotal != null ? Number(src.subtotal) : s.subtotal;
+        const nextShipping = src.shipping_cost != null ? Number(src.shipping_cost) : 0;
+        const nextTotal = src.total != null ? Number(src.total) : (nextSubtotal + nextShipping);
+        return {
+          ...s,
+          selectedShippingMethod: methodId,
+          subtotal: nextSubtotal,
+          shippingCost: nextShipping,
+          total: nextTotal,
+          items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
+          reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
+          vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
+          vatRegime: src.vat_regime !== undefined ? (src.vat_regime ?? null) : s.vatRegime,
+          currentStep: 2, // Go to payment
+          isLoading: false,
+        };
+      });
       return true;
     } catch {
       toast.error('Verbinding onderbroken. Probeer opnieuw.');
