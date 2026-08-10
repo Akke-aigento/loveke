@@ -6,10 +6,8 @@ export default function USPMarquee() {
   const usps = [
     t('usps.belgium'),
     t('usps.organic'),
-    t('usps.gots'),
     t('usps.shipping'),
     t('usps.love'),
-    t('usps.comic'),
   ];
 
   const doubled = [...usps, ...usps];
