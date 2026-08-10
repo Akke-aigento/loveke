@@ -144,13 +144,22 @@ function storeCartId(cartId: string) {
   }
 }
 
+function clearStoredCartId() {
+  try { localStorage.removeItem(CART_STORAGE_KEY); } catch { /* ignore */ }
+}
+
 export function useCartQuery() {
   const cartId = getStoredCartId();
   return useQuery({
     queryKey: sellqoKeys.cart(cartId || ''),
     queryFn: async () => {
       const result = await cartAPI.get(cartId!);
-      const raw = extractSingle<Cart>(result) || result;
+      const raw = extractSingle<Cart>(result);
+      if (!raw) {
+        // Cart bestaat niet meer (verlopen/verwijderd) → opruimen, lege mand tonen.
+        clearStoredCartId();
+        return normalizeCart({ id: '', items: [] });
+      }
       return normalizeCart(raw);
     },
     enabled: !!cartId,
@@ -183,12 +192,29 @@ export function useAddToCart() {
         const newCart = await createCart.mutateAsync();
         activeCartId = newCart.id;
       }
-      const result = await cartAPI.addItem(activeCartId, item);
-      const raw = extractSingle<Cart>(result) || result;
+
+      let result = await cartAPI.addItem(activeCartId, item);
+      let raw = extractSingle<Cart>(result);
+
+      // Self-heal: opgeslagen cart bleek dood (backend gaf data:null) → verse cart + retry (max 1x)
+      if (!raw) {
+        clearStoredCartId();
+        const newCart = await createCart.mutateAsync();
+        activeCartId = newCart.id;
+        result = await cartAPI.addItem(activeCartId, item);
+        raw = extractSingle<Cart>(result);
+      }
+
+      if (!raw) {
+        // Nog steeds niks bruikbaars terug → duidelijke fout i.p.v. stille lege mand.
+        throw new Error('CART_ADD_FAILED');
+      }
       return normalizeCart(raw);
     },
     onSuccess: (cart) => {
+      if (cart.id) storeCartId(cart.id);
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
+      queryClient.invalidateQueries({ queryKey: sellqoKeys.cart(cart.id) });
     },
   });
 }
