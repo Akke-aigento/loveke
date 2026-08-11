@@ -27,19 +27,23 @@ export default function Shop() {
 
   // Safely extract and normalize products with fallback
   const products: Product[] = useMemo(() => {
+    const applySort = (list: Product[]) => {
+      if (sort === 'price-asc') return [...list].sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+      if (sort === 'price-desc') return [...list].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+      return list;
+    };
+
     if (!productsError && productsData) {
       const rawProducts = extractArray(productsData);
       if (rawProducts.length > 0) {
-        return normalizeProducts(rawProducts);
+        return applySort(normalizeProducts(rawProducts));
       }
     }
     // Fallback to mock data
     let filtered = activeCollection === 'all'
       ? MOCK_PRODUCTS
       : MOCK_PRODUCTS.filter(p => p.collection === activeCollection);
-    if (sort === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
-    if (sort === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
-    return filtered as unknown as Product[];
+    return applySort(filtered as unknown as Product[]);
   }, [productsData, productsError, activeCollection, sort]);
 
   // Safely extract and normalize collections with fallback
