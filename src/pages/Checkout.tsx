@@ -21,6 +21,11 @@ function CheckoutContent() {
     closeCart();
   }, [closeCart]);
 
+  // Bij elke stapwissel terug naar boven scrollen (mobiel bleef anders halverwege staan).
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [currentStep]);
+
   useEffect(() => {
     const storedCartId = localStorage.getItem('sellqo_cart_id');
     if (!storedCartId || !items.length) {
