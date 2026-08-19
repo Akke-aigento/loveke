@@ -10,6 +10,82 @@ import type { CheckoutCustomer, CheckoutAddress } from '@/integrations/sellqo/ch
 
 const emptyAddress: CheckoutAddress = { street: '', city: '', postal_code: '', country: '', company: '' };
 
+type CountryOption = { code: string; name: string };
+
+/**
+ * Module-level component: mag NOOIT binnen CustomerAddressStep gedefinieerd worden.
+ * Anders wordt bij elke toetsaanslag een nieuw componenttype gemaakt -> React unmount/remount
+ * -> input verliest focus -> mobiel toetsenbord klapt dicht na elk karakter.
+ */
+function AddressFields({
+  prefix, addr, setAddr, fieldErrors, countriesLoading, noShipping, singleCountry, countryOptions, t,
+}: {
+  prefix: string;
+  addr: CheckoutAddress;
+  setAddr: React.Dispatch<React.SetStateAction<CheckoutAddress>>;
+  fieldErrors: Record<string, string>;
+  countriesLoading: boolean;
+  noShipping: boolean;
+  singleCountry: CountryOption | null;
+  countryOptions: CountryOption[];
+  t: (k: string) => string;
+}) {
+  const ac = prefix === 'billing' ? 'billing' : 'shipping';
+  return (
+    <div className="space-y-3">
+      <div>
+        <Label htmlFor={`${prefix}_company`}>Bedrijf (optioneel)</Label>
+        <Input id={`${prefix}_company`} name={`${prefix}_company`} autoComplete="organization"
+          value={addr.company || ''} onChange={e => setAddr(a => ({ ...a, company: e.target.value }))} placeholder="Bedrijfsnaam" />
+      </div>
+      <div>
+        <Label htmlFor={`${prefix}_street`}>Straat + huisnummer *</Label>
+        <Input id={`${prefix}_street`} name={`${prefix}_street`} required autoComplete={`${ac} street-address`}
+          value={addr.street} onChange={e => setAddr(a => ({ ...a, street: e.target.value }))} placeholder="Kerkstraat 1"
+          className={fieldErrors[`${prefix}_street`] || fieldErrors.street ? 'border-destructive' : ''} />
+        {(fieldErrors[`${prefix}_street`] || fieldErrors.street) && <p className="text-xs text-destructive mt-1">{fieldErrors[`${prefix}_street`] || fieldErrors.street}</p>}
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        <div>
+          <Label htmlFor={`${prefix}_postal`}>Postcode *</Label>
+          <Input id={`${prefix}_postal`} name={`${prefix}_postal_code`} required autoComplete={`${ac} postal-code`} inputMode="numeric"
+            value={addr.postal_code} onChange={e => setAddr(a => ({ ...a, postal_code: e.target.value }))} placeholder="1000"
+            className={fieldErrors[`${prefix}_postal_code`] || fieldErrors.postal_code ? 'border-destructive' : ''} />
+        </div>
+        <div className="col-span-2">
+          <Label htmlFor={`${prefix}_city`}>Gemeente *</Label>
+          <Input id={`${prefix}_city`} name={`${prefix}_city`} required autoComplete={`${ac} address-level2`}
+            value={addr.city} onChange={e => setAddr(a => ({ ...a, city: e.target.value }))} placeholder="Brussel"
+            className={fieldErrors[`${prefix}_city`] || fieldErrors.city ? 'border-destructive' : ''} />
+        </div>
+      </div>
+      <div>
+        <Label htmlFor={`${prefix}_country`}>Land *</Label>
+        {countriesLoading ? (
+          <p className="text-sm text-muted-foreground">{t('checkout.loadingCountries')}</p>
+        ) : noShipping ? (
+          <p className="text-sm text-destructive">{t('checkout.noShippingAvailable')}</p>
+        ) : singleCountry ? (
+          <p className="text-sm">{t('checkout.shippingTo')}: <strong>{singleCountry.name}</strong></p>
+        ) : (
+          <select
+            id={`${prefix}_country`}
+            name={`${prefix}_country`}
+            autoComplete={`${ac} country`}
+            value={addr.country}
+            onChange={e => setAddr(a => ({ ...a, country: e.target.value }))}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {countryOptions.map(o => (
+              <option key={o.code} value={o.code}>{o.name}</option>
+            ))}
+          </select>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function CustomerAddressStep() {
   const { t, locale } = useLanguage();
   const {
