@@ -150,7 +150,7 @@ export function normalizeCart(raw: any): Cart {
     tax: raw.tax ?? 0,
     total: raw.total ?? subtotal,
     currency: raw.currency || 'EUR',
-    discount_code: raw.discount_code ?? undefined,
+    discount_code: raw.discount_code ?? (Array.isArray(raw.discount_codes) ? raw.discount_codes[0] : undefined) ?? undefined,
     free_shipping_eligible: raw.free_shipping_eligible ?? undefined,
     free_shipping_remaining: raw.free_shipping_remaining ?? undefined,
   };
