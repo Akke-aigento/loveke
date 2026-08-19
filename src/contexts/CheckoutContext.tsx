@@ -385,8 +385,18 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   const applyDiscountFn = useCallback(async (code: string): Promise<boolean> => {
     if (!state.cartId) return false;
     try {
-      const result = await checkoutFlowAPI.applyDiscount(state.cartId, code);
-      if (handleApiError(result)) return false;
+      const typed = code.trim();
+      const attempts = [typed, typed.toUpperCase(), typed.toLowerCase()]
+        .filter((v, i, arr) => v && arr.indexOf(v) === i);
+      let result: any = null;
+      let ok = false;
+      for (const attempt of attempts) {
+        try {
+          result = await checkoutFlowAPI.applyDiscount(state.cartId, attempt);
+          if (result && (result as any).success !== false && !(result as any).error) { ok = true; break; }
+        } catch { /* volgende variant proberen */ }
+      }
+      if (!ok) { if (result) handleApiError(result); return false; }
       const data = extractData<any>(result);
       const firstDiscount = Array.isArray(data?.applied_discounts) && data.applied_discounts.length > 0
         ? data.applied_discounts[0]
