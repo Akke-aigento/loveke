@@ -189,62 +189,16 @@ export default function CustomerAddressStep() {
     await saveCustomerAndAddress(customerPayload, shippingPayload, billingSame, billingSame ? null : billing);
   };
 
-  const AddressFields = ({ prefix, addr, setAddr }: { prefix: string; addr: CheckoutAddress; setAddr: (a: CheckoutAddress) => void }) => (
-    <div className="space-y-3">
-      <div>
-        <Label htmlFor={`${prefix}_company`}>Bedrijf (optioneel)</Label>
-        <Input id={`${prefix}_company`} value={addr.company || ''} onChange={e => setAddr({ ...addr, company: e.target.value })} placeholder="Bedrijfsnaam" />
-      </div>
-      <div>
-        <Label htmlFor={`${prefix}_street`}>Straat + huisnummer *</Label>
-        <Input id={`${prefix}_street`} required value={addr.street} onChange={e => setAddr({ ...addr, street: e.target.value })} placeholder="Kerkstraat 1"
-          className={fieldErrors[`${prefix}_street`] || fieldErrors.street ? 'border-destructive' : ''} />
-        {(fieldErrors[`${prefix}_street`] || fieldErrors.street) && <p className="text-xs text-destructive mt-1">{fieldErrors[`${prefix}_street`] || fieldErrors.street}</p>}
-      </div>
-      <div className="grid grid-cols-3 gap-3">
-        <div>
-          <Label htmlFor={`${prefix}_postal`}>Postcode *</Label>
-          <Input id={`${prefix}_postal`} required value={addr.postal_code} onChange={e => setAddr({ ...addr, postal_code: e.target.value })} placeholder="1000"
-            className={fieldErrors[`${prefix}_postal_code`] || fieldErrors.postal_code ? 'border-destructive' : ''} />
-        </div>
-        <div className="col-span-2">
-          <Label htmlFor={`${prefix}_city`}>Gemeente *</Label>
-          <Input id={`${prefix}_city`} required value={addr.city} onChange={e => setAddr({ ...addr, city: e.target.value })} placeholder="Brussel"
-            className={fieldErrors[`${prefix}_city`] || fieldErrors.city ? 'border-destructive' : ''} />
-        </div>
-      </div>
-      <div>
-        <Label htmlFor={`${prefix}_country`}>Land *</Label>
-        {countriesLoading ? (
-          <p className="text-sm text-muted-foreground">{t('checkout.loadingCountries')}</p>
-        ) : noShipping ? (
-          <p className="text-sm text-destructive">{t('checkout.noShippingAvailable')}</p>
-        ) : singleCountry ? (
-          <p className="text-sm">{t('checkout.shippingTo')}: <strong>{singleCountry.name}</strong></p>
-        ) : (
-          <select
-            id={`${prefix}_country`}
-            value={addr.country}
-            onChange={e => setAddr({ ...addr, country: e.target.value })}
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {countryOptions.map(o => (
-              <option key={o.code} value={o.code}>{o.name}</option>
-            ))}
-          </select>
-        )}
-      </div>
-    </div>
-  );
+  const addressFieldProps = { fieldErrors, countriesLoading, noShipping, singleCountry, countryOptions, t };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5" autoComplete="on">
       {/* Customer details */}
       <h2 className="font-display text-xl">Jouw gegevens</h2>
 
       <div>
         <Label htmlFor="email">E-mailadres *</Label>
-        <Input id="email" type="email" required value={form.email}
+        <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required value={form.email}
           onChange={e => updateCustomer('email', e.target.value)} placeholder="jouw@email.be"
           className={fieldErrors.email ? 'border-destructive' : ''} />
         {fieldErrors.email && <p className="text-xs text-destructive mt-1">{fieldErrors.email}</p>}
@@ -253,14 +207,14 @@ export default function CustomerAddressStep() {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <Label htmlFor="first_name">Voornaam *</Label>
-          <Input id="first_name" required value={form.first_name}
+          <Input id="first_name" name="given-name" autoComplete="given-name" required value={form.first_name}
             onChange={e => updateCustomer('first_name', e.target.value)} placeholder="Jan"
             className={fieldErrors.first_name ? 'border-destructive' : ''} />
           {fieldErrors.first_name && <p className="text-xs text-destructive mt-1">{fieldErrors.first_name}</p>}
         </div>
         <div>
           <Label htmlFor="last_name">Achternaam *</Label>
-          <Input id="last_name" required value={form.last_name}
+          <Input id="last_name" name="family-name" autoComplete="family-name" required value={form.last_name}
             onChange={e => updateCustomer('last_name', e.target.value)} placeholder="Janssen"
             className={fieldErrors.last_name ? 'border-destructive' : ''} />
           {fieldErrors.last_name && <p className="text-xs text-destructive mt-1">{fieldErrors.last_name}</p>}
@@ -269,7 +223,7 @@ export default function CustomerAddressStep() {
 
       <div>
         <Label htmlFor="phone">Telefoonnummer *</Label>
-        <Input id="phone" type="tel" required value={form.phone || ''}
+        <Input id="phone" name="tel" type="tel" autoComplete="tel" inputMode="tel" required value={form.phone || ''}
           onChange={e => { updateCustomer('phone', e.target.value); if (phoneError) setPhoneError(null); }}
           placeholder="+32 4XX XX XX XX"
           className={fieldErrors.phone || phoneError ? 'border-destructive' : ''} />
@@ -289,7 +243,7 @@ export default function CustomerAddressStep() {
           <div className="space-y-3 rounded-xl border border-border p-4">
             <div>
               <Label htmlFor="company_name">{t('checkout.companyName')} *</Label>
-              <Input id="company_name" required value={companyName}
+              <Input id="company_name" name="organization" autoComplete="organization" required value={companyName}
                 onChange={e => setCompanyName(e.target.value)} placeholder="Loveke BV" />
             </div>
             <div>
@@ -322,7 +276,7 @@ export default function CustomerAddressStep() {
 
       {/* Shipping address */}
       <h2 className="font-display text-xl pt-4 border-t border-border">Bezorgadres</h2>
-      <AddressFields prefix="shipping" addr={shipping} setAddr={setShipping} />
+      <AddressFields prefix="shipping" addr={shipping} setAddr={setShipping} {...addressFieldProps} />
 
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={billingSame} onChange={e => setBillingSame(e.target.checked)}
@@ -333,7 +287,7 @@ export default function CustomerAddressStep() {
       {!billingSame && (
         <div className="pt-2 border-t border-border">
           <h3 className="font-display text-lg mb-3">Factuuradres</h3>
-          <AddressFields prefix="billing" addr={billing} setAddr={setBilling} />
+          <AddressFields prefix="billing" addr={billing} setAddr={setBilling} {...addressFieldProps} />
         </div>
       )}
 
