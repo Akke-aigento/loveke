@@ -312,14 +312,31 @@ export function useApplyDiscount() {
     mutationFn: async (code: string) => {
       const cartId = getStoredCartId();
       if (!cartId) throw new Error('No cart found');
-      const result = code
-        ? await cartAPI.applyDiscount(cartId, code)
-        : await cartAPI.removeDiscount(cartId);
+      let result;
+      if (code) {
+        const typed = code.trim();
+        try {
+          result = await cartAPI.applyDiscount(cartId, typed);
+        } catch (err) {
+          // Backend-matching is hoofdlettergevoelig: probeer de genormaliseerde varianten.
+          const variants = [typed.toUpperCase(), typed.toLowerCase()].filter(v => v !== typed);
+          let lastErr = err;
+          result = undefined;
+          for (const variant of variants) {
+            try { result = await cartAPI.applyDiscount(cartId, variant); break; }
+            catch (e) { lastErr = e; }
+          }
+          if (!result) throw lastErr;
+        }
+      } else {
+        result = await cartAPI.removeDiscount(cartId);
+      }
       const raw = extractSingle<Cart>(result) || result;
       return normalizeCart(raw);
     },
     onSuccess: (cart) => {
       queryClient.setQueryData(sellqoKeys.cart(cart.id), cart);
+      queryClient.invalidateQueries({ queryKey: ['sellqo', 'cart'] });
     },
   });
 }
