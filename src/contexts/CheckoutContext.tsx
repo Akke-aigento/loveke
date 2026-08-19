@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -80,6 +80,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
 
   const setLoading = (isLoading: boolean) => setState(s => ({ ...s, isLoading }));
   const setFieldErrors = (fieldErrors: Record<string, string>) => setState(s => ({ ...s, fieldErrors }));
+  const redirectingRef = useRef(false);
 
   // PAY-BACK-1: when the shopper returns from an external payment page (browser back /
   // bfcache restore), the page is restored with isLoading still true — which keeps every
@@ -87,7 +88,13 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unlock = () => setState(s => (s.isLoading ? { ...s, isLoading: false } : s));
     const onPageShow = (e: PageTransitionEvent) => { if (e.persisted) unlock(); };
-    const onVisibility = () => { if (document.visibilityState === 'visible') unlock(); };
+    const onVisibility = () => {
+      // only after we sent the shopper to an external payment page
+      if (document.visibilityState === 'visible' && redirectingRef.current) {
+        redirectingRef.current = false;
+        unlock();
+      }
+    };
     window.addEventListener('pageshow', onPageShow);
     window.addEventListener('popstate', unlock);
     document.addEventListener('visibilitychange', onVisibility);
@@ -331,6 +338,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
 
       switch (data.payment_type) {
         case 'redirect':
+          redirectingRef.current = true;
           window.location.href = data.checkout_url;
           break;
         case 'manual':
@@ -361,6 +369,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           break;
         default:
           if (data.checkout_url) {
+            redirectingRef.current = true;
             window.location.href = data.checkout_url;
           } else {
             toast.error('Onbekende betaalmethode. Neem contact op.');
