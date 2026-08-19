@@ -318,13 +318,26 @@ export function useApplyDiscount() {
         try {
           result = await cartAPI.applyDiscount(cartId, typed);
         } catch (err) {
+          // Code is al actief op deze cart → geen fout tonen, gewoon de cart verversen.
+          if (/al toegepast|already applied/i.test(String((err as Error)?.message || ''))) {
+            const current = await cartAPI.get(cartId);
+            const rawCart = extractSingle<Cart>(current) || current;
+            return normalizeCart(rawCart);
+          }
           // Backend-matching is hoofdlettergevoelig: probeer de genormaliseerde varianten.
           const variants = [typed.toUpperCase(), typed.toLowerCase()].filter(v => v !== typed);
           let lastErr = err;
           result = undefined;
           for (const variant of variants) {
             try { result = await cartAPI.applyDiscount(cartId, variant); break; }
-            catch (e) { lastErr = e; }
+            catch (e) {
+              if (/al toegepast|already applied/i.test(String((e as Error)?.message || ''))) {
+                const current = await cartAPI.get(cartId);
+                const rawCart = extractSingle<Cart>(current) || current;
+                return normalizeCart(rawCart);
+              }
+              lastErr = e;
+            }
           }
           if (!result) throw lastErr;
         }
