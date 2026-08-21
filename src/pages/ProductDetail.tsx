@@ -29,6 +29,7 @@ export default function ProductDetail() {
   const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
   const { data: apiRelatedData } = useRelatedProducts(slug || '');
   const { data: reviewsData } = useProductReviews(slug || '');
+  const { data: allProductsData } = useProducts({});
 
   // Extract reviews
   const reviewsRaw = (reviewsData as any)?.data ?? reviewsData ?? {};
