@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
-import { useProduct, useRelatedProducts, useProductReviews } from '@/integrations/sellqo/hooks';
+import { useProduct, useRelatedProducts, useProductReviews, useProducts } from '@/integrations/sellqo/hooks';
 import { extractSingle, extractArray } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
