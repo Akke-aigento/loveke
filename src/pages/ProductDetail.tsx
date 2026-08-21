@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSellQoCart } from '@/integrations/sellqo/CartContext';
-import { useProduct, useRelatedProducts, useProductReviews } from '@/integrations/sellqo/hooks';
+import { useProduct, useRelatedProducts, useProductReviews, useProducts } from '@/integrations/sellqo/hooks';
 import { extractSingle, extractArray } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import { MOCK_PRODUCTS } from '@/lib/sellqo';
@@ -29,6 +29,7 @@ export default function ProductDetail() {
   const { data: apiProductData, isLoading, isError } = useProduct(slug || '');
   const { data: apiRelatedData } = useRelatedProducts(slug || '');
   const { data: reviewsData } = useProductReviews(slug || '');
+  const { data: allProductsData } = useProducts({});
 
   // Extract reviews
   const reviewsRaw = (reviewsData as any)?.data ?? reviewsData ?? {};
@@ -43,11 +44,19 @@ export default function ProductDetail() {
   // Fallback to mock data
   const product: Product | undefined = apiProduct || (MOCK_PRODUCTS.find(p => p.slug === slug) as unknown as Product | undefined);
 
-  // Related products
+  // Related products — the backend's /related endpoint currently echoes the product
+  // itself, so fall back to real catalogue products (same collection first).
   const rawRelated = extractArray(apiRelatedData);
-  const relatedProducts = rawRelated.length > 0
-    ? normalizeProducts(rawRelated)
-    : (MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3) as unknown as Product[]);
+  const apiRelated = normalizeProducts(rawRelated).filter(p => p.slug && p.slug !== slug);
+  const catalogue = normalizeProducts(extractArray(allProductsData)).filter(p => p.slug !== slug);
+  const sameCollection = product?.collection
+    ? catalogue.filter(p => p.collection === product.collection)
+    : [];
+  const relatedProducts: Product[] = (
+    apiRelated.length > 0
+      ? apiRelated
+      : [...sameCollection, ...catalogue.filter(p => !sameCollection.some(s => s.slug === p.slug))]
+  ).slice(0, 3);
 
   if (isLoading) {
     return (
