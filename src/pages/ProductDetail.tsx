@@ -44,11 +44,19 @@ export default function ProductDetail() {
   // Fallback to mock data
   const product: Product | undefined = apiProduct || (MOCK_PRODUCTS.find(p => p.slug === slug) as unknown as Product | undefined);
 
-  // Related products
+  // Related products — the backend's /related endpoint currently echoes the product
+  // itself, so fall back to real catalogue products (same collection first).
   const rawRelated = extractArray(apiRelatedData);
-  const relatedProducts = rawRelated.length > 0
-    ? normalizeProducts(rawRelated)
-    : (MOCK_PRODUCTS.filter(p => p.slug !== slug).slice(0, 3) as unknown as Product[]);
+  const apiRelated = normalizeProducts(rawRelated).filter(p => p.slug && p.slug !== slug);
+  const catalogue = normalizeProducts(extractArray(allProductsData)).filter(p => p.slug !== slug);
+  const sameCollection = product?.collection
+    ? catalogue.filter(p => p.collection === product.collection)
+    : [];
+  const relatedProducts: Product[] = (
+    apiRelated.length > 0
+      ? apiRelated
+      : [...sameCollection, ...catalogue.filter(p => !sameCollection.some(s => s.slug === p.slug))]
+  ).slice(0, 3);
 
   if (isLoading) {
     return (
