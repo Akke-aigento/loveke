@@ -51,7 +51,17 @@ export function normalizeProduct(raw: any): Product {
     title: raw.name || raw.title || raw.product_name || 'Untitled',
     description: raw.description || '',
     short_description: raw.short_description || undefined,
-    price: raw.price ?? 0,
+    // List endpoints return the (stale) base product price; when the product has
+    // variants the real price lives in price_range/variants. Prefer those.
+    price: (() => {
+      const variantPrices = (variants || [])
+        .map((v) => v.price)
+        .filter((p): p is number => typeof p === 'number' && p > 0);
+      const rangeMin = typeof raw.price_range?.min === 'number' ? raw.price_range.min : undefined;
+      if (variantPrices.length > 0) return Math.min(...variantPrices);
+      if (rangeMin != null && rangeMin > 0) return rangeMin;
+      return raw.price ?? 0;
+    })(),
     compare_at_price: raw.compare_at_price || undefined,
     currency: raw.currency || 'EUR',
     images,
