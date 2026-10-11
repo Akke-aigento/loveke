@@ -48,6 +48,7 @@ export function SellQoCartProvider({ children }: { children: React.ReactNode }) 
         amount: item.amount,
         gift_card_metadata: item.gift_card_metadata ? item.gift_card_metadata as Record<string, unknown> : undefined,
       });
+      (window as unknown as { akke?: (event: string, props?: Record<string, unknown>) => void }).akke?.('In winkelmandje', { product: item.title });
       setIsOpen(true);
     } catch (error) {
       console.error('Add to cart failed:', error);

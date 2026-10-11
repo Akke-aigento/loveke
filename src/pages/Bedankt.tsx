@@ -212,6 +212,20 @@ export default function Bedankt() {
     setIsLoading(false);
   }, [cartId, sessionId, pollForOrder]);
 
+  // Akke Insights: fire "Bestelling" once per order on the confirmation page
+  useEffect(() => {
+    const total = stripeOrder?.total ?? navState.total ?? order?.total;
+    const orderKey = stripeOrder?.order_number || navState.orderNumber || sessionId || cartId;
+    if (total == null || !orderKey) return;
+    const storageKey = `akke_order_${orderKey}`;
+    try {
+      if (sessionStorage.getItem(storageKey)) return;
+      sessionStorage.setItem(storageKey, '1');
+    } catch { /* noop */ }
+    (window as unknown as { akke?: (event: string, props?: Record<string, unknown>) => void })
+      .akke?.('Bestelling', { waarde: String(total) });
+  }, [stripeOrder, order, navState.total, navState.orderNumber, sessionId, cartId]);
+
   const heroMessage = navState.paymentType === 'manual'
     ? 'Bedankt voor je bestelling! 🧡'
     : navState.paymentType === 'qr'
