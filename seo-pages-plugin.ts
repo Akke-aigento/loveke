@@ -1,5 +1,5 @@
 // Vite-plugin (alleen bij `vite build`): schrijft per route uit src/seo/pages.ts een eigen
-// HTML-bestand (dist/prijzen.html, dist/diensten/logo-design.html, …) met een unieke titel,
+// HTML-bestand (dist/prijzen.html + dist/prijzen/index.html, …) met een unieke titel,
 // beschrijving, canonical en og-tags, plus dist/sitemap.xml. De body blijft de SPA, dus de site
 // werkt exact zoals voorheen; alleen de <head> die Google en deelplatformen zonder JavaScript
 // lezen, is per pagina juist.
@@ -63,9 +63,17 @@ export function seoPages(): Plugin {
           fs.writeFileSync(indexPath, applyHead(base, page, false));
           continue;
         }
-        const file = path.join(outDir, `${page.path.slice(1)}.html`);
-        fs.mkdirSync(path.dirname(file), { recursive: true });
-        fs.writeFileSync(file, applyHead(base, page, true));
+        // Twee vormen: prijzen.html én prijzen/index.html. De hosting serveert /prijzen.html
+        // letterlijk maar valt voor /prijzen terug op index.html; een map-index is de vorm die
+        // statische hosts voor nette URL's opzoeken.
+        const html = applyHead(base, page, true);
+        for (const file of [
+          path.join(outDir, `${page.path.slice(1)}.html`),
+          path.join(outDir, page.path.slice(1), "index.html"),
+        ]) {
+          fs.mkdirSync(path.dirname(file), { recursive: true });
+          fs.writeFileSync(file, html);
+        }
       }
       fs.writeFileSync(path.join(outDir, "sitemap.xml"), sitemapXml(PAGES, new Date().toISOString().slice(0, 10)));
     },
