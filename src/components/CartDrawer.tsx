@@ -33,6 +33,7 @@ export default function CartDrawer() {
   };
 
   const handleCheckout = () => {
+    (window as unknown as { akke?: (event: string, props?: Record<string, unknown>) => void }).akke?.('Checkout gestart');
     closeCart();
     navigate('/checkout');
   };
