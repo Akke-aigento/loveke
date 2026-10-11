@@ -14,6 +14,7 @@ import CartDrawer from "@/components/CartDrawer";
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import { RouteMeta } from "@/seo/useRouteMeta";
 import Index from "./pages/Index";
 
 // Lazy-loaded routes
@@ -81,6 +82,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
+            <RouteMeta />
             <Navbar />
             <CartDrawer />
             <Suspense fallback={<PageLoader />}>
