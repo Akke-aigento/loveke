@@ -12,7 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Plugin } from "vite";
-import { fetchSeoOverrides, withOverride, type SeoOverrides } from "./src/seo/insights";
+import { fetchSeoBundle, withOverride, type SeoOverrides } from "./src/seo/insights";
 import { PAGES, SITE_URL, type PageMeta } from "./src/seo/pages";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -114,13 +114,16 @@ async function productPages(supabaseUrl: string | undefined): Promise<ProductPag
 export function seoPages(): Plugin {
   let outDir = "dist";
   let overrides: SeoOverrides = {};
+  let jsonld: Record<string, unknown> | null = null;
   let supabaseUrl: string | undefined;
   return {
     name: "loveke-seo-pages",
     apply: "build",
     // Goedgekeurde teksten uit Akke Insights ophalen; ook aan de browser meegeven.
     async config() {
-      overrides = await fetchSeoOverrides();
+      const bundle = await fetchSeoBundle();
+      overrides = bundle.pages;
+      jsonld = bundle.jsonld;
       console.log(`[seo-pages] ${Object.keys(overrides).length} goedgekeurde teksten uit Insights`);
       return { define: { __SEO_OVERRIDES__: JSON.stringify(overrides) } };
     },
@@ -138,7 +141,14 @@ export function seoPages(): Plugin {
       for (const page of pages) {
         if (page.path === "/") {
           // Homepage-canonical enkel als de productpagina's eigen bestanden kregen (zie boven).
-          fs.writeFileSync(indexPath, applyHead(base, page, products !== null));
+          // Bedrijfsgegevens uit Insights (JSON-LD) enkel op de homepage.
+          let home = applyHead(base, page, products !== null);
+          if (jsonld)
+            home = home.replace(
+              "</head>",
+              `    <script type="application/ld+json" data-insights="business">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n  </head>`,
+            );
+          fs.writeFileSync(indexPath, home);
           continue;
         }
         // Twee vormen: prijzen.html én prijzen/index.html. De hosting serveert /prijzen.html

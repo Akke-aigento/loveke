@@ -31,13 +31,23 @@ export function withOverride<T extends { path: string; title: string; descriptio
   return { ...page, title: o.title ?? page.title, description: o.description ?? page.description };
 }
 
-export async function fetchSeoOverrides(): Promise<SeoOverrides> {
+export type SeoBundle = { pages: SeoOverrides; jsonld: Record<string, unknown> | null };
+
+/** Goedgekeurde teksten + bedrijfsgegevens (JSON-LD voor de homepage) uit Insights. */
+export async function fetchSeoBundle(): Promise<SeoBundle> {
   try {
     const res = await fetch(INSIGHTS_SEO_URL, { signal: AbortSignal.timeout(8_000) });
-    if (!res.ok) return {};
-    const json = (await res.json()) as { pages?: SeoOverrides };
-    return json.pages && typeof json.pages === "object" ? json.pages : {};
+    if (!res.ok) return { pages: {}, jsonld: null };
+    const json = (await res.json()) as { pages?: SeoOverrides; jsonld?: Record<string, unknown> | null };
+    return {
+      pages: json.pages && typeof json.pages === "object" ? json.pages : {},
+      jsonld: json.jsonld && typeof json.jsonld === "object" ? json.jsonld : null,
+    };
   } catch {
-    return {};
+    return { pages: {}, jsonld: null };
   }
+}
+
+export async function fetchSeoOverrides(): Promise<SeoOverrides> {
+  return (await fetchSeoBundle()).pages;
 }
