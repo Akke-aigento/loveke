@@ -3,6 +3,8 @@
 // en door RouteMeta (titel bij navigatie). Productpagina's (/shop/:slug) zijn dynamisch en
 // vallen terug op index.html (zonder canonical).
 
+import { withOverride } from "./insights";
+
 export const SITE_URL = "https://loveke.be";
 
 export type PageMeta = {
@@ -63,5 +65,7 @@ export const PAGES: PageMeta[] = [
 
 export function metaFor(pathname: string): PageMeta | undefined {
   const p = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-  return PAGES.find((m) => m.path === p);
+  const m = PAGES.find((x) => x.path === p);
+  // Goedgekeurde teksten uit Akke Insights gaan voor (zelfde bron als de statische head).
+  return m ? withOverride(m) : undefined;
 }
