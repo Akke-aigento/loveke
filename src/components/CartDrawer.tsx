@@ -53,6 +53,7 @@ export default function CartDrawer() {
 
   const discount = cart?.discount ?? 0;
   const activeDiscountCode = cart?.discount_code || '';
+  const discountLines = cart?.discount_lines ?? [];
 
   return (
     <AnimatePresence>
@@ -180,8 +181,15 @@ export default function CartDrawer() {
                   </div>
                 )}
 
-                {/* Applied discount line */}
-                {discount > 0 && (
+                {/* Applied discount lines: codes en automatische acties (bv. Loveke for Two) */}
+                {discountLines.length > 0 ? discountLines.map((d, i) => (
+                  <div key={`${d.code ?? d.label}-${i}`} className="flex justify-between text-sm text-primary">
+                    <span className="flex items-center gap-1">
+                      <Tag size={14} /> {d.code ? `Korting (${d.code})` : d.label}
+                    </span>
+                    <span className="font-semibold">-€{d.amount.toFixed(2)}</span>
+                  </div>
+                )) : discount > 0 && (
                   <div className="flex justify-between text-sm text-primary">
                     <span className="flex items-center gap-1">
                       <Tag size={14} /> Korting {activeDiscountCode && `(${activeDiscountCode})`}

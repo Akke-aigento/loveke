@@ -8,7 +8,6 @@ import ProductCard from './ProductCard';
 import { motion } from 'framer-motion';
 
 const FRESH_DROPS_SLOTS = 4;
-const COUPLE_SLOTS = 2;
 
 function CollectionPlaceholder({ title }: { title: string }) {
   return (
@@ -29,26 +28,15 @@ export default function FeaturedProducts() {
   const { t } = useLanguage();
 
   const { data: featuredData, isError: featuredError } = useProducts({ collection: 'fresh-drops' });
-  const { data: coupleData, isError: coupleError } = useProducts({ collection: 'loveke-for-two' });
 
   const featuredRaw = extractArray(featuredData);
   const featuredProducts: Product[] = featuredRaw.length > 0 && !featuredError
     ? normalizeProducts(featuredRaw)
     : [];
 
-  const coupleRaw = extractArray(coupleData);
-  const coupleProducts: Product[] = coupleRaw.length > 0 && !coupleError
-    ? normalizeProducts(coupleRaw)
-    : [];
-
   const freshDropsItems: (Product | null)[] = [
     ...featuredProducts.slice(0, FRESH_DROPS_SLOTS),
     ...Array(Math.max(0, FRESH_DROPS_SLOTS - featuredProducts.length)).fill(null),
-  ];
-
-  const coupleItems: (Product | null)[] = [
-    ...coupleProducts.slice(0, COUPLE_SLOTS),
-    ...Array(Math.max(0, COUPLE_SLOTS - coupleProducts.length)).fill(null),
   ];
 
   return (
@@ -91,16 +79,22 @@ export default function FeaturedProducts() {
               {t('featured.forTwo.subtitle')}
             </p>
 
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
-              {coupleItems.map((product, i) =>
-                product
-                  ? <div key={product.id} className="w-48"><ProductCard product={product} index={i} /></div>
-                  : <div key={`ph-couple-${i}`} className="w-48"><CollectionPlaceholder title="Loveke for Two" /></div>
-              )}
+            {/* Loveke for Two is een automatische staffelkorting in SellQo (vanaf 2 stuks),
+                geen productcollectie: hier dus uitleg in plaats van productvakken. */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+              <div
+                className="w-28 h-28 shrink-0 rounded-full bg-background border-2 border-foreground shadow-sticker flex items-center justify-center -rotate-6"
+                aria-hidden="true"
+              >
+                <span className="font-display text-3xl text-primary">{t('featured.forTwo.badge')}</span>
+              </div>
+              <p className="font-body text-base md:text-lg text-primary-foreground max-w-md sm:text-left">
+                {t('featured.forTwo.how')}
+              </p>
             </div>
 
             <Link
-              to="/shop?collection=loveke-for-two"
+              to="/shop"
               className="inline-flex items-center justify-center px-8 py-3 rounded-xl font-display text-lg bg-background text-foreground border-2 border-foreground shadow-sticker hover:scale-105 transition-transform"
             >
               {t('featured.forTwo.cta')} 💕

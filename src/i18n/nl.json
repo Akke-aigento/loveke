@@ -24,7 +24,9 @@
     "viewProduct": "Bekijk",
     "forTwo": {
       "title": "Loveke for Two 💕",
-      "subtitle": "Koop er 2, bespaar 10%",
+      "subtitle": "Koop er 2, bespaar 7%",
+      "badge": "-7%",
+      "how": "Kies 2 stuks naar keuze. De korting staat automatisch in je winkelmandje, je hebt geen code nodig.",
       "cta": "Shop for Two"
     }
   },

@@ -120,8 +120,32 @@ export interface Cart {
   total: number;
   currency: string;
   discount_code?: string;
+  /** Elke toegepaste korting apart (code of automatische actie zoals "Loveke for Two"). */
+  discount_lines?: DiscountLine[];
   free_shipping_eligible?: boolean;
   free_shipping_remaining?: number;
+}
+
+export interface DiscountLine {
+  /** Kortingscode, of null bij een automatische actie. */
+  code: string | null;
+  /** Naam van de actie of omschrijving van de code. */
+  label: string;
+  amount: number;
+}
+
+/** Leest applied_discounts uit een SellQo-respons (mandje of checkout). */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function readDiscountLines(raw: any): DiscountLine[] {
+  const list = Array.isArray(raw?.applied_discounts) ? raw.applied_discounts : [];
+  return list
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((d: any) => ({
+      code: d?.code ?? null,
+      label: String(d?.description || d?.code || 'Korting'),
+      amount: Number(d?.amount) || 0,
+    }))
+    .filter((d: DiscountLine) => d.amount > 0);
 }
 
 // === CHECKOUT ===

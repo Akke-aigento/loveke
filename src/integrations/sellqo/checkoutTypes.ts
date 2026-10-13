@@ -1,3 +1,4 @@
+import type { DiscountLine } from './types';
 // Checkout flow types — separate from main types to keep files focused
 
 import type { CartItem } from './types';
@@ -86,6 +87,8 @@ export interface CheckoutState {
   subtotal: number;
   shippingCost: number;
   discount: { code: string; amount: number } | null;
+  /** Alle kortingen volgens de server (codes én automatische acties). */
+  discountLines: DiscountLine[];
   total: number;
   currency: string;
   currentStep: number;

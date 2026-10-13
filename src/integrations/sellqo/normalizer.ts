@@ -3,6 +3,7 @@
  */
 
 import type { Product, ProductImage, ProductVariant, Collection, Cart, CartItem } from './types';
+import { readDiscountLines } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function normalizeProduct(raw: any): Product {
@@ -161,6 +162,7 @@ export function normalizeCart(raw: any): Cart {
     total: raw.total ?? subtotal,
     currency: raw.currency || 'EUR',
     discount_code: raw.discount_code ?? (Array.isArray(raw.discount_codes) ? raw.discount_codes[0] : undefined) ?? undefined,
+    discount_lines: readDiscountLines(raw),
     free_shipping_eligible: raw.free_shipping_eligible ?? undefined,
     free_shipping_remaining: raw.free_shipping_remaining ?? undefined,
   };

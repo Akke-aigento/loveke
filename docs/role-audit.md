@@ -1,5 +1,16 @@
 # Role audit
 
+## LOVEKE-FORTWO-1 — "Loveke for Two" als automatische korting tonen (13-10-2026)
+
+Hoort bij PROMO-ENGINE-1 in SellQo: de staffelkorting "Loveke for Two" wordt sinds die batch ook echt aangerekend bij het afrekenen, niet alleen getoond in het mandje.
+
+- `src/components/FeaturedProducts.tsx`: de twee lege productvakken (collectie `loveke-for-two`, die niet bestaat) zijn vervangen door uitleg. Een -7%-sticker en de tekst "Kies 2 stuks naar keuze, de korting staat automatisch in je winkelmandje". De knop gaat naar `/shop`.
+- `src/i18n/{nl,en,fr}.json`: de ondertitel zegt nu 7%, gelijk aan de actie in SellQo. Nieuwe keys `featured.forTwo.badge` en `featured.forTwo.how`.
+- Mandje (`CartDrawer`) en checkout (`OrderSummary`, `CheckoutContext`) tonen elke korting apart uit `applied_discounts` van de API: codes als "Korting (CODE)", automatische acties met hun naam. Vroeger zag de checkout alleen een korting na het intikken van een code.
+- `readDiscountLines` in `src/integrations/sellqo/types.ts`; `normalizeCart` geeft `discount_lines` mee.
+
+tsc schoon, lint ongewijzigd (30 bestaande meldingen in deze bestanden, 0 nieuw), `vite build` en `vitest` groen.
+
 ## LOVEKE-PHONE-1 (Deel C) — telefoonveld verplicht + disclaimer in Loveke checkout
 
 Frontend sluit aan op de backend-afdwinging uit Deel A (SellQo storefront-api tenant-vlag `checkout_phone_required=true` voor Loveke).

@@ -8,6 +8,7 @@ import type {
   CheckoutCustomer,
   CheckoutAddress,
 } from '@/integrations/sellqo/checkoutTypes';
+import { readDiscountLines, type DiscountLine } from '@/integrations/sellqo/types';
 
 interface CheckoutContextType extends CheckoutState {
   startCheckout: (cartId: string) => Promise<boolean>;
@@ -39,6 +40,7 @@ const initialState: CheckoutState = {
   subtotal: 0,
   shippingCost: 0,
   discount: null,
+  discountLines: [],
   total: 0,
   currency: 'EUR',
   currentStep: 1,
@@ -63,6 +65,12 @@ function extractData<T>(response: unknown): T {
   const r = response as Record<string, unknown>;
   if (r.data && typeof r.data === 'object') return r.data as T;
   return response as T;
+}
+
+// Kortingsregels uit een respons; zonder applied_discounts blijven de vorige staan.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function linesFrom(data: any, prev: DiscountLine[]): DiscountLine[] {
+  return data && Array.isArray(data.applied_discounts) ? readDiscountLines(data) : prev;
 }
 
 function readCartTotals(data: any) {
@@ -132,7 +140,9 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
         availablePaymentMethods: data.available_payment_methods || [],
         availableShippingMethods: data.available_shipping_methods || [],
         subtotal: Number(data.subtotal) || 0,
-        total: Number(data.subtotal) || 0,
+        // Verzending is hier nog niet gekozen: totaal = subtotaal min korting.
+        total: Math.max(0, (Number(data.subtotal) || 0) - (Number(data.discount_total) || 0)),
+        discountLines: linesFrom(data, []),
         currency: data.currency || 'EUR',
         customer: (data.customer as CheckoutCustomer) ?? null,
         reverseCharge: !!data.reverse_charge,
@@ -213,6 +223,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           ...s,
           subtotal: custData.subtotal != null ? Number(custData.subtotal) : s.subtotal,
           total: custData.total != null ? Number(custData.total) : s.total,
+          discountLines: linesFrom(custData, s.discountLines),
           reverseCharge: !!custData.reverse_charge,
           vatText: custData.vat_text ?? null,
           vatRegime: custData.vat_regime ?? null,
@@ -249,6 +260,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
             billingSameAsShipping: billingSame,
             subtotal: src.subtotal != null ? Number(src.subtotal) : s.subtotal,
             total: src.total != null ? Number(src.total) : s.total,
+            discountLines: linesFrom(src, s.discountLines),
             items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
             reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
             vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
@@ -276,6 +288,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           subtotal: nextSubtotal,
           shippingCost: nextShipping,
           total: nextTotal,
+          discountLines: linesFrom(src, s.discountLines),
           items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
           reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
           vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
@@ -311,6 +324,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           subtotal: nextSubtotal,
           shippingCost: nextShipping,
           total: nextTotal,
+          discountLines: linesFrom(src, s.discountLines),
           items: Array.isArray(src.items) && src.items.length ? src.items : s.items,
           reverseCharge: src.reverse_charge != null ? !!src.reverse_charge : s.reverseCharge,
           vatText: src.vat_text !== undefined ? (src.vat_text ?? null) : s.vatText,
@@ -408,6 +422,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
           : (Number(data?.discount_total) > 0
               ? { code, amount: Number(data.discount_total) }
               : null),
+        discountLines: linesFrom(data, s.discountLines),
         subtotal: data?.subtotal != null ? Number(data.subtotal) : s.subtotal,
         shippingCost: data?.shipping_cost != null ? Number(data.shipping_cost) : s.shippingCost,
         total: data?.total != null ? Number(data.total) : s.total,
@@ -427,6 +442,7 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
       setState(s => ({
         ...s,
         discount: null,
+        discountLines: linesFrom(data, s.discountLines.filter((d) => !d.code)),
         subtotal: data?.subtotal != null ? Number(data.subtotal) : s.subtotal,
         shippingCost: data?.shipping_cost != null ? Number(data.shipping_cost) : s.shippingCost,
         total: data?.total != null
@@ -461,9 +477,11 @@ export function CheckoutProvider({ children }: { children: React.ReactNode }) {
     if (apiTotal > 0) return apiTotal;
     const sub = Number(state.subtotal) || 0;
     const ship = Number(state.shippingCost) || 0;
-    const disc = Number(state.discount?.amount) || 0;
+    const disc = state.discountLines.length > 0
+      ? state.discountLines.reduce((sum, d) => sum + d.amount, 0)
+      : Number(state.discount?.amount) || 0;
     return Math.max(0, sub + ship - disc);
-  }, [state.total, state.subtotal, state.shippingCost, state.discount]);
+  }, [state.total, state.subtotal, state.shippingCost, state.discount, state.discountLines]);
 
   const value = useMemo<CheckoutContextType>(() => ({
     ...state,

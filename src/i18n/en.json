@@ -24,7 +24,9 @@
     "viewProduct": "View",
     "forTwo": {
       "title": "Loveke for Two 💕",
-      "subtitle": "Buy 2, save 10%",
+      "subtitle": "Buy 2, save 7%",
+      "badge": "-7%",
+      "how": "Pick any 2 items. The discount is applied automatically in your cart, no code needed.",
       "cta": "Shop for Two"
     }
   },

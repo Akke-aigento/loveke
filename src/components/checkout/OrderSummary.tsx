@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Tag, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
 
 export default function OrderSummary() {
-  const { items, subtotal, shippingCost, discount, total, applyDiscount, removeDiscount, currentStep, reverseCharge, vatText } = useCheckout();
+  const { items, subtotal, shippingCost, discount, discountLines, total, applyDiscount, removeDiscount, currentStep, reverseCharge, vatText } = useCheckout();
   const { t } = useLanguage();
   const [discountCode, setDiscountCode] = useState('');
   const [isApplying, setIsApplying] = useState(false);
@@ -112,7 +112,12 @@ export default function OrderSummary() {
             <span>€{subtotal.toFixed(2)}</span>
           </div>
 
-          {discount && (
+          {discountLines.length > 0 ? discountLines.map((d, i) => (
+            <div key={`${d.code ?? d.label}-${i}`} className="flex justify-between text-sm text-primary">
+              <span>{d.code ? `Korting (${d.code})` : d.label}</span>
+              <span>-€{d.amount.toFixed(2)}</span>
+            </div>
+          )) : discount && (
             <div className="flex justify-between text-sm text-primary">
               <span>Korting</span>
               <span>-€{discount.amount.toFixed(2)}</span>
