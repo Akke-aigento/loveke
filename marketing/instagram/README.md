@@ -17,11 +17,16 @@ dezelfde stappen volgen.
 | `log.md` | Wat er al gepost is, per week. Lees dit vóór je nieuwe content bedenkt: niets herhalen. |
 | `../product-photos/` | Productfoto's (PNG met transparante achtergrond, 1000×1000), van SellQo. |
 | `../../src/assets/comic/strip-1..12.webp` | De strip (Engelstalig), 896×1200. |
+| `published/<JJJJ-MM-DD>/` | De JPG's die online gaan (datum = maandag; de launch staat in `published/launch/`). Wél in git: SellQo haalt ze op via de publieke raw-URL. |
 
-**Post-kit (de pagina die Akke gebruikt):** https://claude.ai/artifact/VgL27QQ5XbZc2rbLQ92enQ
-Die pagina leest `kit.json` en de beelden onder `img/`. Een nieuwe week = een nieuw blok in
-`kit.json` + nieuwe beelden, opnieuw gepubliceerd naar dezelfde URL. Elke dag heeft een anker
-`#d-JJJJ-MM-DD` waar de reminder naartoe linkt.
+**Waar Akke alles ziet en goedkeurt:** SellQo (tenant Loveke) → **Marketing → Social planning**.
+Daar staan alle posts per week met beeld, tekst en uur. Akke keurt goed (los of per week);
+SellQo publiceert goedgekeurde posts zelf op Instagram, elk uur op :01. Stories met een sticker
+staan er als "Zelf posten" met een knop "Beeld openen" en "Gepost".
+
+De post-kit (https://claude.ai/artifact/VgL27QQ5XbZc2rbLQ92enQ) was de werkwijze van de
+launchweek en blijft staan als archief (onder meer de highlight-covers). Nieuwe weken komen
+daar niet meer in.
 
 ## Huisstijl in het kort
 
@@ -56,15 +61,25 @@ Die pagina leest `kit.json` en de beelden onder `img/`. Een nieuwe week = een ni
    Nieuwe producten zonder foto in `../product-photos/`? Gebruik een strip- of typografisch beeld en meld het aan Akke.
 3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en per post één story (`story-ma.html` …), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
 4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt).
-5. **Kit bijwerken**: lees de kit (`Artifact` action `read` op de URL hierboven), voeg in `kit.json` een week toe (`weeks[]`, met per dag `id: "d-JJJJ-MM-DD"`, `date`, `title`, `kind`, `images`, `caption`, `story`, `todo`), zet de JPG's onder `img/<maandag>/` en publiceer `kit.json` + de nieuwe beelden naar dezelfde URL (bestaande bestanden blijven staan).
-6. **Reminders**: maak per postdag een eenmalige geplande taak om 17:45 Brussel (pushmelding aan), met de titel, het anker `…#d-JJJJ-MM-DD` en wat Akke moet doen, naar het model van de launch-reminders.
-7. **Log en git**: voeg de week toe aan `log.md`, commit `weeks/<maandag>/` + `log.md` naar `main` van `Akke-aigento/loveke` (de map `out/` niet). Raak niets buiten `marketing/instagram/` aan.
-8. **Meld** Akke in één korte boodschap: de 3 onderwerpen van de week en de link naar de kit.
+5. **Publiceer de beelden**: kopieer de JPG's uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de beelden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>.jpg`. Controleer één URL met `curl -sI` (200, `image/jpeg`).
+6. **Zet de week in SellQo** met `query_database` (zelfde project). Eén `insert` voor alle items van de week, nooit `update` of `delete` op bestaande rijen:
+   ```sql
+   insert into social_posts (tenant_id, platform, media_type, status, source, post_text, image_urls, scheduled_for) values
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task','<caption>',
+    array['<raw-url>'], '<JJJJ-MM-DD> 18:00 Europe/Brussels'),
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','Story: <wat Akke moet doen, welke sticker waar>',
+    array['<raw-url>'], '<JJJJ-MM-DD> 18:05 Europe/Brussels');
+   ```
+   - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
+   - Stories met een sticker: status `manual`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
+   - Caption max 2200 tekens; enkele quotes verdubbelen (`''`). Maximaal 10 beelden per carousel; meer is een losse post of handwerk.
+   - Controleer daarna met een `select` dat de rijen er staan, met het juiste uur in Brussel.
+7. **Reminders**: maak per postdag een eenmalige geplande taak om 17:45 Brussel (pushmelding aan), naar het model van de launch-reminders (17–23 okt): één read-only `select status, error_message` op de post van die dag, één korte boodschap aan Akke volgens de status (gaat vanzelf online / staat online / wacht nog op goedkeuring / mislukt + reden), plus zijn deel van die dag (de story). De reminder zegt nooit "post dit zelf" voor een post die SellQo publiceert: dan staat hij dubbel online.
+8. **Log en git**: voeg de week toe aan `log.md`, commit `weeks/<maandag>/` + `log.md` naar `main` van `Akke-aigento/loveke` (de map `out/` niet). Raak niets buiten `marketing/instagram/` aan.
+9. **Meld** Akke in één korte boodschap: de onderwerpen van de week, dat ze klaarstaan in SellQo → Marketing → Social planning, en dat hij ze moet goedkeuren (knop "Week goedkeuren"). Zonder goedkeuring gaat er niets online.
 
-## Volledig automatisch posten (nog niet actief)
+## Wat SellQo wel en niet automatisch kan
 
-Kan later via de Instagram Graph API (`instagram_content_publish`): Loveke-account als
-professioneel account gekoppeld aan een Facebook-pagina, een Meta-app en een langlevend token in
-de secrets van het Loveke-project, plus een edge function die op het geplande moment de JPG-URL +
-caption publiceert. Stories met stickers (poll, link, vraag) kunnen niet via de API; die blijven
-handwerk. Tot dan: Meta Business Suite plant posts gratis in, voor een hele week tegelijk.
+- Automatisch: foto-posts, carousels (max 10) en stories zonder sticker, op het geplande uur. Een PNG wordt vanzelf naar JPEG omgezet.
+- Handwerk: stories met poll-, link- of vraagsticker (de API kent geen stickers), highlights, reacties beantwoorden.
+- Mislukt een post (bv. koppeling verlopen), dan staat hij op "Mislukt" in de Social planning en krijgt Akke een melding. De koppeling zit in SellQo Connect → Kanalen en verloopt na 60 dagen als ze niet ververst wordt; SellQo ververst ze elke nacht.
