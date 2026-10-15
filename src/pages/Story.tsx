@@ -45,9 +45,9 @@ export default function Story() {
               className={`${ch.color} border-3 border-foreground rounded-2xl p-6 md:p-8 shadow-card relative overflow-hidden`}
             >
               <div className="absolute top-3 right-4 text-3xl">{ch.icon}</div>
-              <h3 className="font-display text-xl md:text-2xl mb-4 pr-10">
+              <h2 className="font-display text-xl md:text-2xl mb-4 pr-10">
                 {t(`story.${ch.key}Title`)}
-              </h3>
+              </h2>
               <p className="font-body leading-relaxed text-muted-foreground">
                 {t(`story.${ch.key}`)}
               </p>

@@ -23,6 +23,21 @@ function setMeta(html: string, attr: "name" | "property", key: string, value: st
   return re.test(html) ? html.replace(re, tag) : html.replace("</head>", `    ${tag}\n  </head>`);
 }
 
+const ldScript = (data: unknown) =>
+  `    <script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>\n  </head>`;
+
+// LOVEKE-LAUNCH-1: bedrijfsgegevens op de homepage als Insights (nog) geen JSON-LD levert.
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Loveke",
+  url: `${SITE_URL}/`,
+  logo: `${SITE_URL}/favicon.png`,
+  email: "info@loveke.be",
+  sameAs: ["https://www.instagram.com/loveke.shop/"],
+  parentOrganization: { "@type": "Organization", name: "Nomadix BV", vatID: "BE1017500207" },
+};
+
 export function applyHead(html: string, page: PageMeta, withCanonical: boolean, image?: string): string {
   const url = page.path === "/" ? `${SITE_URL}/` : `${SITE_URL}${page.path}`;
   let out = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(page.title)}</title>`);
@@ -38,6 +53,8 @@ export function applyHead(html: string, page: PageMeta, withCanonical: boolean, 
   if (image) {
     out = setMeta(out, "property", "og:image", image);
     out = setMeta(out, "name", "twitter:image", image);
+    // De afmetingen in index.html horen bij og-image.png, niet bij een productfoto.
+    out = out.replace(/\s*<meta property="og:image:(width|height)"[^>]*>/g, "");
   }
   if (page.noindex) out = setMeta(out, "name", "robots", "noindex, follow");
   return out;
@@ -53,8 +70,17 @@ export function sitemapXml(pages: PageMeta[], lastmod: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
 
-type ApiProduct = { name?: string; slug?: string; description?: string | null; images?: (string | { url?: string })[] };
-type ProductPage = PageMeta & { image?: string };
+type ApiProduct = {
+  name?: string;
+  slug?: string;
+  description?: string | null;
+  images?: (string | { url?: string })[];
+  price?: number | string | null;
+  price_range?: { min?: number } | null;
+  variants?: { price?: number | string | null }[];
+  in_stock?: boolean;
+};
+type ProductPage = PageMeta & { image?: string; ld?: Record<string, unknown>[] };
 
 // Sommige omschrijvingen zijn dubbel ge-escaped (&lt;p&gt;…): eerst tags weg, dan entiteiten
 // ontcijferen, dan de tags die daaruit tevoorschijn komen opnieuw weg.
@@ -96,14 +122,60 @@ async function productPages(supabaseUrl: string | undefined): Promise<ProductPag
         const name = p.name!.trim();
         const text = plain(p.description);
         const img = p.images?.[0];
+        const imageUrl = typeof img === "string" ? img : img?.url;
+        const prices = [p.price_range?.min, ...(p.variants ?? []).map((v) => v.price), p.price]
+          .map((v) => (v === null || v === undefined ? NaN : Number(v)))
+          .filter((v) => Number.isFinite(v) && v > 0);
+        const price = prices.length ? Math.min(...prices) : null;
+        const url = `${SITE_URL}/shop/${p.slug}`;
+        const ld: Record<string, unknown>[] = [
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+              { "@type": "ListItem", position: 2, name: "Shop", item: `${SITE_URL}/shop` },
+              { "@type": "ListItem", position: 3, name, item: url },
+            ],
+          },
+        ];
+        if (price !== null) {
+          ld.push({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name,
+            description: cut(text || name, 300),
+            image: imageUrl ? [imageUrl] : undefined,
+            brand: { "@type": "Brand", name: "Loveke" },
+            url,
+            offers: {
+              "@type": "Offer",
+              url,
+              priceCurrency: "EUR",
+              price: price.toFixed(2),
+              availability: "https://schema.org/InStock",
+              itemCondition: "https://schema.org/NewCondition",
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "EUR" },
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  handlingTime: { "@type": "QuantitativeValue", minValue: 2, maxValue: 5, unitCode: "DAY" },
+                  transitTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 15, unitCode: "DAY" },
+                },
+              },
+            },
+          });
+        }
         return {
+          ld,
           path: `/shop/${p.slug}`,
           title: `${name} | Loveke`,
           description: cut(
             text ? (text.startsWith(name) ? text : `${name}. ${text}`) : `${name} — Belgische streetwear van Loveke. Bekijk maten, kleuren en prijs in de shop.`,
           ),
           priority: 0.8,
-          image: typeof img === "string" ? img : img?.url,
+          image: imageUrl,
         };
       });
   } catch {
@@ -143,18 +215,23 @@ export function seoPages(): Plugin {
           // Homepage-canonical enkel als de productpagina's eigen bestanden kregen (zie boven).
           // Bedrijfsgegevens uit Insights (JSON-LD) enkel op de homepage.
           let home = applyHead(base, page, products !== null);
-          if (jsonld)
-            home = home.replace(
-              "</head>",
-              `    <script type="application/ld+json" data-insights="business">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n  </head>`,
-            );
+          home = jsonld
+            ? home.replace(
+                "</head>",
+                `    <script type="application/ld+json" data-insights="business">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>\n  </head>`,
+              )
+            : home.replace("</head>", ldScript(ORGANIZATION_LD));
           fs.writeFileSync(indexPath, home);
           continue;
         }
         // Twee vormen: prijzen.html én prijzen/index.html. De hosting serveert /prijzen.html
         // letterlijk maar valt voor /prijzen terug op index.html; een map-index is de vorm die
         // statische hosts voor nette URL's opzoeken.
-        const html = applyHead(base, page, true, page.image);
+        let html = applyHead(base, page, true, page.image);
+        if (page.path.startsWith("/shop/")) {
+          html = html.replace(/<meta property="og:type" content="website" \/>/, '<meta property="og:type" content="product" />');
+          for (const block of page.ld ?? []) html = html.replace("</head>", ldScript(block));
+        }
         for (const file of [
           path.join(outDir, `${page.path.slice(1)}.html`),
           path.join(outDir, page.path.slice(1), "index.html"),

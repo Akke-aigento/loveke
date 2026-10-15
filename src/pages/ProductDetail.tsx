@@ -5,7 +5,6 @@ import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import { useProduct, useRelatedProducts, useProductReviews, useProducts } from '@/integrations/sellqo/hooks';
 import { extractSingle, extractArray } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
-import { MOCK_PRODUCTS } from '@/lib/sellqo';
 import type { Product, Review, ReviewsSummary } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
 import GiftCardDetail from '@/components/GiftCardDetail';
@@ -41,8 +40,8 @@ export default function ProductDetail() {
   const rawProduct = extractSingle(apiProductData);
   const apiProduct = rawProduct ? normalizeProduct(rawProduct) : null;
 
-  // Fallback to mock data
-  const product: Product | undefined = apiProduct || (MOCK_PRODUCTS.find(p => p.slug === slug) as unknown as Product | undefined);
+  // LOVEKE-LAUNCH-1: geen nep-fallback meer; enkel echte producten uit SellQo.
+  const product: Product | undefined = apiProduct ?? undefined;
 
   // Related products — the backend's /related endpoint currently echoes the product
   // itself, so fall back to real catalogue products (same collection first).
@@ -79,7 +78,7 @@ export default function ProductDetail() {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen overflow-x-hidden flex items-center justify-center">
         <div className="text-center">
-          <p className="font-handwritten text-2xl text-muted-foreground mb-4">Product niet gevonden 😢</p>
+          <p className="font-handwritten text-2xl text-muted-foreground mb-4">{isError ? t('shop.unavailable') : 'Product niet gevonden 😢'}</p>
           <Link to="/shop" className="font-body text-primary hover:underline">← Terug naar shop</Link>
         </div>
       </main>
@@ -253,6 +252,10 @@ export default function ProductDetail() {
               </div>
             </div>
 
+            {product.variants && product.variants.length > 1 && !/kids|bodysuit/i.test(product.title) && (
+              <p className="font-body text-xs text-muted-foreground -mt-2 mb-4">{t('product.sizeTip')}</p>
+            )}
+
             {/* Add to cart */}
             <button
               onClick={handleAddToCart}
@@ -261,6 +264,7 @@ export default function ProductDetail() {
             >
               {t('product.addToCart')} 🛒
             </button>
+            <p className="font-body text-sm text-muted-foreground mt-3 text-center">{t('product.delivery')}</p>
 
             {/* USP badges */}
             <div className="flex flex-wrap gap-2 mt-6">

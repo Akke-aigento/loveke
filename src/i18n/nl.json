@@ -6,7 +6,9 @@
     "comic": "De Strip",
     "sizeGuide": "Maatgids",
     "giftCards": "Cadeaubon",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu openen of sluiten",
+    "cart": "Winkelmandje"
   },
   "hero": {
     "tagline": "Born from Love. Worn on the Street.",
@@ -32,7 +34,7 @@
   },
   "usps": {
     "belgium": "Belgisch merk 🇧🇪",
-    "organic": "Biologisch katoen 🌿",
+    "organic": "Gemaakt op bestelling 🧵",
     "shipping": "Gratis verzending 📦",
     "love": "Gedrukt met liefde ❤️"
   },
@@ -51,7 +53,10 @@
     "placeholder": "jouw@email.be",
     "submit": "Schrijf me in! 💌",
     "success": "Je bent erbij! 🎉",
-    "error": "Oeps, probeer het opnieuw."
+    "error": "Oeps, probeer het opnieuw.",
+    "consent": "Je kan je altijd uitschrijven. Lees ons",
+    "privacy": "privacybeleid",
+    "label": "Je e-mailadres"
   },
   "footer": {
     "shop": "Shop",
@@ -68,7 +73,10 @@
     "returns": "Retourneren",
     "contact": "Contact",
     "copyright": "© 2026 Loveke — Made with ❤️",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "legal": "Juridisch",
+    "company": "Loveke is een merk van Nomadix BV · BTW BE1017500207",
+    "payments": "Betaalmethodes"
   },
   "cart": {
     "title": "Winkelwagen",
@@ -111,10 +119,13 @@
     "sizeGuide": "Maatgids bekijken",
     "related": "Je vindt dit misschien ook leuk",
     "belgiumMade": "Belgisch merk 🇧🇪",
-    "organicCotton": "Biologisch Katoen 🌿",
+    "organicCotton": "Gemaakt op bestelling",
     "sizeGuideTitle": "Maatgids",
     "unitCm": "cm",
-    "unitInch": "inch"
+    "unitInch": "inch",
+    "reviews": "Reviews",
+    "delivery": "Gratis verzending · gemaakt op bestelling · levering in 5 tot 20 werkdagen",
+    "sizeTip": "Tip van Akke (1m83): L voor normaal, XL voor oversized."
   },
   "shop": {
     "title": "Shop",
@@ -124,7 +135,8 @@
     "sortPriceLow": "Prijs laag-hoog",
     "sortPriceHigh": "Prijs hoog-laag",
     "all": "Alles",
-    "empty": "Hier komt binnenkort iets moois! 👀"
+    "empty": "Hier komt binnenkort iets moois! 👀",
+    "unavailable": "Onze winkel doet even een dutje 😴 Probeer het zo opnieuw!"
   },
   "story": {
     "heroTitle": "Hoe het allemaal begon...",
@@ -143,7 +155,9 @@
   "comic": {
     "title": "De Strip",
     "subtitle": "Het Loveke verhaal als stripverhaal",
-    "freeReminder": "Ontdek het Loveke-verhaal in stripvorm 📖"
+    "freeReminder": "Ontdek het Loveke-verhaal in stripvorm 📖",
+    "englishNote": "De strip is in het Engels.",
+    "alt": "Strip, pagina"
   },
   "sizeGuide": {
     "title": "Maatgids",
@@ -184,7 +198,9 @@
     "message": "Oeps... deze pagina zit vast. Net als Nastya op dat toilet in Bratislava. 🚽",
     "occupied": "BEZET",
     "homeCta": "Breng me terug naar home 🏠",
-    "storyCta": "Of lees het volledige verhaal →"
+    "storyCta": "Of lees het volledige verhaal →",
+    "legalMissing": "Deze pagina konden we niet vinden.",
+    "back": "Terug naar home"
   },
   "cookie": {
     "message": "Wij gebruiken cookies. Geen koekjes helaas, maar wel om je ervaring beter te maken. 🍪",

@@ -1,9 +1,21 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function NotFound() {
   const { t } = useLanguage();
+
+  // LOVEKE-LAUNCH-1: de hosting geeft status 200 voor onbekende adressen; laat Google ze niet indexeren.
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, follow';
+    document.head.appendChild(meta);
+    const canonical = document.head.querySelector('link[rel="canonical"]');
+    canonical?.remove();
+    return () => { meta.remove(); if (canonical) document.head.appendChild(canonical); };
+  }, []);
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4 pt-20 pb-16">

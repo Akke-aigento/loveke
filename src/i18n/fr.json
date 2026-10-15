@@ -6,7 +6,9 @@
     "comic": "La BD",
     "sizeGuide": "Guide des tailles",
     "giftCards": "Cartes cadeaux",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Ouvrir ou fermer le menu",
+    "cart": "Panier"
   },
   "hero": {
     "tagline": "Born from Love. Worn on the Street.",
@@ -32,7 +34,7 @@
   },
   "usps": {
     "belgium": "Marque belge 🇧🇪",
-    "organic": "Coton bio 🌿",
+    "organic": "Fabriqué à la commande 🧵",
     "shipping": "Livraison gratuite 📦",
     "love": "Imprimé avec amour ❤️"
   },
@@ -51,7 +53,10 @@
     "placeholder": "votre@email.be",
     "submit": "Inscrivez-moi ! 💌",
     "success": "Vous êtes inscrit ! 🎉",
-    "error": "Oups, réessayez."
+    "error": "Oups, réessayez.",
+    "consent": "Tu peux te désinscrire à tout moment. Lis notre",
+    "privacy": "politique de confidentialité",
+    "label": "Ton adresse e-mail"
   },
   "footer": {
     "shop": "Boutique",
@@ -68,7 +73,10 @@
     "returns": "Retours",
     "contact": "Contact",
     "copyright": "© 2026 Loveke — Made with ❤️",
-    "privacy": "Confidentialité"
+    "privacy": "Confidentialité",
+    "legal": "Mentions légales",
+    "company": "Loveke est une marque de Nomadix BV · TVA BE1017500207",
+    "payments": "Moyens de paiement"
   },
   "cart": {
     "title": "Panier",
@@ -111,10 +119,13 @@
     "sizeGuide": "Voir le guide des tailles",
     "related": "Vous aimerez aussi",
     "belgiumMade": "Marque belge 🇧🇪",
-    "organicCotton": "Coton Bio 🌿",
+    "organicCotton": "Fabriqué à la commande",
     "sizeGuideTitle": "Guide des tailles",
     "unitCm": "cm",
-    "unitInch": "pouce"
+    "unitInch": "pouce",
+    "reviews": "Avis",
+    "delivery": "Livraison gratuite · fabriqué à la commande · livré en 5 à 20 jours ouvrables",
+    "sizeTip": "L'astuce d'Akke (1,83 m) : L pour une coupe normale, XL pour oversize."
   },
   "shop": {
     "title": "Boutique",
@@ -124,7 +135,8 @@
     "sortPriceLow": "Prix croissant",
     "sortPriceHigh": "Prix décroissant",
     "all": "Tout",
-    "empty": "Quelque chose de beau arrive bientôt ! 👀"
+    "empty": "Quelque chose de beau arrive bientôt ! 👀",
+    "unavailable": "Notre boutique fait une petite sieste 😴 Réessaie dans un instant !"
   },
   "story": {
     "heroTitle": "Comment tout a commencé...",
@@ -143,7 +155,9 @@
   "comic": {
     "title": "La BD",
     "subtitle": "L'histoire Loveke en bande dessinée",
-    "freeReminder": "Découvrez l'histoire Loveke en BD 📖"
+    "freeReminder": "Découvrez l'histoire Loveke en BD 📖",
+    "englishNote": "La bande dessinée est en anglais.",
+    "alt": "Bande dessinée, page"
   },
   "sizeGuide": {
     "title": "Guide des tailles",
@@ -184,7 +198,9 @@
     "message": "Oups... cette page est coincée. Comme Nastya dans ces toilettes à Bratislava. 🚽",
     "occupied": "OCCUPÉ",
     "homeCta": "Ramenez-moi à l'accueil 🏠",
-    "storyCta": "Ou lire l'histoire complète →"
+    "storyCta": "Ou lire l'histoire complète →",
+    "legalMissing": "Nous n’avons pas trouvé cette page.",
+    "back": "Retour à l'accueil"
   },
   "cookie": {
     "message": "Nous utilisons des cookies. Pas les délicieux malheureusement, mais pour améliorer votre expérience. 🍪",

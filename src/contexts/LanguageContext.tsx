@@ -29,13 +29,33 @@ function getNestedValue(obj: Record<string, unknown>, path: string): string {
   return typeof current === 'string' ? current : path;
 }
 
+const LOCALE_KEY = 'loveke-locale';
+const isLocale = (v: unknown): v is Locale => v === 'nl' || v === 'en' || v === 'fr';
+
+// LOVEKE-LAUNCH-1: taalkeuze onthouden (localStorage, defensief) zodat een refresh niet terugspringt naar NL.
+function initialLocale(): Locale {
+  try {
+    const saved = localStorage.getItem(LOCALE_KEY);
+    if (isLocale(saved)) return saved;
+  } catch { /* opslag geblokkeerd: val terug op NL */ }
+  return 'nl';
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('nl');
+  const [locale, setLocaleState] = useState<Locale>(() => {
+    const l = initialLocale();
+    if (l !== 'nl') {
+      setSellqoLocale(l);
+      document.documentElement.lang = l;
+    }
+    return l;
+  });
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
     setSellqoLocale(newLocale);
     document.documentElement.lang = newLocale;
+    try { localStorage.setItem(LOCALE_KEY, newLocale); } catch { /* geen opslag beschikbaar */ }
   }, []);
 
   const t = useCallback((key: string): string => {

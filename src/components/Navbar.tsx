@@ -6,9 +6,9 @@ import { useSellQoCart } from '@/integrations/sellqo/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const locales = [
-  { code: 'nl' as const, label: 'NL', flag: '🇧🇪' },
-  { code: 'en' as const, label: 'EN', flag: '🇬🇧' },
-  { code: 'fr' as const, label: 'FR', flag: '🇫🇷' },
+  { code: 'nl' as const, label: 'NL', flag: '🇧🇪', name: 'Nederlands' },
+  { code: 'en' as const, label: 'EN', flag: '🇬🇧', name: 'English' },
+  { code: 'fr' as const, label: 'FR', flag: '🇫🇷', name: 'Français' },
 ];
 
 export default function Navbar() {
@@ -65,6 +65,8 @@ export default function Navbar() {
                   {i > 0 && <span className="text-muted-foreground mx-1">|</span>}
                   <button
                     onClick={() => setLocale(l.code)}
+                    aria-label={l.name}
+                    aria-pressed={locale === l.code}
                     className={`transition-colors ${locale === l.code ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`}
                   >
                     {l.flag} {l.label}
@@ -74,7 +76,7 @@ export default function Navbar() {
             </div>
 
             {/* Cart */}
-            <button onClick={openCart} className="relative p-2 hover:text-primary transition-colors">
+            <button onClick={openCart} aria-label={itemCount > 0 ? `${t('nav.cart')} (${itemCount})` : t('nav.cart')} className="relative p-2 hover:text-primary transition-colors">
               <ShoppingBag size={22} />
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">
@@ -84,7 +86,7 @@ export default function Navbar() {
             </button>
 
             {/* Mobile menu button */}
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2">
+            <button onClick={() => setMobileOpen(!mobileOpen)} aria-label={t('nav.menu')} aria-expanded={mobileOpen} className="md:hidden p-2">
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -116,6 +118,8 @@ export default function Navbar() {
                 <button
                   key={l.code}
                   onClick={() => setLocale(l.code)}
+                  aria-label={l.name}
+                  aria-pressed={locale === l.code}
                   className={`text-lg font-body ${locale === l.code ? 'text-primary font-bold' : 'text-muted-foreground'}`}
                 >
                   {l.flag} {l.label}

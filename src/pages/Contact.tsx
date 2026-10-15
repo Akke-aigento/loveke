@@ -35,7 +35,7 @@ export default function Contact() {
       setSent(true);
     } catch (err: any) {
       console.error('Contact form error:', err);
-      setError(t('contactPage.error') || 'Something went wrong. Please try again.');
+      setError(t('contactPage.error'));
     } finally {
       setLoading(false);
     }
@@ -66,20 +66,20 @@ export default function Contact() {
             className="space-y-4 bg-card border-3 border-foreground rounded-2xl p-6 md:p-8 shadow-card"
           >
             <div>
-              <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.name')}</label>
-              <input name="name" value={form.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <label htmlFor="contact-name" className="font-body font-semibold text-sm block mb-1">{t('contactPage.name')}</label>
+              <input id="contact-name" autoComplete="name" name="name" value={form.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
-              <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.email')}</label>
-              <input name="email" type="email" value={form.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <label htmlFor="contact-email" className="font-body font-semibold text-sm block mb-1">{t('contactPage.email')}</label>
+              <input id="contact-email" autoComplete="email" name="email" type="email" value={form.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
-              <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.subject')}</label>
-              <input name="subject" value={form.subject} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
+              <label htmlFor="contact-subject" className="font-body font-semibold text-sm block mb-1">{t('contactPage.subject')}</label>
+              <input id="contact-subject" name="subject" value={form.subject} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground" />
             </div>
             <div>
-              <label className="font-body font-semibold text-sm block mb-1">{t('contactPage.message')}</label>
-              <textarea name="message" value={form.message} onChange={handleChange} required rows={5} className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground resize-none" />
+              <label htmlFor="contact-message" className="font-body font-semibold text-sm block mb-1">{t('contactPage.message')}</label>
+              <textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required rows={5} className="w-full px-4 py-3 rounded-xl border-2 border-border bg-background font-body focus:outline-none focus:border-foreground resize-none" />
             </div>
             {error && <p className="text-destructive text-sm font-body text-center">{error}</p>}
             <button type="submit" disabled={loading} className="w-full py-3 rounded-xl font-display text-lg gradient-warm text-primary-foreground shadow-sticker hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100">

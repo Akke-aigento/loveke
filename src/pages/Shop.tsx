@@ -4,7 +4,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts, useCollections } from '@/integrations/sellqo/hooks';
 import { extractArray } from '@/integrations/sellqo/client';
 import { normalizeProducts, normalizeCollections } from '@/integrations/sellqo/normalizer';
-import { MOCK_PRODUCTS, MOCK_COLLECTIONS } from '@/lib/sellqo';
 import type { Product } from '@/integrations/sellqo/types';
 import type { Collection } from '@/integrations/sellqo/types';
 import ProductCard from '@/components/ProductCard';
@@ -33,18 +32,11 @@ export default function Shop() {
       return list;
     };
 
-    if (!productsError && productsData) {
-      const rawProducts = extractArray(productsData);
-      if (rawProducts.length > 0) {
-        return applySort(normalizeProducts(rawProducts));
-      }
-    }
-    // Fallback to mock data
-    let filtered = activeCollection === 'all'
-      ? MOCK_PRODUCTS
-      : MOCK_PRODUCTS.filter(p => p.collection === activeCollection);
-    return applySort(filtered as unknown as Product[]);
-  }, [productsData, productsError, activeCollection, sort]);
+    // LOVEKE-LAUNCH-1: geen nep-fallback meer. Geen data = lege lijst; een API-fout
+    // toont de 'dutje'-melding hieronder in plaats van verzonnen producten.
+    if (productsError || !productsData) return [];
+    return applySort(normalizeProducts(extractArray(productsData)));
+  }, [productsData, productsError, sort]);
 
   // Safely extract and normalize collections with fallback
   const collections = useMemo(() => {
@@ -56,7 +48,7 @@ export default function Shop() {
         return all.filter(c => (c.product_count ?? 0) > 0);
       }
     }
-    return MOCK_COLLECTIONS as unknown as Collection[];
+    return [] as Collection[];
   }, [collectionsData, collectionsError]);
 
   return (
@@ -118,6 +110,10 @@ export default function Shop() {
                 <div className="h-4 bg-muted rounded w-1/2" />
               </div>
             ))}
+          </div>
+        ) : productsError ? (
+          <div className="text-center py-20">
+            <p className="font-handwritten text-2xl text-muted-foreground">{t('shop.unavailable')}</p>
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-20">

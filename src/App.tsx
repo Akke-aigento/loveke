@@ -11,7 +11,6 @@ import { productsAPI, collectionsAPI, settingsAPI, pagesAPI } from "@/integratio
 import { sellqoKeys } from "@/integrations/sellqo/hooks";
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
-import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { RouteMeta } from "@/seo/useRouteMeta";
@@ -103,7 +102,6 @@ const App = () => (
               </Routes>
             </Suspense>
             <Footer />
-            <CookieBanner />
           </BrowserRouter>
         </TooltipProvider>
       </SellQoCartProvider>

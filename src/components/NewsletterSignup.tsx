@@ -3,12 +3,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useNewsletterSubscribe, useStorefrontSettings } from '@/integrations/sellqo/hooks';
 import { extractSingle } from '@/integrations/sellqo/client';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function NewsletterSignup() {
   const { t, locale } = useLanguage();
   const { data: settingsData } = useStorefrontSettings();
   const settings = (extractSingle(settingsData) ?? settingsData) as any;
-  const newsletterEnabled = settings?.newsletter?.enabled ?? settings?.data?.newsletter?.enabled ?? true;
+  // LOVEKE-LAUNCH-1: de API stuurt features.newsletter_enabled; het oude pad bestond niet.
+  const newsletterEnabled = settings?.features?.newsletter_enabled ?? settings?.newsletter?.enabled ?? true;
 
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -55,7 +57,10 @@ export default function NewsletterSignup() {
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <label htmlFor="newsletter-email" className="sr-only">{t('newsletter.label')}</label>
               <input
+                id="newsletter-email"
+                autoComplete="email"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -71,6 +76,13 @@ export default function NewsletterSignup() {
                 {subscribe.isPending ? '...' : t('newsletter.submit')}
               </button>
             </form>
+          )}
+
+          {status !== 'success' && (
+            <p className="mt-4 font-body text-xs text-primary-foreground/80">
+              {t('newsletter.consent')}{' '}
+              <Link to="/juridisch/privacy" className="underline">{t('newsletter.privacy')}</Link>.
+            </p>
           )}
 
           {status === 'error' && (

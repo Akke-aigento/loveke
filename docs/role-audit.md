@@ -155,3 +155,28 @@ changelog-keys.
 
 **Changelog (tenant-zichtbaar, bugfix):** i18n-keys `changelog.legalPages.*` in NL/EN/FR
 (app-talen) + DE-tekst in `docs/CHANGELOG.md`.
+
+## LOVEKE-LAUNCH-1 — launch-audit A–Z uitgevoerd (15-10-2026)
+
+**Aanleiding:** launch-audit (doc "Loveke launch-audit A–Z"). Zes blockers + SEO/a11y/content.
+
+**Data (SellQo, via connector, snapshot vooraf in `snapshots.loveke_20261015_{products,legal_pages,theme}`):**
+- Productprijs = laagste actieve variantprijs (tanktop 27,99 → 26,99; bodysuit 13,00 → 29,95).
+- Slugs hernoemd vóór indexering: `loveke-classic-tanktop`, `loveke-classic-hoodie`, `loveke-classic-oversized-tee`.
+- Omschrijving + meta_description voor sweatshirt, tanktop, bodysuit (zonder materiaalclaims die we niet kunnen staven); tee-omschrijving ontdubbeld (was dubbel ge-escaped HTML).
+- Cadeaukaart: geldigheid 12 → 24 maanden (Belgisch minimum), teksten aangepast ("geen vervaldatum" weg).
+- `tenant_theme_settings`: cookie_banner_enabled=false, newsletter_enabled=true. Verzendmethode-omschrijving: "Gemaakt op bestelling. Levering in 5 tot 20 werkdagen."
+- 7 juridische pagina's herschreven (NL/EN/FR): Nomadix BV + KBO, loveke.be, echte verzending (27 landen, gratis, 5–20 werkdagen, Oekraïne-douane), herroepingsformulier, verwerkers (Stripe, Printful, SellQo/Supabase, Resend), cookies zonder GA. `is_auto_generated=false`, DE-velden leeg (site kent geen DE).
+
+**Frontend:**
+- Mock-fallback (`MOCK_PRODUCTS`/`MOCK_COLLECTIONS`) verwijderd; API-fout toont de "dutje"-melding.
+- Cookiebanner weg (geen tracking-cookies). Taalkeuze onthouden in localStorage.
+- Footer: echte betaalmethodes (Bancontact, iDEAL, Visa, Mastercard, overschrijving) i.p.v. PayPal/nep-logo's; bedrijfsregel Nomadix BV; "Juridisch" vertaald.
+- Productpagina: levertijd + gratis verzending onder de knop, maattip van Akke, USP "Biologisch katoen" → "Gemaakt op bestelling" (claim gold niet voor alle producten; greenwashing-regels sinds 27-09-2026).
+- Loveke-muur op de homepage: 4 strippagina's i.p.v. emoji-plaatshouders.
+- Strip: 5 lege tekstkaders op pagina 2–3 gevuld, pagina 7 gekaderd, alles naar WebP (12,2 MB → 2,1 MB), beschrijvende alt-teksten NL/EN/FR, melding "strip is in het Engels".
+- SEO: Product- + BreadcrumbList-JSON-LD per productpagina, og:type product, Organization-JSON-LD op de homepage zolang Insights geen jsonld levert, /cadeaubon uit de sitemap (client-redirect blijft), og-image 1200×630, apple-touch-icon, theme-color, 404 → noindex.
+- A11y: aria-labels op winkelmand, menu, taal- en sociale knoppen; gekoppelde labels + autocomplete in contact- en nieuwsbriefformulier; Story-koppen h3 → h2.
+- LegalPage: datum-override (LEGAL-DATE-1) verwijderd, 404-tekst vertaald.
+
+**Niet gedaan (Akke):** echte testorder (2 stuks, Loveke for Two) + Search Console/sitemap indienen; productfoto in de hero.

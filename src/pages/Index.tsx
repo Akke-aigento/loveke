@@ -5,6 +5,12 @@ import FeaturedProducts from '@/components/FeaturedProducts';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import wall1 from '@/assets/comic/strip-1.webp';
+import wall2 from '@/assets/comic/strip-5.webp';
+import wall3 from '@/assets/comic/strip-8.webp';
+import wall4 from '@/assets/comic/strip-11.webp';
+
+const WALL = [wall1, wall2, wall3, wall4];
 
 // Lazy load below-the-fold components
 const StoryTeaser = lazy(() => import('@/components/StoryTeaser'));
@@ -41,23 +47,27 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Social Wall placeholder */}
+      {/* Loveke-muur: vier strippagina's als voorproefje (LOVEKE-LAUNCH-1, vervangt de emoji-plaatshouders) */}
       <section className="py-16 px-4">
         <div className="container mx-auto text-center">
           <h2 className="font-display text-3xl md:text-4xl mb-3">{t('socialWall.title')}</h2>
           <p className="font-body text-muted-foreground mb-8">{t('socialWall.subtitle')}</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
-            {[...Array(4)].map((_, i) => (
+            {WALL.map((src, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, rotate: (i % 2 === 0 ? -3 : 3) }}
+                initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="aspect-square bg-card border-2 border-foreground rounded-lg shadow-sticker flex items-center justify-center text-3xl"
                 style={{ transform: `rotate(${(i % 2 === 0 ? -2 : 2)}deg)` }}
               >
-                {['📸', '🧡', '👫', '🔥'][i]}
+                <Link
+                  to="/de-strip"
+                  className="block aspect-square bg-card border-2 border-foreground rounded-lg shadow-sticker overflow-hidden"
+                >
+                  <img src={src} alt={t('comic.title')} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+                </Link>
               </motion.div>
             ))}
           </div>

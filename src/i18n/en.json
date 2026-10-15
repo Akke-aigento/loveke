@@ -6,7 +6,9 @@
     "comic": "The Comic",
     "sizeGuide": "Size Guide",
     "giftCards": "Gift Cards",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Open or close menu",
+    "cart": "Shopping cart"
   },
   "hero": {
     "tagline": "Born from Love. Worn on the Street.",
@@ -32,7 +34,7 @@
   },
   "usps": {
     "belgium": "Belgian brand 🇧🇪",
-    "organic": "Organic cotton 🌿",
+    "organic": "Made to order 🧵",
     "shipping": "Free shipping 📦",
     "love": "Printed with love ❤️"
   },
@@ -51,7 +53,10 @@
     "placeholder": "your@email.com",
     "submit": "Sign me up! 💌",
     "success": "You're in! 🎉",
-    "error": "Oops, try again."
+    "error": "Oops, try again.",
+    "consent": "You can unsubscribe at any time. Read our",
+    "privacy": "privacy policy",
+    "label": "Your email address"
   },
   "footer": {
     "shop": "Shop",
@@ -68,7 +73,10 @@
     "returns": "Returns",
     "contact": "Contact",
     "copyright": "© 2026 Loveke — Made with ❤️",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "legal": "Legal",
+    "company": "Loveke is a brand of Nomadix BV · VAT BE1017500207",
+    "payments": "Payment methods"
   },
   "cart": {
     "title": "Cart",
@@ -111,10 +119,13 @@
     "sizeGuide": "View size guide",
     "related": "You might also like",
     "belgiumMade": "Belgian brand 🇧🇪",
-    "organicCotton": "Organic Cotton 🌿",
+    "organicCotton": "Made to order",
     "sizeGuideTitle": "Size guide",
     "unitCm": "cm",
-    "unitInch": "inch"
+    "unitInch": "inch",
+    "reviews": "Reviews",
+    "delivery": "Free shipping · made to order · delivered in 5 to 20 working days",
+    "sizeTip": "Akke's tip (1.83 m): L for a regular fit, XL for oversized."
   },
   "shop": {
     "title": "Shop",
@@ -124,7 +135,8 @@
     "sortPriceLow": "Price low-high",
     "sortPriceHigh": "Price high-low",
     "all": "All",
-    "empty": "Something beautiful is coming soon! 👀"
+    "empty": "Something beautiful is coming soon! 👀",
+    "unavailable": "Our shop is taking a quick nap 😴 Please try again in a moment!"
   },
   "story": {
     "heroTitle": "How it all started...",
@@ -143,7 +155,9 @@
   "comic": {
     "title": "The Comic",
     "subtitle": "The Loveke story as a comic book",
-    "freeReminder": "Discover the Loveke story in comic form 📖"
+    "freeReminder": "Discover the Loveke story in comic form 📖",
+    "englishNote": "The comic is in English.",
+    "alt": "Comic, page"
   },
   "sizeGuide": {
     "title": "Size Guide",
@@ -184,7 +198,9 @@
     "message": "Oops... this page is stuck. Just like Nastya in that bathroom in Bratislava. 🚽",
     "occupied": "OCCUPIED",
     "homeCta": "Take me back home 🏠",
-    "storyCta": "Or read the full story →"
+    "storyCta": "Or read the full story →",
+    "legalMissing": "We couldn't find this page.",
+    "back": "Back to home"
   },
   "cookie": {
     "message": "We use cookies. Not the tasty kind unfortunately, but to improve your experience. 🍪",

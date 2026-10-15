@@ -20,14 +20,14 @@ export const PAGES: PageMeta[] = [
     path: "/",
     title: "Loveke — Belgische streetwear geboren uit liefde",
     description:
-      "Belgische streetwear met een verhaal: van een hostel in Bratislava tot organic, GOTS-gecertificeerde kleding gedrukt met liefde. Shop de collectie.",
+      "Belgische streetwear met een verhaal: van een hostel in Bratislava tot tees en hoodies, gedrukt op bestelling. Gratis verzending. Shop de collectie.",
     priority: 1.0,
   },
   {
     path: "/shop",
     title: "Shop de collectie — Belgische streetwear | Loveke",
     description:
-      "Shop de Loveke-collectie: organic, GOTS-gecertificeerde streetwear uit België, gedrukt met liefde. T-shirts, hoodies en meer met een verhaal.",
+      "Shop de Loveke-collectie: Belgische streetwear met een verhaal. Oversized tees, hoodies, sweaters en tanktops, gedrukt op bestelling. Gratis verzending.",
     priority: 0.9,
   },
   {
@@ -48,12 +48,6 @@ export const PAGES: PageMeta[] = [
     title: "Maatgids — vind je juiste maat | Loveke",
     description: "Twijfel je over je maat? In de Loveke-maatgids vind je per model de afmetingen, zodat je in één keer de juiste maat kiest.",
     priority: 0.5,
-  },
-  {
-    path: "/cadeaubon",
-    title: "Cadeaubon — geef een Loveke cadeau | Loveke",
-    description: "De perfecte cadeaubon voor wie je graag ziet: geef een Loveke-cadeaubon en laat hen zelf hun favoriete stuk kiezen.",
-    priority: 0.6,
   },
   {
     path: "/contact",
