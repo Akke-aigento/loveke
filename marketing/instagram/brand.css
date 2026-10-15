@@ -1,0 +1,13 @@
+/* Loveke Instagram-huisstijl. Lettertypes lokaal (fontsource), geen netwerk nodig. */
+@font-face{font-family:'Lilita One';src:url(fonts/lilita-one-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:'DM Sans';src:url(fonts/dm-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:'DM Sans';src:url(fonts/dm-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:'DM Sans';src:url(fonts/dm-sans-latin-700-normal.woff2) format('woff2');font-weight:700}
+@font-face{font-family:'Caveat';src:url(fonts/caveat-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:'Caveat';src:url(fonts/caveat-latin-700-normal.woff2) format('woff2');font-weight:700}
+:root{--cream:#FFF8F0;--black:#1A1A1A;--orange:#FF7033;--yellow:#FFD43D;--red:#E3404B;--pink:#FF85A1}
+html,body{margin:0;padding:0}
+.wm{background:linear-gradient(135deg,#E3404B 0%,#FF7033 55%,#FFC93D 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dots{background-image:radial-gradient(circle,rgba(26,26,26,.10) 2.5px,transparent 2.5px);background-size:22px 22px}
+/* Plek voor een Instagram-sticker (poll, link, vraag, aftelling): leeg in de export. */
+.slot{visibility:hidden}
