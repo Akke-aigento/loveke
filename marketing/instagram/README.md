@@ -36,6 +36,7 @@ daar niet meer in.
 - Formaten: post 1080×1350, story 1080×1920 (bovenaan 250 px en onderaan 340 px vrij laten), highlight 1080×1080.
 - Geen emoji in de beelden (wel in captions). Icoontjes als inline SVG.
 - Taal: Nederlands (Vlaams, warm, kort). De tagline "Born from Love. Worn on the Street." blijft Engels.
+- **Engels enkel op aanvraag** (Akke, 15-10): standaard is alles Nederlands. Vraagt Akke een Engelse post (in de chat of via "Opnieuw maken" met taal English), dan is de caption én de tekst in het beeld Engels (internationaal, warm, kort; geen Vlaamse woorden behalve "Loveke"). Vul altijd de kolom `language` in (`nl` of `en`).
 
 ## Wat we wel en niet zeggen
 
@@ -65,10 +66,10 @@ daar niet meer in.
 5. **Publiceer de beelden**: kopieer de JPG's (en MP4's) uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`, `reel-<onderwerp>-muziek.mp4`, `reel-<onderwerp>-stil.mp4`, `reel-<onderwerp>-cover.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de bestanden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>`. Controleer elke URL met `curl -sI` (200).
 6. **Zet de week in SellQo** met `query_database` (zelfde project). Eén `insert` voor alle items van de week, nooit `update` of `delete` op bestaande rijen:
    ```sql
-   insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, post_text, image_urls, scheduled_for) values
-   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task',null,'<caption>',
+   insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, language, post_text, image_urls, scheduled_for) values
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task',null,'nl','<caption>',
     array['<raw-url>'], '<JJJJ-MM-DD> 18:00 Europe/Brussels'),
-   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','sticker','Story: <wat Akke moet doen, welke sticker waar>',
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','sticker','nl','Story: <wat Akke moet doen, welke sticker waar>',
     array['<raw-url>'], '<JJJJ-MM-DD> 18:05 Europe/Brussels');
    ```
    - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
@@ -98,14 +99,15 @@ POV/meme met strippanelen, of montage van clips die Akke doorstuurt.
 - **Bekijk** vóór je verdergaat 6 tot 8 stills (begin, elke scène, eindkaart): niets afgesneden, tekst leesbaar.
 - **In SellQo**:
   ```sql
-  insert into social_posts (tenant_id, platform, media_type, status, source, post_text, image_urls, video_url, video_silent_url, music_hint, scheduled_for) values
-  ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','reel','pending_approval','content_task','<caption>',
+  insert into social_posts (tenant_id, platform, media_type, status, source, language, post_text, image_urls, video_url, video_silent_url, music_hint, scheduled_for) values
+  ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','reel','pending_approval','content_task','nl','<caption>',
    array['<raw-url cover.jpg>'], '<raw-url -muziek.mp4>', '<raw-url -stil.mp4>',
-   '{"mood":"warm, akoestisch","bpm":100,"search_terms":["acoustic love","indie folk","soft guitar"],"tip":"Laat het refrein starten bij het perron (0:09).","track":{"title":"<titel>","license":"<licentie>"}}'::jsonb,
+   '{"songs":[{"title":"<titel>","artist":"<artiest>","note":"<waarom / vanaf waar>"},{"title":"…","artist":"…"},{"title":"…","artist":"…"}],"mood":"warm, akoestisch","bpm":100,"tip":"Laat het refrein starten bij het perron (0:09).","track":{"title":"<bibliotheeknummer>","license":"<licentie>"}}'::jsonb,
    '<zondag> 19:00 Europe/Brussels');
   ```
+  **Songvoorstellen (verplicht, 3 concrete nummers):** zoek elke week met WebSearch naar de actuele trending audio voor Instagram Reels (bv. "trending Instagram Reels songs <maand> <jaar>") en lees één of twee lijsten van deze week. Kies 3 nummers die bij de sfeer van de reel passen, met titel én artiest, plus in `note` waarom en vanaf waar. Voorkeur voor nummers die de bron als bruikbaar voor zakelijke accounts noemt of voor "original audio"; commerciële hits zijn voor zakelijke accounts vaak niet beschikbaar. Verzin nooit een titel: enkel nummers die je in een bron van deze week of met zekerheid kent. Noteer de bron-URL in het log.
   Zonder bibliotheeknummer: `video_url` null, status `manual`, `manual_reason` `music`. Akke kiest in de planning "Goedkeuren (automatisch)" (met het bibliotheeknummer) of "Ik kies zelf muziek" (stille versie + herinnering).
-  `search_terms` zijn zoekwoorden voor de muziekzoeker in de Instagram-app (sfeer/genre, geen titels van hits die we niet kunnen controleren).
+  `search_terms` (optioneel) blijft bruikbaar als extra zoekwoorden naast de 3 songs.
 
 ## Opnieuw maken (verzoeken uit de Social planning)
 
@@ -113,8 +115,9 @@ Akke kan bij elke post "Opnieuw maken" kiezen, met een optionele opmerking. De p
 status `regenerate_requested` (met `regenerate_note` en `regenerate_from`). De geplande taak
 "Social: opnieuw maken" pikt die elk uur (8–22 u) op:
 - Zelfde dag en uur, zelfde soort (post/story/reel), tenzij de opmerking iets anders vraagt.
+- Taal: `regenerate_language` als dat ingevuld is (bv. `en` = caption én beeldtekst in het Engels), anders de huidige `language`. Zet `language` op de taal van de nieuwe versie.
 - Houd rekening met de opmerking en met het log (geen dubbels), maak het nieuwe beeld, push het naar `published/<maandag>/` met een nieuwe naam (`…-v2.jpg`).
-- Werk **die ene rij** bij (dit is de enige `update` die mag): nieuwe `post_text`, `image_urls`/video-kolommen, `music_hint`; `status` = `regenerate_from` als dat `manual` was, anders `pending_approval`; `regenerate_note`, `regenerate_requested_at`, `regenerate_from`, `reminded_at`, `approved_at`, `approved_by` en `error_message` op null; `publish_attempts` 0.
+- Werk **die ene rij** bij (dit is de enige `update` die mag): nieuwe `post_text`, `image_urls`/video-kolommen, `music_hint`; `status` = `regenerate_from` als dat `manual` was, anders `pending_approval`; `regenerate_note`, `regenerate_requested_at`, `regenerate_from`, `regenerate_language`, `reminded_at`, `approved_at`, `approved_by` en `error_message` op null; `publish_attempts` 0.
 - Pas het log aan en stuur een melding `social_posts_ready` ("Nieuwe versie klaar: <onderwerp>").
 
 ## Wat SellQo wel en niet automatisch kan
