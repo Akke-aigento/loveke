@@ -60,26 +60,65 @@ daar niet meer in.
    `select name, slug, short_description, (select min(price) from product_variants v where v.product_id=p.id and v.is_active) prijs from products p where tenant_id='1671a91c-31fe-42ed-8a10-41f3117ceb50' and is_active and not hide_from_storefront;`
    Nieuwe producten zonder foto in `../product-photos/`? Gebruik een strip- of typografisch beeld en meld het aan Akke.
 3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en per post één story (`story-ma.html` …), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
-4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt).
-5. **Publiceer de beelden**: kopieer de JPG's uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de beelden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>.jpg`. Controleer één URL met `curl -sI` (200, `image/jpeg`).
+   **Plus één reel per week** (zondag 19:00), zie "Reels" hieronder.
+4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt). De reel met `reel.mjs` (zie "Reels").
+5. **Publiceer de beelden**: kopieer de JPG's (en MP4's) uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`, `reel-<onderwerp>-muziek.mp4`, `reel-<onderwerp>-stil.mp4`, `reel-<onderwerp>-cover.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de bestanden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>`. Controleer elke URL met `curl -sI` (200).
 6. **Zet de week in SellQo** met `query_database` (zelfde project). Eén `insert` voor alle items van de week, nooit `update` of `delete` op bestaande rijen:
    ```sql
-   insert into social_posts (tenant_id, platform, media_type, status, source, post_text, image_urls, scheduled_for) values
-   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task','<caption>',
+   insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, post_text, image_urls, scheduled_for) values
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task',null,'<caption>',
     array['<raw-url>'], '<JJJJ-MM-DD> 18:00 Europe/Brussels'),
-   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','Story: <wat Akke moet doen, welke sticker waar>',
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','sticker','Story: <wat Akke moet doen, welke sticker waar>',
     array['<raw-url>'], '<JJJJ-MM-DD> 18:05 Europe/Brussels');
    ```
    - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
-   - Stories met een sticker: status `manual`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
+   - Stories met een sticker: status `manual`, `manual_reason` `sticker`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
+   - Reel: zie "Reels" voor de kolommen.
    - Caption max 2200 tekens; enkele quotes verdubbelen (`''`). Maximaal 10 beelden per carousel; meer is een losse post of handwerk.
    - Controleer daarna met een `select` dat de rijen er staan, met het juiste uur in Brussel.
-7. **Reminders**: maak per postdag een eenmalige geplande taak om 17:45 Brussel (pushmelding aan), naar het model van de launch-reminders (17–23 okt): één read-only `select status, error_message` op de post van die dag, één korte boodschap aan Akke volgens de status (gaat vanzelf online / staat online / wacht nog op goedkeuring / mislukt + reden), plus zijn deel van die dag (de story). De reminder zegt nooit "post dit zelf" voor een post die SellQo publiceert: dan staat hij dubbel online.
-8. **Log en git**: voeg de week toe aan `log.md`, commit `weeks/<maandag>/` + `log.md` naar `main` van `Akke-aigento/loveke` (de map `out/` niet). Raak niets buiten `marketing/instagram/` aan.
-9. **Meld** Akke in één korte boodschap: de onderwerpen van de week, dat ze klaarstaan in SellQo → Marketing → Social planning, en dat hij ze moet goedkeuren (knop "Week goedkeuren"). Zonder goedkeuring gaat er niets online.
+7. **Herinneringen doet SellQo zelf.** Voor alles op `manual` krijgt Akke ±1 uur vooraf een melding met push (SOCIAL-3). Maak dus **geen** losse geplande herinneringstaken meer.
+8. **Log en git**: voeg de week toe aan `log.md` (ook de reel en welk nummer), commit `weeks/<maandag>/`, `published/<maandag>/`, `log.md` en eventueel `../music/tracks.json` (`used`) naar `main` van `Akke-aigento/loveke` (de map `out/` niet).
+9. **Meld** Akke via een SellQo-melding (die geeft ook een push) en één korte boodschap:
+   ```sql
+   insert into notifications (tenant_id, category, type, priority, title, message, action_url, data) values
+   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','marketing','social_posts_ready','medium',
+    'Week van <d mmm> klaar: <n> posts','<onderwerpen, kort>. Keur ze goed in de Social planning.','/admin/marketing/social','{}'::jsonb);
+   ```
+   Zonder goedkeuring gaat er niets online.
+
+## Reels
+
+Eén per week, zondag 19:00. Afwisselen tussen formats (zie het log, nooit twee keer na elkaar hetzelfde):
+strip-verhaal (een hoofdstuk geanimeerd), product-drop, typografisch (zin woord per woord), slideshow op de beat,
+POV/meme met strippanelen, of montage van clips die Akke doorstuurt.
+
+- **Bron**: `weeks/<maandag>/reel-<onderwerp>/index.html` met `<meta name="loveke-reel" content="1080x1920" data-duration="<s>" data-fps="30">` en een `window.setT(t)` die alles deterministisch op tijdstip t zet (voorbeeld: `weeks/2026-10-19/reel-kyiv/`). 12 tot 25 seconden; tekst binnen de veilige zone (boven 220 px en onder 380 px vrij laten).
+- **Muziek**: kies een nummer uit `../music/` (zie de README daar) en zet de scèneduur op de beat. Is de bibliotheek nog leeg, dan enkel de stille versie.
+- **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/reel.mjs <index.html> out/<maandag>/reel-<onderwerp> --music ../music/<file> --music-start <best_start>` → `-stil.mp4` en `-muziek.mp4` (elk < 9,5 MB). Cover: `ffmpeg -ss <s> -i <stil.mp4> -frames:v 1 -q:v 2 reel-<onderwerp>-cover.jpg` (een sterk beeld met de titel).
+- **Bekijk** vóór je verdergaat 6 tot 8 stills (begin, elke scène, eindkaart): niets afgesneden, tekst leesbaar.
+- **In SellQo**:
+  ```sql
+  insert into social_posts (tenant_id, platform, media_type, status, source, post_text, image_urls, video_url, video_silent_url, music_hint, scheduled_for) values
+  ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','reel','pending_approval','content_task','<caption>',
+   array['<raw-url cover.jpg>'], '<raw-url -muziek.mp4>', '<raw-url -stil.mp4>',
+   '{"mood":"warm, akoestisch","bpm":100,"search_terms":["acoustic love","indie folk","soft guitar"],"tip":"Laat het refrein starten bij het perron (0:09).","track":{"title":"<titel>","license":"<licentie>"}}'::jsonb,
+   '<zondag> 19:00 Europe/Brussels');
+  ```
+  Zonder bibliotheeknummer: `video_url` null, status `manual`, `manual_reason` `music`. Akke kiest in de planning "Goedkeuren (automatisch)" (met het bibliotheeknummer) of "Ik kies zelf muziek" (stille versie + herinnering).
+  `search_terms` zijn zoekwoorden voor de muziekzoeker in de Instagram-app (sfeer/genre, geen titels van hits die we niet kunnen controleren).
+
+## Opnieuw maken (verzoeken uit de Social planning)
+
+Akke kan bij elke post "Opnieuw maken" kiezen, met een optionele opmerking. De post krijgt dan
+status `regenerate_requested` (met `regenerate_note` en `regenerate_from`). De geplande taak
+"Social: opnieuw maken" pikt die elk uur (8–22 u) op:
+- Zelfde dag en uur, zelfde soort (post/story/reel), tenzij de opmerking iets anders vraagt.
+- Houd rekening met de opmerking en met het log (geen dubbels), maak het nieuwe beeld, push het naar `published/<maandag>/` met een nieuwe naam (`…-v2.jpg`).
+- Werk **die ene rij** bij (dit is de enige `update` die mag): nieuwe `post_text`, `image_urls`/video-kolommen, `music_hint`; `status` = `regenerate_from` als dat `manual` was, anders `pending_approval`; `regenerate_note`, `regenerate_requested_at`, `regenerate_from`, `reminded_at`, `approved_at`, `approved_by` en `error_message` op null; `publish_attempts` 0.
+- Pas het log aan en stuur een melding `social_posts_ready` ("Nieuwe versie klaar: <onderwerp>").
 
 ## Wat SellQo wel en niet automatisch kan
 
-- Automatisch: foto-posts, carousels (max 10) en stories zonder sticker, op het geplande uur. Een PNG wordt vanzelf naar JPEG omgezet.
-- Handwerk: stories met poll-, link- of vraagsticker (de API kent geen stickers), highlights, reacties beantwoorden.
+- Automatisch: foto-posts, carousels (max 10), stories zonder sticker en reels (MP4 tot 10 MB, met bibliotheekmuziek), op het geplande uur. Een PNG wordt vanzelf naar JPEG omgezet; video's worden naar de SellQo-opslag gekopieerd.
+- Handwerk: stories met poll-, link- of vraagsticker (de API kent geen stickers), reels met een nummer uit de Instagram-app, highlights, reacties beantwoorden. SellQo stuurt een herinnering ±1 uur vooraf.
 - Mislukt een post (bv. koppeling verlopen), dan staat hij op "Mislukt" in de Social planning en krijgt Akke een melding. De koppeling zit in SellQo Connect → Kanalen en verloopt na 60 dagen als ze niet ververst wordt; SellQo ververst ze elke nacht.
