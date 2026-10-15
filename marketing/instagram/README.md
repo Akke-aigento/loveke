@@ -14,6 +14,7 @@ dezelfde stappen volgen.
 | `weeks/<JJJJ-MM-DD>/` | Eén map per week (datum = maandag), met de HTML-bronnen van die week. |
 | `out/` | Gerenderde JPG's (niet nodig in git; mag opnieuw gemaakt worden). |
 | `render.mjs` | Rendert elke `.html` in een map naar JPG op het formaat uit `<meta name="loveke-size">`. |
+| `recipe.mjs` | Maakt van een post-HTML met `data-slot`-tekstvakken een recept (`.recipe.json`) voor "Tekst in beeld aanpassen" in SellQo. |
 | `log.md` | Wat er al gepost is, per week. Lees dit vóór je nieuwe content bedenkt: niets herhalen. |
 | `../product-photos/` | Productfoto's (PNG met transparante achtergrond, 1000×1000), van SellQo. |
 | `../../src/assets/comic/strip-1..12.webp` | De strip (Engelstalig), 896×1200. |
@@ -62,7 +63,9 @@ daar niet meer in.
    Nieuwe producten zonder foto in `../product-photos/`? Gebruik een strip- of typografisch beeld en meld het aan Akke.
 3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en per post één story (`story-ma.html` …), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
    **Plus één reel per week** (zondag 19:00), zie "Reels" hieronder.
+3b. **Tekstvakken markeren** (SOCIAL-4): geef elk tekstelement dat Akke later mag aanpassen `data-slot="<sleutel>" data-label="<Label>" data-max="<max tekens>"` (`data-multiline="true"` als er een `<br>` in mag). Enkel platte tekst in zo'n element (geen geneste opmaak); zet een vast stukje opmaak (bv. "1." of "vanaf") in een apart element ernaast. `data-max` ≈ wat nog mooi past in het ontwerp (meestal 1,4 × de huidige lengte). Geen scripts of on…-attributen.
 4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt). De reel met `reel.mjs` (zie "Reels").
+4b. **Recept**: `node marketing/instagram/recipe.mjs weeks/<maandag>/post-*.html weeks/<maandag>/story-*.html` → `<naam>.recipe.json` naast elke HTML. Commit die mee.
 5. **Publiceer de beelden**: kopieer de JPG's (en MP4's) uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`, `reel-<onderwerp>-muziek.mp4`, `reel-<onderwerp>-stil.mp4`, `reel-<onderwerp>-cover.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de bestanden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>`. Controleer elke URL met `curl -sI` (200).
 6. **Zet de week in SellQo** met `query_database` (zelfde project). Eén `insert` voor alle items van de week, nooit `update` of `delete` op bestaande rijen:
    ```sql
@@ -75,6 +78,7 @@ daar niet meer in.
    - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
    - Stories met een sticker: status `manual`, `manual_reason` `sticker`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
    - Reel: zie "Reels" voor de kolommen.
+   - Recept: voeg `image_recipes` toe als `jsonb_build_array($r$<inhoud van .recipe.json>$r$::jsonb)` (één element per beeld, in dezelfde volgorde als `image_urls`; `null` voor een beeld zonder recept). Reels krijgen geen recept.
    - Caption max 2200 tekens; enkele quotes verdubbelen (`''`). Maximaal 10 beelden per carousel; meer is een losse post of handwerk.
    - Controleer daarna met een `select` dat de rijen er staan, met het juiste uur in Brussel.
 7. **Herinneringen doet SellQo zelf.** Voor alles op `manual` krijgt Akke ±1 uur vooraf een melding met push (SOCIAL-3). Maak dus **geen** losse geplande herinneringstaken meer.
@@ -116,8 +120,9 @@ status `regenerate_requested` (met `regenerate_note` en `regenerate_from`). De g
 "Social: opnieuw maken" pikt die elk uur (8–22 u) op:
 - Zelfde dag en uur, zelfde soort (post/story/reel), tenzij de opmerking iets anders vraagt.
 - Taal: `regenerate_language` als dat ingevuld is (bv. `en` = caption én beeldtekst in het Engels), anders de huidige `language`. Zet `language` op de taal van de nieuwe versie.
+- Heeft Akke de tekst in het beeld al aangepast (het recept in `image_recipes` verschilt van de `.recipe.json` in de repo), vertrek dan van de teksten in het recept uit SellQo.
 - Houd rekening met de opmerking en met het log (geen dubbels), maak het nieuwe beeld, push het naar `published/<maandag>/` met een nieuwe naam (`…-v2.jpg`).
-- Werk **die ene rij** bij (dit is de enige `update` die mag): nieuwe `post_text`, `image_urls`/video-kolommen, `music_hint`; `status` = `regenerate_from` als dat `manual` was, anders `pending_approval`; `regenerate_note`, `regenerate_requested_at`, `regenerate_from`, `regenerate_language`, `reminded_at`, `approved_at`, `approved_by` en `error_message` op null; `publish_attempts` 0.
+- Werk **die ene rij** bij (dit is de enige `update` die mag): nieuwe `post_text`, `image_urls`/video-kolommen, `music_hint`, `image_recipes` (nieuw recept); `status` = `regenerate_from` als dat `manual` was, anders `pending_approval`; `regenerate_note`, `regenerate_requested_at`, `regenerate_from`, `regenerate_language`, `reminded_at`, `approved_at`, `approved_by` en `error_message` op null; `publish_attempts` 0.
 - Pas het log aan en stuur een melding `social_posts_ready` ("Nieuwe versie klaar: <onderwerp>").
 
 ## Wat SellQo wel en niet automatisch kan
