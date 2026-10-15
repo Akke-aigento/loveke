@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="19" data-fps="30">
+<title>Reel: afscheid in Kyiv</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#FFF8F0}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#FFF8F0;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .hand{font-family:'Caveat',cursive;font-weight:700;color:#E3404B;line-height:1}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .card{position:absolute;left:50%;border:7px solid #1A1A1A;border-radius:34px;overflow:hidden;background:#1A1A1A}
+  .card img{display:block;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%}
+  .title{position:absolute;left:80px;right:80px;text-align:center;font-family:'Lilita One',sans-serif;font-size:96px;line-height:1}
+  .sub{position:absolute;left:80px;right:80px;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:66px;color:#E3404B}
+  .w{display:inline-block}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="dots" style="position:absolute;inset:0"></div>
+
+  <!-- Hook -->
+  <div class="layer" id="hook">
+    <div class="hand" id="h1" style="position:absolute;top:560px;width:100%;text-align:center;font-size:84px">een echt verhaal</div>
+    <div class="big" style="position:absolute;top:680px;width:100%;text-align:center;font-size:170px">
+      <div class="w" id="h2">Afscheid</div><br>
+      <div class="w" id="h3">nemen in</div><br>
+      <div class="w wm" id="h4" style="font-size:230px">Kyiv</div>
+    </div>
+  </div>
+
+  <!-- Scènes worden door het script aangemaakt -->
+  <div id="scenes"></div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big wm" id="e1" style="position:absolute;top:640px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:930px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div id="e3" style="position:absolute;top:1120px;width:100%;text-align:center;font-size:46px;color:#FFF8F0">de hele strip lees je op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+const SCENES = [
+  { img: 'a-kyiv.jpg',   ratio: 1592/700, title: 'Samen door Kyiv',          sub: 'eindelijk samen',   accent: '#FF7033', rot: -2.5 },
+  { img: 'b-cafe.jpg',   ratio: 778/712,  title: 'Varenyky en veel lachen',  sub: 'de beste dagen',           accent: '#FFD43D', rot:  2.5 },
+  { img: 'c-zon.jpg',    ratio: 1592/718, title: 'Tot de zon onderging',     sub: 'en de trein wachtte',      accent: '#FF85A1', rot: -2 },
+  { img: 'd-perron.jpg', ratio: 1584/804, title: 'Dan: het perron',          sub: 'tot snel, Loveke',         accent: '#E3404B', rot:  2 },
+  { img: 'e-trein.jpg',  ratio: 768/676,  title: 'Twee landen',              sub: 'één chat',                 accent: '#FFD43D', rot: -2.5 },
+  { img: 'f-bellen.jpg', ratio: 1584/718, title: 'Afstand is maar afstand',  sub: 'elke avond bellen',        accent: '#FF7033', rot:  2 },
+];
+const HOOK_END = 2.2, SCENE = 2.4, END_START = HOOK_END + SCENES.length * SCENE; // 16.6
+
+const host = document.getElementById('scenes');
+SCENES.forEach((s, i) => {
+  const wide = s.ratio > 1.5;
+  const w = wide ? 960 : 820, h = Math.round(w / s.ratio);
+  const top = 1000 - h / 2;
+  const el = document.createElement('div');
+  el.className = 'layer'; el.id = 'sc' + i;
+  el.innerHTML =
+    `<div class="title" style="top:${top - 230}px">${s.title.split(' ').map(x => `<span class="w">${x}</span>`).join(' ')}</div>` +
+    `<div class="card" style="top:${top}px;width:${w}px;height:${h}px;margin-left:${-w/2}px;box-shadow:16px 16px 0 ${s.accent}"><img src="${s.img}" alt=""></div>` +
+    `<div class="sub" style="top:${top + h + 50}px">${s.sub}</div>`;
+  host.appendChild(el);
+});
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .35) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px)`;
+};
+
+window.setT = (t) => {
+  // Hook
+  const hook = document.getElementById('hook');
+  hook.style.opacity = t < HOOK_END ? 1 : 0;
+  if (t < HOOK_END) {
+    pop(document.getElementById('h1'), t, 0.05);
+    pop(document.getElementById('h2'), t, 0.3);
+    pop(document.getElementById('h3'), t, 0.55);
+    pop(document.getElementById('h4'), t, 0.85, .45);
+    const out = clamp((t - (HOOK_END - .25)) / .25);
+    hook.style.opacity = 1 - out;
+  }
+  // Scènes
+  SCENES.forEach((s, i) => {
+    const el = document.getElementById('sc' + i);
+    const u = t - (HOOK_END + i * SCENE);
+    if (u < 0 || u > SCENE) { el.style.opacity = 0; return; }
+    el.style.opacity = 1;
+    const inP = easeBack(clamp(u / .45));
+    const outP = easeOut(clamp((u - (SCENE - .28)) / .28));
+    const card = el.querySelector('.card');
+    card.style.transform = `translateY(${(1 - inP) * 260 - outP * 300}px) rotate(${s.rot * inP}deg) scale(${0.85 + 0.15 * inP})`;
+    card.style.opacity = clamp(u / .2) * (1 - outP);
+    const img = card.querySelector('img');
+    const k = u / SCENE;
+    img.style.transform = `scale(${1.04 + 0.12 * k}) translateX(${(i % 2 ? -1 : 1) * 20 * k}px)`;
+    el.querySelectorAll('.title .w').forEach((w, j) => {
+      pop(w, u, 0.2 + j * 0.09, .3);
+      if (outP > 0) w.style.opacity = 1 - outP;
+    });
+    const sub = el.querySelector('.sub');
+    pop(sub, u, 0.75, .35);
+    if (outP > 0) sub.style.opacity = 1 - outP;
+  });
+  // Eindkaart
+  const end = document.getElementById('end');
+  const ue = t - END_START;
+  end.style.opacity = clamp(ue / .25);
+  if (ue >= 0) {
+    pop(document.getElementById('e1'), ue, 0.1, .5);
+    pop(document.getElementById('e2'), ue, 0.6);
+    pop(document.getElementById('e3'), ue, 1.0);
+  }
+};
+window.setT(0);
+</script>
+</body>
+</html>

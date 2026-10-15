@@ -16,11 +16,11 @@ Eén blok per week, nieuwste onderaan. Gebruikt om herhaling te vermijden.
 | 2026-10-22 | Verhaal | Twee rugzakken, één trein (strip p. 8) | Cadeaukaart |
 | 2026-10-23 | Merk | Maattip van Akke | Highlights zetten |
 
-Nog niet gebruikt: tanktop, bodysuit (kids), strip p. 9 tot 12 als losse post, de
-Kyiv-hoofdstukken, story "komt eraan" (reserve voor een volgende drop).
+Nog niet gebruikt: tanktop, bodysuit (kids), strip p. 9 en 10 als losse post (11-12 zitten in de Kyiv-reel), story "komt eraan" (reserve voor een volgende drop).
 
 ## Op aanvraag
 
 | Datum | Pijler | Post | Story |
 | --- | --- | --- | --- |
 | 2026-10-24 | Product | Classic Sweatshirt, "de hoodie z'n rustige broer" (foto sweatshirt-3), map `weeks/2026-10-19/` | geen |
+| 2026-10-25 | Verhaal | Reel (test) "Afscheid nemen in Kyiv": strip p. 11-12 geanimeerd, 19 s, map `weeks/2026-10-19/reel-kyiv/` | geen |
