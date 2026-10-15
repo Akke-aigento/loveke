@@ -180,3 +180,9 @@ changelog-keys.
 - LegalPage: datum-override (LEGAL-DATE-1) verwijderd, 404-tekst vertaald.
 
 **Niet gedaan (Akke):** echte testorder (2 stuks, Loveke for Two) + Search Console/sitemap indienen; productfoto in de hero.
+
+## MARKETING-PHOTOS-1 + LOVEKE-IG-1 — Instagram-pipeline (15-10-2026)
+
+- Productfoto's uit SellQo-storage via de Lovable-agent naar `marketing/product-photos/` (19 PNG's, 0,9 credits; enkel bestanden, geen code).
+- `marketing/instagram/`: huisstijl (`brand.css` + lokale fonts), de launchweek als HTML-bronnen, `render.mjs` (Playwright → JPG), `README.md` met de weekroutine, `log.md`.
+- Post-kit (downloads + captions per dag): https://claude.ai/artifact/VgL27QQ5XbZc2rbLQ92enQ. Reminders 16–23 okt als geplande taken (17:45), wekelijkse taak "Loveke IG: weekcontent" (zondag 9:50, vanaf de week van 26 okt).
