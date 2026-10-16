@@ -55,6 +55,10 @@ daar niet meer in.
 3. **Samen**: vraag, poll, "tag je Loveke", reacties of foto's van klanten (als die er zijn).
 4. **Merk**: gemaakt op bestelling, maatgids, cadeaukaart, Loveke for Two, achter de schermen.
 
+## Variatie (verplicht)
+
+Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATIE.md` (beslissing Akke, 16 okt 2026): elke post uniek (geen titel, hook, beeld of opbouw uit `log.md` herhalen), per week minstens 5 formats, nooit twee dagen na elkaar dezelfde template, minstens één lichte/felle post, één beeld-eerst-post en één typografische post, hooks en captionlengtes wisselen, en per item format/template/hook in `log.md`. Volstaat een template niet, maak een nieuwe variant in de huisstijl.
+
 ## Weekroutine (elke zondag, voor de week vanaf maandag)
 
 1. **Lees** `log.md` en de laatste week in `weeks/` (of `launch/`). Kies 3 posts (maandag, woensdag, vrijdag) uit verschillende pijlers en minstens één product. Herhaal geen beeld of caption uit het log. **Hier en daar een carousel** (Akke, 16-10): ongeveer om de week is één van de 3 posts een carousel, zie "Carousels" hieronder. Nooit meer dan één carousel per week, en noteer in het log welke post een carousel was.
