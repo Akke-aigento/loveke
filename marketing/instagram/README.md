@@ -57,7 +57,7 @@ daar niet meer in.
 
 ## Weekroutine (elke zondag, voor de week vanaf maandag)
 
-1. **Lees** `log.md` en de laatste week in `weeks/` (of `launch/`). Kies 3 posts (maandag, woensdag, vrijdag) uit verschillende pijlers en minstens één product. Herhaal geen beeld of caption uit het log.
+1. **Lees** `log.md` en de laatste week in `weeks/` (of `launch/`). Kies 3 posts (maandag, woensdag, vrijdag) uit verschillende pijlers en minstens één product. Herhaal geen beeld of caption uit het log. **Hier en daar een carousel** (Akke, 16-10): ongeveer om de week is één van de 3 posts een carousel, zie "Carousels" hieronder. Nooit meer dan één carousel per week, en noteer in het log welke post een carousel was.
 2. **Haal live data** via de Lovable-connector, `query_database` op project `9932a7fe-43a1-42de-9c64-168968599600`:
    `select name, slug, short_description, (select min(price) from product_variants v where v.product_id=p.id and v.is_active) prijs from products p where tenant_id='1671a91c-31fe-42ed-8a10-41f3117ceb50' and is_active and not hide_from_storefront;`
    Nieuwe producten zonder foto in `../product-photos/`? Gebruik een strip- of typografisch beeld en meld het aan Akke.
@@ -90,6 +90,15 @@ daar niet meer in.
     'Week van <d mmm> klaar: <n> posts','<onderwerpen, kort>. Keur ze goed in de Social planning.','/admin/marketing/social','{}'::jsonb);
    ```
    Zonder goedkeuring gaat er niets online.
+
+## Carousels
+
+Een carousel is een post met 2 tot 10 beelden (1080×1350, allemaal hetzelfde formaat). Ideaal 4 tot 7 slides.
+
+- **Wanneer**: als een onderwerp meer is dan één beeld. Voorbeelden: een strip-hoofdstuk (bv. p. 9-10 met een cover ervoor), een product van dichtbij (foto, detail, maat, "zo draag je hem"), "5 dingen over Loveke", maatgids in stappen, achter de schermen (van bestelling tot pakje), Loveke for Two uitgelegd.
+- **Opbouw**: slide 1 is de haak (grote titel, lees-verder-gevoel, klein pijltje "swipe" rechtsonder in Caveat). Middenslides: één idee per slide, weinig tekst. Laatste slide: afsluiter met oproep (loveke.be, "bewaar dit", "tag je Loveke"). Zelfde achtergrond- of kleurlogica over alle slides, zodat het één geheel is.
+- **Bestanden**: `weeks/<maandag>/post-<dag>-1.html` … `post-<dag>-<n>.html`, gerenderd en gepubliceerd als `post-<dag>-<onderwerp>-1.jpg` … in volgorde.
+- **In SellQo**: `media_type` `carousel`, `image_urls` in volgorde, `image_recipes` met één recept per slide in dezelfde volgorde. Caption verwijst naar het swipen ("Swipe →").
 
 ## Reels
 
