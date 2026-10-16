@@ -59,6 +59,10 @@ daar niet meer in.
 
 Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATIE.md` (beslissing Akke, 16 okt 2026): elke post uniek (geen titel, hook, beeld of opbouw uit `log.md` herhalen), per week minstens 5 formats, nooit twee dagen na elkaar dezelfde template, minstens één lichte/felle post, één beeld-eerst-post en één typografische post, hooks en captionlengtes wisselen, en per item format/template/hook in `log.md`. Volstaat een template niet, maak een nieuwe variant in de huisstijl.
 
+## Leren (verplicht)
+
+Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/LEREN.md (SOCIAL-6): elke post krijgt `content_tags` (pijler, format, template, hook, captionlengte, cta, bucket) in SellQo én in `log.md`; lees vóór je iets bedenkt `lessen.md` (deze map) en de resultaten in `social_post_performance`; kies volgens 70/20/10; UTM-parameters op elke link (`utm_campaign=loveke-<JJJJMMDD>`).
+
 ## Posttijden (verplicht)
 
 Geen vaste uren (Akke, 16 okt 2026). Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/POSTTIJDEN.md, venster "Loveke": avond 19:30–21:00 voor posts en de reel, middag 12:10–12:40 en ochtend 08:15–08:45 als afwisseling, sticker-stories 20:45–21:30 (niet allemaal op hetzelfde uur). Nooit twee items in dezelfde week op hetzelfde uur, één testslot per week met `(test)` in `log.md`, en per item uur + reden in het log. Zodra SellQo resultaten toont (SOCIAL-5), gaan de eigen data voor.
@@ -77,11 +81,11 @@ Geen vaste uren (Akke, 16 okt 2026). Volg https://github.com/Akke-aigento/nomadi
 5. **Publiceer de beelden**: kopieer de JPG's (en MP4's) uit `out/<maandag>/` naar `published/<maandag>/` met een duidelijke naam (`post-ma-<onderwerp>.jpg`, `story-ma-<onderwerp>.jpg`, `reel-<onderwerp>-muziek.mp4`, `reel-<onderwerp>-stil.mp4`, `reel-<onderwerp>-cover.jpg`). Commit en push dit naar `main` vóór stap 6: SellQo haalt de bestanden op via `https://raw.githubusercontent.com/Akke-aigento/loveke/main/marketing/instagram/published/<maandag>/<bestand>`. Controleer elke URL met `curl -sI` (200).
 6. **Zet de week in SellQo** met `query_database` (zelfde project). Eén `insert` voor alle items van de week, nooit `update` of `delete` op bestaande rijen:
    ```sql
-   insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, language, post_text, image_urls, scheduled_for) values
+   insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, language, post_text, image_urls, scheduled_for, content_tags) values
    ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task',null,'nl','<caption>',
-    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels'),
+    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels', '{"pillar":"…","format":"…","hook":"…","caption_length":"…","cta":"…","bucket":"…"}'),
    ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','sticker','nl','Story: <wat Akke moet doen, welke sticker waar>',
-    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels');
+    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels', '{"pillar":"…","format":"…","bucket":"…"}');
    ```
    - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
    - Stories met een sticker: status `manual`, `manual_reason` `sticker`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
