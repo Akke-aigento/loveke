@@ -59,6 +59,10 @@ daar niet meer in.
 
 Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATIE.md` (beslissing Akke, 16 okt 2026): elke post uniek (geen titel, hook, beeld of opbouw uit `log.md` herhalen), per week minstens 5 formats, nooit twee dagen na elkaar dezelfde template, minstens één lichte/felle post, één beeld-eerst-post en één typografische post, hooks en captionlengtes wisselen, en per item format/template/hook in `log.md`. Volstaat een template niet, maak een nieuwe variant in de huisstijl.
 
+## Posttijden (verplicht)
+
+Geen vaste uren (Akke, 16 okt 2026). Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/POSTTIJDEN.md, venster "Loveke": avond 19:30–21:00 voor posts en de reel, middag 12:10–12:40 en ochtend 08:15–08:45 als afwisseling, sticker-stories 20:45–21:30 (niet allemaal op hetzelfde uur). Nooit twee items in dezelfde week op hetzelfde uur, één testslot per week met `(test)` in `log.md`, en per item uur + reden in het log. Zodra SellQo resultaten toont (SOCIAL-5), gaan de eigen data voor.
+
 ## Weekroutine (elke zondag, voor de week vanaf maandag)
 
 1. **Lees** `log.md` en de laatste week in `weeks/` (of `launch/`). Kies 3 posts (maandag, woensdag, vrijdag) uit verschillende pijlers en minstens één product. Herhaal geen beeld of caption uit het log. **Hier en daar een carousel** (Akke, 16-10): ongeveer om de week is één van de 3 posts een carousel, zie "Carousels" hieronder. Nooit meer dan één carousel per week, en noteer in het log welke post een carousel was.
@@ -66,7 +70,7 @@ Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATI
    `select name, slug, short_description, (select min(price) from product_variants v where v.product_id=p.id and v.is_active) prijs from products p where tenant_id='1671a91c-31fe-42ed-8a10-41f3117ceb50' and is_active and not hide_from_storefront;`
    Nieuwe producten zonder foto in `../product-photos/`? Gebruik een strip- of typografisch beeld en meld het aan Akke.
 3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en per post één story (`story-ma.html` …), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
-   **Plus één reel per week** (zondag 19:00), zie "Reels" hieronder.
+   **Plus één reel per week** (zondag, sterkste slot: standaard 20:30), zie "Reels" hieronder.
 3b. **Tekstvakken markeren** (SOCIAL-4): geef elk tekstelement dat Akke later mag aanpassen `data-slot="<sleutel>" data-label="<Label>" data-max="<max tekens>"` (`data-multiline="true"` als er een `<br>` in mag). Enkel platte tekst in zo'n element (geen geneste opmaak); zet een vast stukje opmaak (bv. "1." of "vanaf") in een apart element ernaast. `data-max` ≈ wat nog mooi past in het ontwerp (meestal 1,4 × de huidige lengte). Geen scripts of on…-attributen.
 4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt). De reel met `reel.mjs` (zie "Reels").
 4b. **Recept**: `node marketing/instagram/recipe.mjs weeks/<maandag>/post-*.html weeks/<maandag>/story-*.html` → `<naam>.recipe.json` naast elke HTML. Commit die mee.
@@ -75,9 +79,9 @@ Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATI
    ```sql
    insert into social_posts (tenant_id, platform, media_type, status, source, manual_reason, language, post_text, image_urls, scheduled_for) values
    ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','image','pending_approval','content_task',null,'nl','<caption>',
-    array['<raw-url>'], '<JJJJ-MM-DD> 18:00 Europe/Brussels'),
+    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels'),
    ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','story','manual','content_task','sticker','nl','Story: <wat Akke moet doen, welke sticker waar>',
-    array['<raw-url>'], '<JJJJ-MM-DD> 18:05 Europe/Brussels');
+    array['<raw-url>'], '<JJJJ-MM-DD> <uur> Europe/Brussels');
    ```
    - Posts: `media_type` `image` (1 beeld) of `carousel` (2 tot 10 beelden, in volgorde), status `pending_approval`. **Nooit `approved`**: goedkeuren doet Akke.
    - Stories met een sticker: status `manual`, `manual_reason` `sticker`. Een story zonder sticker mag `story` + `pending_approval` (dan post SellQo hem zelf).
@@ -106,7 +110,7 @@ Een carousel is een post met 2 tot 10 beelden (1080×1350, allemaal hetzelfde fo
 
 ## Reels
 
-Eén per week, zondag 19:00. Afwisselen tussen formats (zie het log, nooit twee keer na elkaar hetzelfde):
+Eén per week, zondag op het sterkste slot (standaard 20:30). Afwisselen tussen formats (zie het log, nooit twee keer na elkaar hetzelfde):
 strip-verhaal (een hoofdstuk geanimeerd), product-drop, typografisch (zin woord per woord), slideshow op de beat,
 POV/meme met strippanelen, of montage van clips die Akke doorstuurt.
 
@@ -120,7 +124,7 @@ POV/meme met strippanelen, of montage van clips die Akke doorstuurt.
   ('1671a91c-31fe-42ed-8a10-41f3117ceb50','instagram','reel','pending_approval','content_task','nl','<caption>',
    array['<raw-url cover.jpg>'], '<raw-url -muziek.mp4>', '<raw-url -stil.mp4>',
    '{"songs":[{"title":"<titel>","artist":"<artiest>","note":"<waarom / vanaf waar>"},{"title":"…","artist":"…"},{"title":"…","artist":"…"}],"mood":"warm, akoestisch","bpm":100,"tip":"Laat het refrein starten bij het perron (0:09).","track":{"title":"<bibliotheeknummer>","license":"<licentie>"}}'::jsonb,
-   '<zondag> 19:00 Europe/Brussels');
+   '<zondag> 20:30 Europe/Brussels');
   ```
   **Songvoorstellen (verplicht, 3 concrete nummers):** zoek elke week met WebSearch naar de actuele trending audio voor Instagram Reels (bv. "trending Instagram Reels songs <maand> <jaar>") en lees één of twee lijsten van deze week. Kies 3 nummers die bij de sfeer van de reel passen, met titel én artiest, plus in `note` waarom en vanaf waar. Voorkeur voor nummers die de bron als bruikbaar voor zakelijke accounts noemt of voor "original audio"; commerciële hits zijn voor zakelijke accounts vaak niet beschikbaar. Verzin nooit een titel: enkel nummers die je in een bron van deze week of met zekerheid kent. Noteer de bron-URL in het log.
   Zonder bibliotheeknummer: `video_url` null, status `manual`, `manual_reason` `music`. Akke kiest in de planning "Goedkeuren (automatisch)" (met het bibliotheeknummer) of "Ik kies zelf muziek" (stille versie + herinnering).
