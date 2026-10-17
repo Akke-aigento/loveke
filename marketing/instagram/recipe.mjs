@@ -26,7 +26,8 @@ function rawUrlFor(absPath) {
 }
 
 function absolutize(url, baseDir) {
-  if (/^(https?:|data:|#)/i.test(url)) return url;
+  // Interne verwijzingen (#id, of %23id binnen een data:-SVG zoals filter='url(%23n)') zijn geen bestand.
+  if (/^(https?:|data:|#|%23)/i.test(url)) return url;
   return rawUrlFor(path.resolve(baseDir, url));
 }
 
@@ -49,11 +50,11 @@ function makeRecipe(file) {
     const cssPath = path.resolve(dir, href);
     const cssDir = path.dirname(cssPath);
     const css = fs.readFileSync(cssPath, "utf8")
-      .replace(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g, (_u, u) => `url("${absolutize(u, cssDir)}")`);
+      .replace(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g, (m, u) => { const a = absolutize(u, cssDir); return a === u ? m : `url("${a}")`; });
     return `<style>${css}</style>`;
   });
   html = html.replace(/\ssrc="([^"]+)"/g, (_m, src) => ` src="${absolutize(src, dir)}"`);
-  html = html.replace(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g, (m, u) => (/^(https?:|data:)/.test(u) ? m : `url("${absolutize(u, dir)}")`));
+  html = html.replace(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g, (m, u) => { const a = absolutize(u, dir); return a === u ? m : `url("${a}")`; });
 
   return { version: 1, width: Number(size[1]), height: Number(size[2]), html };
 }
