@@ -61,7 +61,7 @@ Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATI
 
 ## Leren (verplicht)
 
-Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/LEREN.md (SOCIAL-6): elke post krijgt `content_tags` (pijler, format, template, hook, captionlengte, cta, bucket) in SellQo én in `log.md`; lees vóór je iets bedenkt `lessen.md` (deze map) en de resultaten in `social_post_performance`; kies volgens 70/20/10; UTM-parameters op elke link (`utm_campaign=loveke-<JJJJMMDD>`).
+Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/LEREN.md (SOCIAL-6): elke post krijgt `content_tags` (pijler, format, template, hook, captionlengte, cta, bucket) in SellQo én in `log.md`; lees vóór je iets bedenkt `lessen.md` (deze map) en de resultaten in `social_post_performance`; kies volgens 70/20/10; UTM-parameters op elke link (`utm_campaign=loveke-<JJJJMMDD>`). Een story met link-sticker eindigt in `post_text` met een eigen regel `Link-sticker: https://loveke.be/<pad>?utm_source=instagram&utm_medium=social&utm_campaign=loveke-<JJJJMMDD>&utm_content=story` (volledige URL, klaar om te kopiëren; LEREN.md §5).
 
 ## Posttijden (verplicht)
 
