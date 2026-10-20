@@ -6,7 +6,7 @@ import { useProducts, useProductDetails } from '@/integrations/sellqo/hooks';
 import { extractArray, extractSingle } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import type { Product, ProductSizeGuide } from '@/integrations/sellqo/types';
-import SizeGuideTable, { hasUsableSizeGuide } from '@/components/SizeGuideTable';
+import StandardSizeChart, { hasUsableSizeGuide } from '@/components/StandardSizeChart';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type GuideProduct = Product & { size_guide: ProductSizeGuide };
@@ -94,7 +94,7 @@ export default function SizeGuide() {
               {products.length === 1 && (
                 <h2 className="font-display text-2xl mb-4">{active.title}</h2>
               )}
-              <SizeGuideTable key={active.slug} guide={active.size_guide} />
+              <StandardSizeChart key={active.slug} guide={active.size_guide} />
             </motion.div>
           </>
         )}

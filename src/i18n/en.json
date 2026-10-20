@@ -128,11 +128,6 @@
     "reviews": "Reviews",
     "delivery": "Free shipping · made to order · delivered in 5 to 20 working days",
     "sizeTip": "Tip: torn between two sizes? Compare with a garment that fits you well using the size guide.",
-    "sizeGuideKind": "Measurement type",
-    "sizeGuideProduct": "Garment measurements",
-    "sizeGuideBody": "Body measurements",
-    "sizeGuideProductHint": "The measurements of the garment itself.",
-    "sizeGuideBodyHint": "Your own body measurements: how to measure yourself.",
     "sizeGuideUnit": "Unit"
   },
   "shop": {
@@ -169,10 +164,32 @@
   },
   "sizeGuide": {
     "title": "Size Guide",
+    "intro": "All sizes use the same format. Measure a shirt you love wearing and enter its width to instantly see which size is closest.",
     "tip": "Not sure? Measure a T-shirt or hoodie that fits you well and compare it with the garment measurements. The oversized tee is already cut loose: just take your usual size.",
     "products": "Choose a product",
     "unavailable": "We can't show the size charts right now. Not sure about your size?",
     "contactCta": "Send us a message"
+  },
+  "sizeChart": {
+    "diagramLabel": "Diagram of a T-shirt laid flat with the measuring points",
+    "width": "Width",
+    "widthHow": "Laid flat, from armpit to armpit.",
+    "length": "Length",
+    "lengthHow": "From the highest point of the shoulder to the bottom hem.",
+    "sleeve": "Sleeve",
+    "sleeveHow": "From the shoulder seam to the end of the sleeve.",
+    "chest": "Fits chest size",
+    "compareTitle": "Compare with your own shirt",
+    "compareHow": "Lay a shirt you love wearing flat and measure from armpit to armpit.",
+    "widthInput": "Width of a shirt you love wearing ({unit})",
+    "lengthInput": "Length of that shirt ({unit}, optional)",
+    "matchClose": "Size {size} is closest to your own shirt ({value}, yours: {yours}).",
+    "matchWider": "Size {size} is closest to your own shirt, but it is {diff} wider ({value}, yours: {yours}).",
+    "matchNarrower": "Size {size} is closest to your own shirt, but it is {diff} narrower ({value}, yours: {yours}).",
+    "lengthSame": "Lengthwise, size {size} is about the same ({value}, yours: {yours}).",
+    "lengthLonger": "Size {size} is {diff} longer ({value}, yours: {yours}).",
+    "lengthShorter": "Size {size} is {diff} shorter ({value}, yours: {yours}).",
+    "tolerance": "Measurements may vary by up to 1–2 cm."
   },
   "giftCardsPage": {
     "title": "Give a Loveke gift 🎁",
