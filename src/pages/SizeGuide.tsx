@@ -39,10 +39,13 @@ export default function SizeGuide() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-5xl md:text-6xl text-center gradient-text mb-10"
+          className="font-display text-5xl md:text-6xl text-center gradient-text mb-4"
         >
           {t('sizeGuide.title')}
         </motion.h1>
+        <p className="font-body text-center text-muted-foreground max-w-xl mx-auto mb-10">
+          {t('sizeGuide.intro')}
+        </p>
 
         {loading ? (
           <div aria-busy="true">

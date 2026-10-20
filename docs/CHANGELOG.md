@@ -1,4 +1,11 @@
 
+## LOVEKE-SIZEGUIDE-3 — verbetering (tenant-zichtbaar)
+
+- **NL:** Elke maattabel staat nu in hetzelfde, duidelijke Loveke-formaat (breedte, lengte, mouw, borstomtrek in hele cm) met een schema dat toont waar je meet. Vul de breedte van je eigen shirt in en de maat die het dichtst zit, licht meteen op.
+- **EN:** Every size chart now uses the same clear Loveke format (width, length, sleeve, chest in whole cm) with a diagram showing where to measure. Enter the width of your own shirt and the closest size lights up.
+- **FR:** Chaque guide des tailles utilise désormais le même format Loveke clair (largeur, longueur, manche, tour de poitrine en cm entiers) avec un schéma des points de mesure. Indiquez la largeur de votre propre t-shirt et la taille la plus proche s'affiche aussitôt.
+- **DE:** Jede Größentabelle hat jetzt dasselbe klare Loveke-Format (Breite, Länge, Ärmel, Brustumfang in ganzen cm) mit einer Skizze der Messpunkte. Gib die Breite deines eigenen Shirts ein und die passendste Größe wird sofort markiert.
+
 ## LOVEKE-SIZEGUIDE-2 — verbetering (tenant-zichtbaar)
 
 - **NL:** De maatgids toont nu per product de echte maattabel uit Printful, met een keuze tussen productmaten en lichaamsmaten en een cm/inch-schakelaar. Nieuwe producten verschijnen er automatisch.
