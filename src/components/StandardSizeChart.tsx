@@ -65,7 +65,7 @@ function ShirtDiagram({ showSleeve, label }: { showSleeve: boolean; label: strin
   const markerId = useId().replace(/:/g, '');
   const arrow = `url(#${markerId})`;
   return (
-    <svg viewBox="0 0 250 216" role="img" aria-label={label} className="w-36 sm:w-44 shrink-0 h-auto">
+    <svg viewBox="0 0 250 216" role="img" aria-label={label} className="w-28 sm:w-44 shrink-0 h-auto">
       <defs>
         <marker id={markerId} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
           <path d="M0 0 L10 5 L0 10 z" className="fill-primary" />
@@ -166,11 +166,11 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
   const td = 'p-2 whitespace-nowrap border-b border-border';
 
   return (
-    <div className="space-y-5">
+    <div className="min-w-0 space-y-5">
       {/* How to measure */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
         <ShirtDiagram showSleeve={has.sleeve} label={t('sizeChart.diagramLabel')} />
-        <dl className="space-y-2 font-body text-sm">
+        <dl className="min-w-0 flex-1 space-y-2 font-body text-xs sm:text-sm">
           {has.width && (
             <div className="flex gap-2">
               <Letter>A</Letter>
