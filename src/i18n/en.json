@@ -127,7 +127,7 @@
     "unitInch": "inch",
     "reviews": "Reviews",
     "delivery": "Free shipping · made to order · delivered in 5 to 20 working days",
-    "sizeTip": "Akke's tip (1.83 m): L for a regular fit, XL for oversized.",
+    "sizeTip": "Akke's tip (1.76 m): L for a regular fit, XL for oversized.",
     "sizeGuideKind": "Measurement type",
     "sizeGuideProduct": "Garment measurements",
     "sizeGuideBody": "Body measurements",
@@ -169,7 +169,7 @@
   },
   "sizeGuide": {
     "title": "Size Guide",
-    "tip": "I'm 1m83 and wear L for regular, XL for oversized — Akke",
+    "tip": "I'm 1.76 m and wear L for regular, XL for oversized — Akke",
     "products": "Choose a product",
     "unavailable": "We can't show the size charts right now. Not sure about your size?",
     "contactCta": "Send us a message"
