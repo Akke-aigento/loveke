@@ -127,7 +127,7 @@
     "unitInch": "inch",
     "reviews": "Reviews",
     "delivery": "Gratis verzending · gemaakt op bestelling · levering in 5 tot 20 werkdagen",
-    "sizeTip": "Tip van Akke (1m76): L voor normaal, XL voor oversized.",
+    "sizeTip": "Tip: twijfel je tussen twee maten? Vergelijk met een kledingstuk dat goed zit via de maatgids.",
     "sizeGuideKind": "Soort maten",
     "sizeGuideProduct": "Productmaten",
     "sizeGuideBody": "Lichaamsmaten",
@@ -169,7 +169,7 @@
   },
   "sizeGuide": {
     "title": "Maatgids",
-    "tip": "Ik ben 1m76 en draag L voor normaal, XL voor oversized — Akke",
+    "tip": "Twijfel je? Meet een T-shirt of hoodie die goed zit en vergelijk met de productmaten. De oversized tee valt al ruim: neem gewoon je normale maat.",
     "products": "Kies een product",
     "unavailable": "We kunnen de maattabellen nu even niet tonen. Twijfel je over je maat?",
     "contactCta": "Stuur ons een berichtje"

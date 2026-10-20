@@ -127,7 +127,7 @@
     "unitInch": "pouce",
     "reviews": "Avis",
     "delivery": "Livraison gratuite · fabriqué à la commande · livré en 5 à 20 jours ouvrables",
-    "sizeTip": "L'astuce d'Akke (1,76 m) : L pour une coupe normale, XL pour oversize.",
+    "sizeTip": "Astuce : vous hésitez entre deux tailles ? Comparez avec un vêtement qui vous va bien grâce au guide des tailles.",
     "sizeGuideKind": "Type de mesures",
     "sizeGuideProduct": "Mesures du vêtement",
     "sizeGuideBody": "Mesures du corps",
@@ -169,7 +169,7 @@
   },
   "sizeGuide": {
     "title": "Guide des tailles",
-    "tip": "Je mesure 1,76 m et je porte du L en normal, XL en oversized — Akke",
+    "tip": "Vous hésitez ? Mesurez un t-shirt ou un hoodie qui vous va bien et comparez avec les mesures du vêtement. Le tee oversized est déjà coupé ample : prenez simplement votre taille habituelle.",
     "products": "Choisissez un produit",
     "unavailable": "Nous ne pouvons pas afficher les guides des tailles pour le moment. Vous hésitez sur votre taille ?",
     "contactCta": "Envoyez-nous un message"

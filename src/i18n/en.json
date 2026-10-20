@@ -127,7 +127,7 @@
     "unitInch": "inch",
     "reviews": "Reviews",
     "delivery": "Free shipping · made to order · delivered in 5 to 20 working days",
-    "sizeTip": "Akke's tip (1.76 m): L for a regular fit, XL for oversized.",
+    "sizeTip": "Tip: torn between two sizes? Compare with a garment that fits you well using the size guide.",
     "sizeGuideKind": "Measurement type",
     "sizeGuideProduct": "Garment measurements",
     "sizeGuideBody": "Body measurements",
@@ -169,7 +169,7 @@
   },
   "sizeGuide": {
     "title": "Size Guide",
-    "tip": "I'm 1.76 m and wear L for regular, XL for oversized — Akke",
+    "tip": "Not sure? Measure a T-shirt or hoodie that fits you well and compare it with the garment measurements. The oversized tee is already cut loose: just take your usual size.",
     "products": "Choose a product",
     "unavailable": "We can't show the size charts right now. Not sure about your size?",
     "contactCta": "Send us a message"
