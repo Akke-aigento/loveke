@@ -118,10 +118,8 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
   };
 
   const unitLabel = unit === 'cm' ? t('product.unitCm') : t('product.unitInch');
-  const num = (cm: number) =>
-    unit === 'cm'
-      ? String(cm)
-      : cmToInch(cm).toLocaleString(locale === 'en' ? 'en-GB' : locale, { maximumFractionDigits: 1 });
+  const dec = (n: number) => n.toLocaleString(locale === 'en' ? 'en-GB' : locale, { maximumFractionDigits: 1 });
+  const num = (cm: number) => (unit === 'cm' ? String(cm) : dec(cmToInch(cm)));
   const withUnit = (cm: number) => `${num(cm)} ${unitLabel}`;
   const range = (min?: number, max?: number) =>
     min === undefined ? '–' : min === max || max === undefined ? num(min) : `${num(min)}–${num(max)}`;
@@ -135,14 +133,8 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
   const yourLength = toCm(lengthInput);
   const match = has.width && yourWidth !== undefined ? findClosestSize(rows, yourWidth, yourLength) : undefined;
 
-  const yours = (cm: number) =>
-    unit === 'cm'
-      ? `${Math.round(cm * 10) / 10} ${unitLabel}`.replace('.', locale === 'en' ? '.' : ',')
-      : `${(cm / 2.54).toLocaleString(locale === 'en' ? 'en-GB' : locale, { maximumFractionDigits: 1 })} ${unitLabel}`;
-  const diffText = (cm: number) =>
-    unit === 'cm'
-      ? `${Math.round(Math.abs(cm))} ${unitLabel}`
-      : `${cmToInch(Math.abs(cm)).toLocaleString(locale === 'en' ? 'en-GB' : locale, { maximumFractionDigits: 1 })} ${unitLabel}`;
+  const yours = (cm: number) => `${dec(unit === 'cm' ? cm : cm / 2.54)} ${unitLabel}`;
+  const diffText = (cm: number) => `${num(Math.round(Math.abs(cm)))} ${unitLabel}`;
 
   let matchSentence = '';
   let lengthSentence = '';
@@ -275,20 +267,24 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
                 <th className={`${th} sticky left-0 z-10 bg-card`}>{t('product.size')}</th>
                 {has.width && (
                   <th className={th}>
-                    <span className="inline-flex items-center gap-1.5"><Letter>A</Letter>{t('sizeChart.width')}</span>
+                    <span className="inline-flex items-center gap-1.5"><Letter>A</Letter>{t('sizeChart.width')}<span className="font-body text-xs text-muted-foreground">({unitLabel})</span></span>
                   </th>
                 )}
                 {has.length && (
                   <th className={th}>
-                    <span className="inline-flex items-center gap-1.5"><Letter>B</Letter>{t('sizeChart.length')}</span>
+                    <span className="inline-flex items-center gap-1.5"><Letter>B</Letter>{t('sizeChart.length')}<span className="font-body text-xs text-muted-foreground">({unitLabel})</span></span>
                   </th>
                 )}
                 {has.sleeve && (
                   <th className={th}>
-                    <span className="inline-flex items-center gap-1.5"><Letter>C</Letter>{t('sizeChart.sleeve')}</span>
+                    <span className="inline-flex items-center gap-1.5"><Letter>C</Letter>{t('sizeChart.sleeve')}<span className="font-body text-xs text-muted-foreground">({unitLabel})</span></span>
                   </th>
                 )}
-                {has.chest && <th className={th}>{t('sizeChart.chest')}</th>}
+                {has.chest && (
+                  <th className={th}>
+                    {t('sizeChart.chest')} <span className="font-body text-xs text-muted-foreground">({unitLabel})</span>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -309,7 +305,7 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
           </table>
         </div>
         <p className="font-body text-xs text-muted-foreground">
-          {t('sizeChart.tolerance')} {t('sizeChart.allIn')} {unitLabel}.
+          {t('sizeChart.tolerance')}
         </p>
       </div>
     </div>
