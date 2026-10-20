@@ -4,7 +4,7 @@ import {
   giftCardsAPI, pagesAPI, navigationAPI, reviewsAPI, newsletterAPI,
   settingsAPI, searchAPI
 } from './api';
-import { extractSingle } from './client';
+import { extractSingle, sellqoFetch } from './client';
 import { normalizeCart } from './normalizer';
 import type { Cart, ProductsParams } from './types';
 
@@ -457,8 +457,14 @@ export function useReviewsSummary() {
 // === NEWSLETTER HOOKS ===
 export function useNewsletterSubscribe() {
   return useMutation({
-    mutationFn: ({ email, locale }: { email: string; locale?: string }) =>
-      newsletterAPI.subscribe(email, locale),
+    mutationFn: ({ email, locale }: { email: string; locale?: string }) => {
+      // Double opt-in: storefront-api leest params.language (2-letter code).
+      const language = (locale || 'nl').slice(0, 2).toLowerCase();
+      return sellqoFetch<any>('/newsletter/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ email, language, locale }),
+      });
+    },
   });
 }
 

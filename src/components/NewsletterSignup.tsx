@@ -14,6 +14,7 @@ export default function NewsletterSignup() {
 
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [successKey, setSuccessKey] = useState('newsletter.success');
   const subscribe = useNewsletterSubscribe();
 
   if (newsletterEnabled === false) return null;
@@ -23,7 +24,15 @@ export default function NewsletterSignup() {
     if (!email) return;
     
     try {
-      await subscribe.mutateAsync({ email, locale });
+      const res: any = await subscribe.mutateAsync({ email, locale });
+      const data = res?.data ?? res;
+      if (data?.requires_confirmation === true) {
+        setSuccessKey('newsletter.checkInbox');
+      } else if (data?.requires_confirmation === false && data?.message === 'Already subscribed') {
+        setSuccessKey('newsletter.alreadySubscribed');
+      } else {
+        setSuccessKey('newsletter.success');
+      }
       setStatus('success');
       setEmail('');
     } catch {

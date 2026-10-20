@@ -56,7 +56,9 @@
     "error": "Oops, try again.",
     "consent": "You can unsubscribe at any time. Read our",
     "privacy": "privacy policy",
-    "label": "Your email address"
+    "label": "Your email address",
+    "checkInbox": "Check your inbox and confirm your subscription via the link in the email.",
+    "alreadySubscribed": "You're already subscribed to our newsletter."
   },
   "footer": {
     "shop": "Shop",

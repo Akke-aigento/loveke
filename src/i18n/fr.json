@@ -56,7 +56,9 @@
     "error": "Oups, réessayez.",
     "consent": "Tu peux te désinscrire à tout moment. Lis notre",
     "privacy": "politique de confidentialité",
-    "label": "Ton adresse e-mail"
+    "label": "Ton adresse e-mail",
+    "checkInbox": "Vérifiez votre boîte mail et confirmez votre inscription via le lien dans l'e-mail.",
+    "alreadySubscribed": "Vous êtes déjà inscrit·e à notre newsletter."
   },
   "footer": {
     "shop": "Boutique",

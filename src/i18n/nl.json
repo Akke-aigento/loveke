@@ -56,7 +56,9 @@
     "error": "Oeps, probeer het opnieuw.",
     "consent": "Je kan je altijd uitschrijven. Lees ons",
     "privacy": "privacybeleid",
-    "label": "Je e-mailadres"
+    "label": "Je e-mailadres",
+    "checkInbox": "Check je inbox en bevestig je inschrijving via de link in de mail.",
+    "alreadySubscribed": "Je bent al ingeschreven op onze nieuwsbrief."
   },
   "footer": {
     "shop": "Shop",
