@@ -128,11 +128,6 @@
     "reviews": "Avis",
     "delivery": "Livraison gratuite · fabriqué à la commande · livré en 5 à 20 jours ouvrables",
     "sizeTip": "Astuce : vous hésitez entre deux tailles ? Comparez avec un vêtement qui vous va bien grâce au guide des tailles.",
-    "sizeGuideKind": "Type de mesures",
-    "sizeGuideProduct": "Mesures du vêtement",
-    "sizeGuideBody": "Mesures du corps",
-    "sizeGuideProductHint": "Les dimensions du vêtement lui-même.",
-    "sizeGuideBodyHint": "Vos propres mensurations : comment vous mesurer.",
     "sizeGuideUnit": "Unité"
   },
   "shop": {
@@ -169,10 +164,32 @@
   },
   "sizeGuide": {
     "title": "Guide des tailles",
+    "intro": "Toutes les tailles sont présentées dans le même format. Mesurez un t-shirt que vous aimez porter et indiquez sa largeur : vous verrez tout de suite quelle taille s'en rapproche le plus.",
     "tip": "Vous hésitez ? Mesurez un t-shirt ou un hoodie qui vous va bien et comparez avec les mesures du vêtement. Le tee oversized est déjà coupé ample : prenez simplement votre taille habituelle.",
     "products": "Choisissez un produit",
     "unavailable": "Nous ne pouvons pas afficher les guides des tailles pour le moment. Vous hésitez sur votre taille ?",
     "contactCta": "Envoyez-nous un message"
+  },
+  "sizeChart": {
+    "diagramLabel": "Schéma d'un t-shirt posé à plat avec les points de mesure",
+    "width": "Largeur",
+    "widthHow": "À plat, d'une aisselle à l'autre.",
+    "length": "Longueur",
+    "lengthHow": "Du point le plus haut de l'épaule jusqu'à l'ourlet du bas.",
+    "sleeve": "Manche",
+    "sleeveHow": "De la couture d'épaule jusqu'au bout de la manche.",
+    "chest": "Tour de poitrine conseillé",
+    "compareTitle": "Comparez avec votre propre t-shirt",
+    "compareHow": "Posez à plat un t-shirt que vous aimez porter et mesurez d'une aisselle à l'autre.",
+    "widthInput": "Largeur d'un t-shirt que vous aimez porter ({unit})",
+    "lengthInput": "Longueur de ce t-shirt ({unit}, facultatif)",
+    "matchClose": "La taille {size} est la plus proche de votre t-shirt ({value}, vous : {yours}).",
+    "matchWider": "La taille {size} est la plus proche de votre t-shirt, mais elle est {diff} plus ample ({value}, vous : {yours}).",
+    "matchNarrower": "La taille {size} est la plus proche de votre t-shirt, mais elle est {diff} plus étroite ({value}, vous : {yours}).",
+    "lengthSame": "En longueur, la taille {size} est à peu près identique ({value}, vous : {yours}).",
+    "lengthLonger": "La taille {size} est {diff} plus longue ({value}, vous : {yours}).",
+    "lengthShorter": "La taille {size} est {diff} plus courte ({value}, vous : {yours}).",
+    "tolerance": "Les mesures peuvent varier de 1 à 2 cm."
   },
   "giftCardsPage": {
     "title": "Offrez un cadeau Loveke 🎁",

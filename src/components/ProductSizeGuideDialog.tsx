@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { ProductSizeGuide } from '@/integrations/sellqo/types';
-import SizeGuideTable, { hasUsableSizeGuide } from '@/components/SizeGuideTable';
+import StandardSizeChart, { hasUsableSizeGuide } from '@/components/StandardSizeChart';
 
 export { hasUsableSizeGuide };
 
@@ -21,7 +21,7 @@ export default function ProductSizeGuideDialog({ guide }: { guide: ProductSizeGu
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">{t('product.sizeGuideTitle')}</DialogTitle>
         </DialogHeader>
-        <SizeGuideTable guide={guide} />
+        <StandardSizeChart guide={guide} />
       </DialogContent>
     </Dialog>
   );

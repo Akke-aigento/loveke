@@ -128,11 +128,6 @@
     "reviews": "Reviews",
     "delivery": "Gratis verzending · gemaakt op bestelling · levering in 5 tot 20 werkdagen",
     "sizeTip": "Tip: twijfel je tussen twee maten? Vergelijk met een kledingstuk dat goed zit via de maatgids.",
-    "sizeGuideKind": "Soort maten",
-    "sizeGuideProduct": "Productmaten",
-    "sizeGuideBody": "Lichaamsmaten",
-    "sizeGuideProductHint": "De afmetingen van het kledingstuk zelf.",
-    "sizeGuideBodyHint": "Je eigen lichaamsmaten: zo meet je jezelf op.",
     "sizeGuideUnit": "Eenheid"
   },
   "shop": {
@@ -169,10 +164,32 @@
   },
   "sizeGuide": {
     "title": "Maatgids",
+    "intro": "Alle maten staan in hetzelfde formaat. Meet een shirt dat je graag draagt en vul de breedte in, dan zie je meteen welke maat het dichtst zit.",
     "tip": "Twijfel je? Meet een T-shirt of hoodie die goed zit en vergelijk met de productmaten. De oversized tee valt al ruim: neem gewoon je normale maat.",
     "products": "Kies een product",
     "unavailable": "We kunnen de maattabellen nu even niet tonen. Twijfel je over je maat?",
     "contactCta": "Stuur ons een berichtje"
+  },
+  "sizeChart": {
+    "diagramLabel": "Schema van een plat gelegd T-shirt met de meetpunten",
+    "width": "Breedte",
+    "widthHow": "Plat gelegd, van oksel tot oksel.",
+    "length": "Lengte",
+    "lengthHow": "Van het hoogste punt van de schouder tot de onderzoom.",
+    "sleeve": "Mouw",
+    "sleeveHow": "Van de schoudernaad tot het uiteinde van de mouw.",
+    "chest": "Past bij borstomtrek",
+    "compareTitle": "Vergelijk met je eigen shirt",
+    "compareHow": "Leg een shirt dat je graag draagt plat en meet van oksel tot oksel.",
+    "widthInput": "Breedte van een shirt dat je graag draagt ({unit})",
+    "lengthInput": "Lengte van dat shirt ({unit}, optioneel)",
+    "matchClose": "Maat {size} zit het dichtst bij je eigen shirt ({value}, jij: {yours}).",
+    "matchWider": "Maat {size} zit het dichtst bij je eigen shirt, maar valt {diff} ruimer ({value}, jij: {yours}).",
+    "matchNarrower": "Maat {size} zit het dichtst bij je eigen shirt, maar valt {diff} nauwer ({value}, jij: {yours}).",
+    "lengthSame": "In de lengte zit maat {size} ongeveer gelijk ({value}, jij: {yours}).",
+    "lengthLonger": "Maat {size} is {diff} langer ({value}, jij: {yours}).",
+    "lengthShorter": "Maat {size} is {diff} korter ({value}, jij: {yours}).",
+    "tolerance": "Maten kunnen tot 1–2 cm afwijken."
   },
   "giftCardsPage": {
     "title": "Geef een Loveke cadeau 🎁",

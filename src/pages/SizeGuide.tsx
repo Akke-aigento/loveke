@@ -6,7 +6,7 @@ import { useProducts, useProductDetails } from '@/integrations/sellqo/hooks';
 import { extractArray, extractSingle } from '@/integrations/sellqo/client';
 import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
 import type { Product, ProductSizeGuide } from '@/integrations/sellqo/types';
-import SizeGuideTable, { hasUsableSizeGuide } from '@/components/SizeGuideTable';
+import StandardSizeChart, { hasUsableSizeGuide } from '@/components/StandardSizeChart';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type GuideProduct = Product & { size_guide: ProductSizeGuide };
@@ -39,10 +39,13 @@ export default function SizeGuide() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-5xl md:text-6xl text-center gradient-text mb-10"
+          className="font-display text-5xl md:text-6xl text-center gradient-text mb-4"
         >
           {t('sizeGuide.title')}
         </motion.h1>
+        <p className="font-body text-center text-muted-foreground max-w-xl mx-auto mb-10">
+          {t('sizeGuide.intro')}
+        </p>
 
         {loading ? (
           <div aria-busy="true">
@@ -94,7 +97,7 @@ export default function SizeGuide() {
               {products.length === 1 && (
                 <h2 className="font-display text-2xl mb-4">{active.title}</h2>
               )}
-              <SizeGuideTable key={active.slug} guide={active.size_guide} />
+              <StandardSizeChart key={active.slug} guide={active.size_guide} />
             </motion.div>
           </>
         )}
