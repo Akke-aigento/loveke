@@ -69,17 +69,16 @@ function classifyProductLabel(label?: string): { field: ProductField; half: bool
   if (!l) return undefined;
   if (l.includes('sleeve')) return { field: 'sleeve', half: false };
   if (/^(body |total |garment |back )?length$/.test(l)) return { field: 'length', half: false };
-  const circumference = /circumference|girth|\(around\)/.test(l);
-  if (/^(chest|bust|body)?\s*(width|circumference|girth)?(\s*\(.*\))?$/.test(l) && /(chest|bust|width)/.test(l) && !/(waist|hip|shoulder|neck|hem)/.test(l)) {
+  const base = l.replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim();
+  const circumference = /circumference|girth|around/.test(l);
+  if (/^((chest|bust|body|half chest) )?width$/.test(base) || /^(chest|bust)( (circumference|girth))?$/.test(base)) {
     return { field: 'width', half: circumference };
   }
   return undefined;
 }
 
-const isBodyChestLabel = (label?: string) => {
-  const l = norm(label);
-  return /^(chest|bust)(\s*(circumference|girth))?(\s*\(.*\))?$/.test(l);
-};
+const isBodyChestLabel = (label?: string) =>
+  /^(chest|bust)( (circumference|girth))?$/.test(norm(label).replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim());
 
 /** Pick the cm table of a kind, or the inch table converted to cm. */
 function pickTable(tables: SizeGuideTable[], productMeasure: boolean): { table: SizeGuideTable; factor: number } | undefined {
