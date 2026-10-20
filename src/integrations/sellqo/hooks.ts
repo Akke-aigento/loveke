@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueries, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   productsAPI, collectionsAPI, categoriesAPI, cartAPI, checkoutAPI,
   giftCardsAPI, pagesAPI, navigationAPI, reviewsAPI, newsletterAPI,
@@ -62,6 +62,17 @@ export function useProduct(slug: string) {
     queryKey: sellqoKeys.products.detail(slug),
     queryFn: () => productsAPI.getBySlug(slug),
     enabled: !!slug,
+  });
+}
+
+/** Detail (incl. size_guide) for several products; shares the cache with useProduct. */
+export function useProductDetails(slugs: string[]) {
+  return useQueries({
+    queries: slugs.map(slug => ({
+      queryKey: sellqoKeys.products.detail(slug),
+      queryFn: () => productsAPI.getBySlug(slug),
+      enabled: !!slug,
+    })),
   });
 }
 

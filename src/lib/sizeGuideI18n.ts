@@ -6,6 +6,9 @@ const LABELS: Record<string, { nl: string; fr: string; en?: string }> = {
   'length': { nl: 'Lengte', fr: 'Longueur' },
   'width': { nl: 'Breedte', fr: 'Largeur' },
   'sleeve length': { nl: 'Mouwlengte', fr: 'Longueur de manche' },
+  'body length': { nl: 'Lichaamslengte', fr: 'Longueur du corps' },
+  'chest width': { nl: 'Borstbreedte', fr: 'Largeur de poitrine' },
+  'chest circumference': { nl: 'Borstomtrek', fr: 'Tour de poitrine' },
   'chest': { nl: 'Borstwijdte', fr: 'Tour de poitrine' },
   'waist': { nl: 'Taille', fr: 'Tour de taille' },
   'hip': { nl: 'Heupwijdte', fr: 'Tour de hanches' },
@@ -40,6 +43,26 @@ const SENTENCES: SentenceRule[] = [
   },
   {
     match: 'pro tip! measure one of your products at home and compare it with the measurements you see in this guide.',
+    nl: 'Pro-tip! Meet thuis een kledingstuk op dat je al hebt en vergelijk het met de maten in deze gids.',
+    fr: 'Astuce ! Mesurez chez vous un vêtement que vous possédez déjà et comparez-le avec les mesures de ce guide.',
+  },
+  {
+    match: 'measurements are provided by our suppliers. product measurements may vary by up to 0.5" (1.25 cm).',
+    nl: 'De afmetingen worden aangeleverd door onze leveranciers. Productafmetingen kunnen tot 0,5" (1,25 cm) afwijken.',
+    fr: 'Les mesures sont fournies par nos fournisseurs. Les mesures du produit peuvent varier jusqu\'à 0,5" (1,25 cm).',
+  },
+  {
+    match: 'measurements are provided by suppliers.',
+    nl: 'De afmetingen worden aangeleverd door onze leveranciers.',
+    fr: 'Les mesures sont fournies par nos fournisseurs.',
+  },
+  {
+    match: 'product measurements may vary by up to 2" (5 cm).',
+    nl: 'Productafmetingen kunnen tot 2" (5 cm) afwijken.',
+    fr: 'Les mesures du produit peuvent varier jusqu\'à 2" (5 cm).',
+  },
+  {
+    match: 'pro tip! measure one of your products at home and compare with the measurements you see in this guide.',
     nl: 'Pro-tip! Meet thuis een kledingstuk op dat je al hebt en vergelijk het met de maten in deze gids.',
     fr: 'Astuce ! Mesurez chez vous un vêtement que vous possédez déjà et comparez-le avec les mesures de ce guide.',
   },

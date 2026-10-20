@@ -1,45 +1,37 @@
-import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useProducts, useProductDetails } from '@/integrations/sellqo/hooks';
+import { extractArray, extractSingle } from '@/integrations/sellqo/client';
+import { normalizeProduct, normalizeProducts } from '@/integrations/sellqo/normalizer';
+import type { Product, ProductSizeGuide } from '@/integrations/sellqo/types';
+import SizeGuideTable, { hasUsableSizeGuide } from '@/components/SizeGuideTable';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const sizeData = {
-  tshirts: [
-    { size: 'XS', chest: 88, length: 66, shoulder: 42 },
-    { size: 'S', chest: 92, length: 68, shoulder: 44 },
-    { size: 'M', chest: 98, length: 71, shoulder: 46 },
-    { size: 'L', chest: 104, length: 74, shoulder: 49 },
-    { size: 'XL', chest: 110, length: 76, shoulder: 52 },
-    { size: 'XXL', chest: 118, length: 78, shoulder: 55 },
-  ],
-  sweaters: [
-    { size: 'XS', chest: 92, length: 64, shoulder: 44 },
-    { size: 'S', chest: 96, length: 66, shoulder: 46 },
-    { size: 'M', chest: 102, length: 69, shoulder: 48 },
-    { size: 'L', chest: 108, length: 72, shoulder: 51 },
-    { size: 'XL', chest: 114, length: 74, shoulder: 54 },
-    { size: 'XXL', chest: 122, length: 76, shoulder: 57 },
-  ],
-  hoodies: [
-    { size: 'XS', chest: 96, length: 66, shoulder: 46 },
-    { size: 'S', chest: 100, length: 68, shoulder: 48 },
-    { size: 'M', chest: 106, length: 71, shoulder: 50 },
-    { size: 'L', chest: 112, length: 74, shoulder: 53 },
-    { size: 'XL', chest: 118, length: 76, shoulder: 56 },
-    { size: 'XXL', chest: 126, length: 78, shoulder: 59 },
-  ],
-};
-
-type Category = keyof typeof sizeData;
+type GuideProduct = Product & { size_guide: ProductSizeGuide };
 
 export default function SizeGuide() {
   const { t } = useLanguage();
-  const [category, setCategory] = useState<Category>('tshirts');
+  const { data: listData, isLoading: listLoading, isError: listError } = useProducts({});
 
-  const categories: { key: Category; label: string }[] = [
-    { key: 'tshirts', label: t('sizeGuide.tshirts') },
-    { key: 'sweaters', label: t('sizeGuide.sweaters') },
-    { key: 'hoodies', label: t('sizeGuide.hoodies') },
-  ];
+  const slugs = useMemo(
+    () => normalizeProducts(extractArray(listData)).map(p => p.slug).filter(Boolean),
+    [listData]
+  );
+  const details = useProductDetails(slugs);
+  const detailsLoading = details.some(q => q.isLoading);
+
+  const products: GuideProduct[] = details
+    .map(q => {
+      const raw = extractSingle(q.data);
+      return raw ? normalizeProduct(raw) : null;
+    })
+    .filter((p): p is GuideProduct => !!p && hasUsableSizeGuide(p.size_guide));
+
+  const [selected, setSelected] = useState<string | null>(null);
+  const active = products.find(p => p.slug === selected) ?? products[0];
+  const loading = listLoading || detailsLoading;
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -52,51 +44,60 @@ export default function SizeGuide() {
           {t('sizeGuide.title')}
         </motion.h1>
 
-        {/* Category tabs */}
-        <div className="flex justify-center gap-3 mb-10">
-          {categories.map(cat => (
-            <button
-              key={cat.key}
-              onClick={() => setCategory(cat.key)}
-              className={`px-5 py-2 rounded-full font-display text-sm border-2 transition-all ${
-                category === cat.key
-                  ? 'border-foreground bg-foreground text-background shadow-sticker'
-                  : 'border-border hover:border-foreground'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Table */}
-        <motion.div
-          key={category}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="border-3 border-foreground rounded-2xl overflow-hidden shadow-card"
-        >
-          <table className="w-full">
-            <thead>
-              <tr className="bg-foreground text-background">
-                <th className="py-3 px-4 text-left font-display text-sm">{t('sizeGuide.size')}</th>
-                <th className="py-3 px-4 text-center font-display text-sm">{t('sizeGuide.chest')}</th>
-                <th className="py-3 px-4 text-center font-display text-sm">{t('sizeGuide.length')}</th>
-                <th className="py-3 px-4 text-center font-display text-sm">{t('sizeGuide.shoulder')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sizeData[category].map((row, i) => (
-                <tr key={row.size} className={i % 2 === 0 ? 'bg-card' : 'bg-background'}>
-                  <td className="py-3 px-4 font-display">{row.size}</td>
-                  <td className="py-3 px-4 text-center font-body">{row.chest}</td>
-                  <td className="py-3 px-4 text-center font-body">{row.length}</td>
-                  <td className="py-3 px-4 text-center font-body">{row.shoulder}</td>
-                </tr>
+        {loading ? (
+          <div aria-busy="true">
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
+              {[0, 1, 2, 3].map(i => (
+                <Skeleton key={i} className="h-10 w-36 rounded-full" />
               ))}
-            </tbody>
-          </table>
-        </motion.div>
+            </div>
+            <Skeleton className="h-72 w-full rounded-2xl" />
+          </div>
+        ) : listError || !active ? (
+          <div className="border-3 border-foreground rounded-2xl p-6 text-center shadow-card">
+            <p className="font-body">
+              {t('sizeGuide.unavailable')}{' '}
+              <Link to="/contact" className="text-primary font-semibold hover:underline">
+                {t('sizeGuide.contactCta')}
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* Product tabs */}
+            {products.length > 1 && (
+              <div role="group" aria-label={t('sizeGuide.products')} className="flex flex-wrap justify-center gap-3 mb-10">
+                {products.map(p => (
+                  <button
+                    key={p.slug}
+                    type="button"
+                    aria-pressed={p.slug === active.slug}
+                    onClick={() => setSelected(p.slug)}
+                    className={`px-5 py-2 rounded-full font-display text-sm border-2 transition-all ${
+                      p.slug === active.slug
+                        ? 'border-foreground bg-foreground text-background shadow-sticker'
+                        : 'border-border hover:border-foreground'
+                    }`}
+                  >
+                    {p.title}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <motion.div
+              key={active.slug}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="border-3 border-foreground rounded-2xl p-4 md:p-6 shadow-card bg-card"
+            >
+              {products.length === 1 && (
+                <h2 className="font-display text-2xl mb-4">{active.title}</h2>
+              )}
+              <SizeGuideTable key={active.slug} guide={active.size_guide} />
+            </motion.div>
+          </>
+        )}
 
         {/* Akke's tip */}
         <motion.div
