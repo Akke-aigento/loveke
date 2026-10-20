@@ -216,7 +216,6 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
                 type="text"
                 inputMode="decimal"
                 autoComplete="off"
-                placeholder={unit === 'cm' ? '60' : '23.5'}
                 value={widthInput}
                 onChange={e => setWidthInput(e.target.value)}
                 className="bg-background border-2 border-foreground"
@@ -232,7 +231,6 @@ export default function StandardSizeChart({ guide }: { guide: ProductSizeGuide }
                   type="text"
                   inputMode="decimal"
                   autoComplete="off"
-                  placeholder={unit === 'cm' ? '72' : '28'}
                   value={lengthInput}
                   onChange={e => setLengthInput(e.target.value)}
                   className="bg-background border-2 border-foreground"
