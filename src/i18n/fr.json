@@ -127,7 +127,13 @@
     "unitInch": "pouce",
     "reviews": "Avis",
     "delivery": "Livraison gratuite · fabriqué à la commande · livré en 5 à 20 jours ouvrables",
-    "sizeTip": "L'astuce d'Akke (1,83 m) : L pour une coupe normale, XL pour oversize."
+    "sizeTip": "L'astuce d'Akke (1,83 m) : L pour une coupe normale, XL pour oversize.",
+    "sizeGuideKind": "Type de mesures",
+    "sizeGuideProduct": "Mesures du vêtement",
+    "sizeGuideBody": "Mesures du corps",
+    "sizeGuideProductHint": "Les dimensions du vêtement lui-même.",
+    "sizeGuideBodyHint": "Vos propres mensurations : comment vous mesurer.",
+    "sizeGuideUnit": "Unité"
   },
   "shop": {
     "title": "Boutique",
@@ -163,14 +169,10 @@
   },
   "sizeGuide": {
     "title": "Guide des tailles",
-    "tshirts": "T-Shirts",
-    "sweaters": "Pulls",
-    "hoodies": "Hoodies",
-    "size": "Taille",
-    "chest": "Poitrine (cm)",
-    "length": "Longueur (cm)",
-    "shoulder": "Épaule (cm)",
-    "tip": "Je mesure 1m83 et je porte du L en normal, XL en oversized — Akke"
+    "tip": "Je mesure 1m83 et je porte du L en normal, XL en oversized — Akke",
+    "products": "Choisissez un produit",
+    "unavailable": "Nous ne pouvons pas afficher les guides des tailles pour le moment. Vous hésitez sur votre taille ?",
+    "contactCta": "Envoyez-nous un message"
   },
   "giftCardsPage": {
     "title": "Offrez un cadeau Loveke 🎁",

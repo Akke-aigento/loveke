@@ -127,7 +127,13 @@
     "unitInch": "inch",
     "reviews": "Reviews",
     "delivery": "Free shipping · made to order · delivered in 5 to 20 working days",
-    "sizeTip": "Akke's tip (1.83 m): L for a regular fit, XL for oversized."
+    "sizeTip": "Akke's tip (1.83 m): L for a regular fit, XL for oversized.",
+    "sizeGuideKind": "Measurement type",
+    "sizeGuideProduct": "Garment measurements",
+    "sizeGuideBody": "Body measurements",
+    "sizeGuideProductHint": "The measurements of the garment itself.",
+    "sizeGuideBodyHint": "Your own body measurements: how to measure yourself.",
+    "sizeGuideUnit": "Unit"
   },
   "shop": {
     "title": "Shop",
@@ -163,14 +169,10 @@
   },
   "sizeGuide": {
     "title": "Size Guide",
-    "tshirts": "T-Shirts",
-    "sweaters": "Sweaters",
-    "hoodies": "Hoodies",
-    "size": "Size",
-    "chest": "Chest (cm)",
-    "length": "Length (cm)",
-    "shoulder": "Shoulder (cm)",
-    "tip": "I'm 1m83 and wear L for regular, XL for oversized — Akke"
+    "tip": "I'm 1m83 and wear L for regular, XL for oversized — Akke",
+    "products": "Choose a product",
+    "unavailable": "We can't show the size charts right now. Not sure about your size?",
+    "contactCta": "Send us a message"
   },
   "giftCardsPage": {
     "title": "Give a Loveke gift 🎁",
