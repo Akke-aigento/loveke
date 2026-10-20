@@ -1,0 +1,1249 @@
+{
+ "tee": {
+  "size_tables": [
+   {
+    "type": "measure_yourself",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "73"
+       },
+       {
+        "size": "M",
+        "value": "75"
+       },
+       {
+        "size": "L",
+        "value": "77"
+       },
+       {
+        "size": "XL",
+        "value": "80"
+       },
+       {
+        "size": "2XL",
+        "value": "82.5"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "24"
+       },
+       {
+        "size": "M",
+        "value": "24.5"
+       },
+       {
+        "size": "L",
+        "value": "25"
+       },
+       {
+        "size": "XL",
+        "value": "25.5"
+       },
+       {
+        "size": "2XL",
+        "value": "26"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "99.06"
+       },
+       {
+        "size": "M",
+        "value": "109.22"
+       },
+       {
+        "size": "L",
+        "value": "119.38"
+       },
+       {
+        "size": "XL",
+        "value": "129.54"
+       },
+       {
+        "size": "2XL",
+        "value": "139.70"
+       }
+      ],
+      "type_label": "Chest"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "73"
+       },
+       {
+        "size": "M",
+        "value": "75"
+       },
+       {
+        "size": "L",
+        "value": "77"
+       },
+       {
+        "size": "XL",
+        "value": "80"
+       },
+       {
+        "size": "2XL",
+        "value": "82.5"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "63"
+       },
+       {
+        "size": "M",
+        "value": "67"
+       },
+       {
+        "size": "L",
+        "value": "71"
+       },
+       {
+        "size": "XL",
+        "value": "76"
+       },
+       {
+        "size": "2XL",
+        "value": "81"
+       }
+      ],
+      "type_label": "Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "24"
+       },
+       {
+        "size": "M",
+        "value": "24.5"
+       },
+       {
+        "size": "L",
+        "value": "25"
+       },
+       {
+        "size": "XL",
+        "value": "25.5"
+       },
+       {
+        "size": "2XL",
+        "value": "26"
+       }
+      ],
+      "type_label": "Sleeve length"
+     }
+    ]
+   },
+   {
+    "type": "measure_yourself",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "28.74"
+       },
+       {
+        "size": "M",
+        "value": "29.53"
+       },
+       {
+        "size": "L",
+        "value": "30.31"
+       },
+       {
+        "size": "XL",
+        "value": "31.50"
+       },
+       {
+        "size": "2XL",
+        "value": "32.48"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "9.45"
+       },
+       {
+        "size": "M",
+        "value": "9.65"
+       },
+       {
+        "size": "L",
+        "value": "9.84"
+       },
+       {
+        "size": "XL",
+        "value": "10.04"
+       },
+       {
+        "size": "2XL",
+        "value": "10.24"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "39"
+       },
+       {
+        "size": "M",
+        "value": "43"
+       },
+       {
+        "size": "L",
+        "value": "47"
+       },
+       {
+        "size": "XL",
+        "value": "51"
+       },
+       {
+        "size": "2XL",
+        "value": "55"
+       }
+      ],
+      "type_label": "Chest"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "28.74"
+       },
+       {
+        "size": "M",
+        "value": "29.53"
+       },
+       {
+        "size": "L",
+        "value": "30.31"
+       },
+       {
+        "size": "XL",
+        "value": "31.50"
+       },
+       {
+        "size": "2XL",
+        "value": "32.48"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "24.80"
+       },
+       {
+        "size": "M",
+        "value": "26.38"
+       },
+       {
+        "size": "L",
+        "value": "27.95"
+       },
+       {
+        "size": "XL",
+        "value": "29.92"
+       },
+       {
+        "size": "2XL",
+        "value": "31.89"
+       }
+      ],
+      "type_label": "Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "9.45"
+       },
+       {
+        "size": "M",
+        "value": "9.65"
+       },
+       {
+        "size": "L",
+        "value": "9.84"
+       },
+       {
+        "size": "XL",
+        "value": "10.04"
+       },
+       {
+        "size": "2XL",
+        "value": "10.24"
+       }
+      ],
+      "type_label": "Sleeve length"
+     }
+    ]
+   }
+  ],
+  "available_sizes": [
+   "S",
+   "M",
+   "L",
+   "XL",
+   "2XL"
+  ]
+ },
+ "sweatshirt": {
+  "size_tables": [
+   {
+    "type": "measure_yourself",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "68"
+       },
+       {
+        "size": "M",
+        "value": "72"
+       },
+       {
+        "size": "L",
+        "value": "74"
+       },
+       {
+        "size": "XL",
+        "value": "76"
+       },
+       {
+        "size": "2XL",
+        "value": "78"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "max_value": " 91.4",
+        "min_value": "83.8 "
+       },
+       {
+        "size": "M",
+        "max_value": " 101.6",
+        "min_value": "94 "
+       },
+       {
+        "size": "L",
+        "max_value": " 109.2",
+        "min_value": "104.1 "
+       },
+       {
+        "size": "XL",
+        "max_value": " 116.8",
+        "min_value": "111.8 "
+       },
+       {
+        "size": "2XL",
+        "max_value": " 124.5",
+        "min_value": "119.4 "
+       }
+      ],
+      "type_label": "Chest Circumference"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "64.5"
+       },
+       {
+        "size": "M",
+        "value": "66"
+       },
+       {
+        "size": "L",
+        "value": "67.5"
+       },
+       {
+        "size": "XL",
+        "value": "69"
+       },
+       {
+        "size": "2XL",
+        "value": "70.5"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "68"
+       },
+       {
+        "size": "M",
+        "value": "72"
+       },
+       {
+        "size": "L",
+        "value": "74"
+       },
+       {
+        "size": "XL",
+        "value": "76"
+       },
+       {
+        "size": "2XL",
+        "value": "78"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "50.5"
+       },
+       {
+        "size": "M",
+        "value": "53"
+       },
+       {
+        "size": "L",
+        "value": "56"
+       },
+       {
+        "size": "XL",
+        "value": "59"
+       },
+       {
+        "size": "2XL",
+        "value": "62"
+       }
+      ],
+      "type_label": "Chest Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "64.5"
+       },
+       {
+        "size": "M",
+        "value": "66"
+       },
+       {
+        "size": "L",
+        "value": "67.5"
+       },
+       {
+        "size": "XL",
+        "value": "69"
+       },
+       {
+        "size": "2XL",
+        "value": "70.5"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     }
+    ]
+   },
+   {
+    "type": "measure_yourself",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "26.77"
+       },
+       {
+        "size": "M",
+        "value": "28.35"
+       },
+       {
+        "size": "L",
+        "value": "29.13"
+       },
+       {
+        "size": "XL",
+        "value": "29.92"
+       },
+       {
+        "size": "2XL",
+        "value": "30.71"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "max_value": "35.98",
+        "min_value": "32.99"
+       },
+       {
+        "size": "M",
+        "max_value": "40.00",
+        "min_value": "37.01"
+       },
+       {
+        "size": "L",
+        "max_value": "42.99",
+        "min_value": "40.98"
+       },
+       {
+        "size": "XL",
+        "max_value": "45.98",
+        "min_value": "44.02"
+       },
+       {
+        "size": "2XL",
+        "max_value": "49.02",
+        "min_value": "47.01"
+       }
+      ],
+      "type_label": "Chest Circumference"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "25.39"
+       },
+       {
+        "size": "M",
+        "value": "25.98"
+       },
+       {
+        "size": "L",
+        "value": "26.57"
+       },
+       {
+        "size": "XL",
+        "value": "27.17"
+       },
+       {
+        "size": "2XL",
+        "value": "27.76"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "26.77"
+       },
+       {
+        "size": "M",
+        "value": "28.35"
+       },
+       {
+        "size": "L",
+        "value": "29.13"
+       },
+       {
+        "size": "XL",
+        "value": "29.92"
+       },
+       {
+        "size": "2XL",
+        "value": "30.71"
+       }
+      ],
+      "type_label": "Body Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "19.88"
+       },
+       {
+        "size": "M",
+        "value": "20.87"
+       },
+       {
+        "size": "L",
+        "value": "22.05"
+       },
+       {
+        "size": "XL",
+        "value": "23.23"
+       },
+       {
+        "size": "2XL",
+        "value": "24.41"
+       }
+      ],
+      "type_label": "Chest Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "25.39"
+       },
+       {
+        "size": "M",
+        "value": "25.98"
+       },
+       {
+        "size": "L",
+        "value": "26.57"
+       },
+       {
+        "size": "XL",
+        "value": "27.17"
+       },
+       {
+        "size": "2XL",
+        "value": "27.76"
+       }
+      ],
+      "type_label": "Sleeve Length"
+     }
+    ]
+   }
+  ],
+  "available_sizes": [
+   "S",
+   "M",
+   "L",
+   "XL",
+   "2XL"
+  ]
+ },
+ "hoodie": {
+  "size_tables": [
+   {
+    "type": "product_measure",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "67.95"
+       },
+       {
+        "size": "M",
+        "value": "69.85"
+       },
+       {
+        "size": "L",
+        "value": "71.76"
+       },
+       {
+        "size": "XL",
+        "value": "74.93"
+       },
+       {
+        "size": "2XL",
+        "value": "77.47"
+       },
+       {
+        "size": "3XL",
+        "value": "80.01"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "57.15"
+       },
+       {
+        "size": "M",
+        "value": "60.96"
+       },
+       {
+        "size": "L",
+        "value": "64.77"
+       },
+       {
+        "size": "XL",
+        "value": "69.85"
+       },
+       {
+        "size": "2XL",
+        "value": "74.93"
+       },
+       {
+        "size": "3XL",
+        "value": "80.01"
+       }
+      ],
+      "type_label": "Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "57.79"
+       },
+       {
+        "size": "M",
+        "value": "58.42"
+       },
+       {
+        "size": "L",
+        "value": "59.69"
+       },
+       {
+        "size": "XL",
+        "value": "60.33"
+       },
+       {
+        "size": "2XL",
+        "value": "60.96"
+       },
+       {
+        "size": "3XL",
+        "value": "61.60"
+       }
+      ],
+      "type_label": "Sleeve length"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "26 3/4"
+       },
+       {
+        "size": "M",
+        "value": "27 1/2"
+       },
+       {
+        "size": "L",
+        "value": "28 1/4"
+       },
+       {
+        "size": "XL",
+        "value": "29 1/2"
+       },
+       {
+        "size": "2XL",
+        "value": "30 1/2"
+       },
+       {
+        "size": "3XL",
+        "value": "31 1/2"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "22 1/2"
+       },
+       {
+        "size": "M",
+        "value": "24"
+       },
+       {
+        "size": "L",
+        "value": "25 1/2"
+       },
+       {
+        "size": "XL",
+        "value": "27 1/2"
+       },
+       {
+        "size": "2XL",
+        "value": "29 1/2"
+       },
+       {
+        "size": "3XL",
+        "value": "31 1/2"
+       }
+      ],
+      "type_label": "Width"
+     },
+     {
+      "values": [
+       {
+        "size": "S",
+        "value": "22 3/4"
+       },
+       {
+        "size": "M",
+        "value": "23"
+       },
+       {
+        "size": "L",
+        "value": "23 1/2"
+       },
+       {
+        "size": "XL",
+        "value": "23 3/4"
+       },
+       {
+        "size": "2XL",
+        "value": "24"
+       },
+       {
+        "size": "3XL",
+        "value": "24 1/4"
+       }
+      ],
+      "type_label": "Sleeve length"
+     }
+    ]
+   }
+  ],
+  "available_sizes": [
+   "S",
+   "M",
+   "L",
+   "XL",
+   "2XL",
+   "3XL"
+  ]
+ },
+ "tanktop": {
+  "size_tables": [
+   {
+    "type": "measure_yourself",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "66.04"
+       },
+       {
+        "size": "S",
+        "value": "68.58"
+       },
+       {
+        "size": "M",
+        "value": "71.12"
+       },
+       {
+        "size": "L",
+        "value": "73.66"
+       },
+       {
+        "size": "XL",
+        "value": "76.20"
+       },
+       {
+        "size": "2XL",
+        "value": "78.74"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "XS",
+        "max_value": "86.36",
+        "min_value": "78.74"
+       },
+       {
+        "size": "S",
+        "max_value": "93.98",
+        "min_value": "86.36"
+       },
+       {
+        "size": "M",
+        "max_value": "104.14",
+        "min_value": "96.52"
+       },
+       {
+        "size": "L",
+        "max_value": "114.30",
+        "min_value": "106.68"
+       },
+       {
+        "size": "XL",
+        "max_value": "124.46",
+        "min_value": "116.84"
+       },
+       {
+        "size": "2XL",
+        "max_value": "134.62",
+        "min_value": "127.00"
+       }
+      ],
+      "type_label": "Chest"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "66.04"
+       },
+       {
+        "size": "S",
+        "value": "68.58"
+       },
+       {
+        "size": "M",
+        "value": "71.12"
+       },
+       {
+        "size": "L",
+        "value": "73.66"
+       },
+       {
+        "size": "XL",
+        "value": "76.20"
+       },
+       {
+        "size": "2XL",
+        "value": "78.74"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "40.64"
+       },
+       {
+        "size": "S",
+        "value": "45.72"
+       },
+       {
+        "size": "M",
+        "value": "50.80"
+       },
+       {
+        "size": "L",
+        "value": "55.88"
+       },
+       {
+        "size": "XL",
+        "value": "60.96"
+       },
+       {
+        "size": "2XL",
+        "value": "66.04"
+       }
+      ],
+      "type_label": "Width"
+     }
+    ]
+   },
+   {
+    "type": "measure_yourself",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "26"
+       },
+       {
+        "size": "S",
+        "value": "27"
+       },
+       {
+        "size": "M",
+        "value": "28"
+       },
+       {
+        "size": "L",
+        "value": "29"
+       },
+       {
+        "size": "XL",
+        "value": "30"
+       },
+       {
+        "size": "2XL",
+        "value": "31"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "XS",
+        "max_value": "34",
+        "min_value": "31"
+       },
+       {
+        "size": "S",
+        "max_value": "37",
+        "min_value": "34"
+       },
+       {
+        "size": "M",
+        "max_value": "41",
+        "min_value": "38"
+       },
+       {
+        "size": "L",
+        "max_value": "45",
+        "min_value": "42"
+       },
+       {
+        "size": "XL",
+        "max_value": "49",
+        "min_value": "46"
+       },
+       {
+        "size": "2XL",
+        "max_value": "53",
+        "min_value": "50"
+       }
+      ],
+      "type_label": "Chest"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "26"
+       },
+       {
+        "size": "S",
+        "value": "27"
+       },
+       {
+        "size": "M",
+        "value": "28"
+       },
+       {
+        "size": "L",
+        "value": "29"
+       },
+       {
+        "size": "XL",
+        "value": "30"
+       },
+       {
+        "size": "2XL",
+        "value": "31"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "XS",
+        "value": "16 ¼"
+       },
+       {
+        "size": "S",
+        "value": "18 ¼"
+       },
+       {
+        "size": "M",
+        "value": "20 ¼"
+       },
+       {
+        "size": "L",
+        "value": "22 ¼"
+       },
+       {
+        "size": "XL",
+        "value": "24 ¼"
+       },
+       {
+        "size": "2XL",
+        "value": "26 ¼"
+       }
+      ],
+      "type_label": "Width"
+     }
+    ]
+   }
+  ],
+  "available_sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL",
+   "2XL"
+  ]
+ },
+ "bodysuit": {
+  "size_tables": [
+   {
+    "type": "product_measure",
+    "unit": "cm",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "12M",
+        "value": "34.29"
+       },
+       {
+        "size": "18M",
+        "value": "36.83"
+       },
+       {
+        "size": "24M",
+        "value": "39.37"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "12M",
+        "value": "24.77"
+       },
+       {
+        "size": "18M",
+        "value": "27.31"
+       },
+       {
+        "size": "24M",
+        "value": "29.85"
+       }
+      ],
+      "type_label": "Width"
+     }
+    ]
+   },
+   {
+    "type": "product_measure",
+    "unit": "inches",
+    "measurements": [
+     {
+      "values": [
+       {
+        "size": "12M",
+        "value": "13.5"
+       },
+       {
+        "size": "18M",
+        "value": "14.5"
+       },
+       {
+        "size": "24M",
+        "value": "15.5"
+       }
+      ],
+      "type_label": "Length"
+     },
+     {
+      "values": [
+       {
+        "size": "12M",
+        "value": "9.75"
+       },
+       {
+        "size": "18M",
+        "value": "10.75"
+       },
+       {
+        "size": "24M",
+        "value": "11.75"
+       }
+      ],
+      "type_label": "Width"
+     }
+    ]
+   }
+  ],
+  "available_sizes": [
+   "12M",
+   "18M",
+   "24M"
+  ]
+ }
+}
