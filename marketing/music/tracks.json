@@ -1,1 +1,110 @@
-[]
+[
+  {
+    "file": "warm-zachte-ochtend.mp3",
+    "title": "Zachte Ochtend",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Warm acoustic guitar and soft hand percussion with a gentle ukulele, cozy and romantic, sunny morning, 96 BPM, instrumental, clean ending",
+    "mood": [
+      "warm",
+      "akoestisch"
+    ],
+    "bpm": 96,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "vrolijk-sticker-pop.mp3",
+    "title": "Sticker Pop",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Upbeat indie pop with bright electric guitar, hand claps and a bouncy bass line, playful and happy, 118 BPM, instrumental, clean ending",
+    "mood": [
+      "vrolijk",
+      "pop"
+    ],
+    "bpm": 118,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "lo-fi-nachttrein.mp3",
+    "title": "Nachttrein",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Lo-fi hip hop with mellow Rhodes piano, soft vinyl crackle and relaxed boom-bap drums, nostalgic night train, 84 BPM, instrumental",
+    "mood": [
+      "lo-fi",
+      "chill"
+    ],
+    "bpm": 84,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "funk-straatfunk.mp3",
+    "title": "Straatfunk",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Light funk groove with slap bass, wah guitar and tight drums, confident streetwear swagger, 108 BPM, instrumental, clean ending",
+    "mood": [
+      "funk",
+      "energiek"
+    ],
+    "bpm": 108,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "emotioneel-perron.mp3",
+    "title": "Perron",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Emotional solo piano with soft strings slowly swelling, bittersweet goodbye at a train station, 72 BPM, instrumental",
+    "mood": [
+      "emotioneel",
+      "piano"
+    ],
+    "bpm": 72,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "energiek-samen-sterk.mp3",
+    "title": "Samen Sterk",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-10-28",
+    "prompt": "Energetic electro pop with punchy drums and bright synth stabs, joyful and confident, 124 BPM, instrumental, clean ending",
+    "mood": [
+      "energiek",
+      "pop"
+    ],
+    "bpm": 124,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  }
+]
