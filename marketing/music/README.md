@@ -1,18 +1,25 @@
 # Loveke-muziekbibliotheek
 
-Nummers die Loveke-reels automatisch mogen gebruiken. Akke kiest en downloadt ze zelf;
-Claude zet ze hier met de licentie erbij en kiest per reel een nummer dat past.
+Nummers die Loveke-reels automatisch gebruiken. Sinds 28 okt 2026 maakt Akke ze zelf in
+**ElevenLabs Music** (betaald plan, commercieel gebruik op social media, geen naamsvermelding).
+Gedeelde regels, prompts en het toevoegscript: `Akke-aigento/nomadix-socials`, `shared/MUZIEK.md`
+(sectie Loveke) en `shared/music-add.mjs`:
+
+```
+node shared/music-add.mjs <pad-naar-loveke>/marketing/music <bestand> --title "<titel>" --mood warm,akoestisch --bpm 96 --prompt "<prompt>"
+```
+
+Doel: een reel met een nummer uit deze map gaat na "Week goedkeuren" vanzelf online, zoals een post.
 
 ## Regels
 
-- Enkel nummers die **commercieel gebruikt mogen worden, zonder naamsvermelding**
-  (bv. Pixabay Music, YouTube Audio Library met de filter "geen naamsvermelding vereist").
-  Elk nummer heeft een bron-URL en de licentie in `tracks.json`; zonder die twee wordt het niet gebruikt.
-- Nooit commerciële hits of nummers uit de Instagram-app hier zetten: die mogen we niet zelf
-  onder een video mixen. Daarvoor is de stille versie ("Ik kies zelf muziek").
-- Max ±5 MB per nummer (mp3 of m4a). Bestandsnaam: `<sfeer>-<titel>.mp3`, kleine letters, koppeltekens.
+- Instrumentaal, ±30 s, nooit een artiest of bestaand nummer in de prompt.
+- Andere bronnen mogen enkel als ze commercieel gebruik zonder naamsvermelding toelaten (bron-URL + licentie in `tracks.json`).
+- Nooit commerciële hits of nummers uit de Instagram-app: die mogen we niet zelf onder een video mixen. Daarvoor is de stille versie ("Ik kies zelf muziek").
+- Max 5 MB per nummer (het script controleert dat). Bestandsnaam: `<sfeer>-<titel>.mp3`.
 - Een nummer niet twee reels na elkaar gebruiken; liefst niet vaker dan eens per maand
   (`used` in `tracks.json` houdt dat bij).
+- Deze repo is publiek: de nummers zijn te downloaden. Aanvaard (28 okt), de reels zelf staan ook publiek.
 
 ## tracks.json
 
@@ -20,9 +27,9 @@ Claude zet ze hier met de licentie erbij en kiest per reel een nummer dat past.
 {
   "file": "warm-zachte-ochtend.mp3",
   "title": "Zachte Ochtend",
-  "artist": "…",
-  "source_url": "https://…",
-  "license": "Pixabay Content License",
+  "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+  "source_url": "https://elevenlabs.io/music",
+  "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
   "attribution_required": false,
   "mood": ["warm", "akoestisch"],
   "bpm": 96,
