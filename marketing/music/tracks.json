@@ -108,5 +108,113 @@
     "duration": 30.1,
     "best_start": 0,
     "used": []
+  },
+  {
+    "file": "warm-zondagmarkt.mp3",
+    "title": "Zondagmarkt",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Breezy acoustic guitar with light tambourine and a glockenspiel melody, sunny weekend market, cheerful and warm, 100 BPM, instrumental, clean ending",
+    "mood": [
+      "warm",
+      "akoestisch"
+    ],
+    "bpm": 100,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "vrolijk-kussengevecht.mp3",
+    "title": "Kussengevecht",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Bouncy indie pop with playful synth leads, hand claps and a punchy bass, cheeky and fun, 128 BPM, instrumental, clean ending",
+    "mood": [
+      "vrolijk",
+      "pop"
+    ],
+    "bpm": 128,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "lo-fi-late-bus.mp3",
+    "title": "Late Bus",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Lo-fi chillhop with dusty drums, warm muted guitar and soft bass, late night bus ride through the city, 78 BPM, instrumental",
+    "mood": [
+      "lo-fi",
+      "chill"
+    ],
+    "bpm": 78,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "funk-hoodieweer.mp3",
+    "title": "Hoodieweer",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Groovy disco funk with rhythm guitar, clavinet and a four-on-the-floor beat, confident and playful, 112 BPM, instrumental, clean ending",
+    "mood": [
+      "funk",
+      "energiek"
+    ],
+    "bpm": 112,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
+  },
+  {
+    "file": "emotioneel-lange-afstand.mp3",
+    "title": "Lange Afstand",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Tender piano and soft cello with gentle ambient pads, longing for someone far away, hopeful ending, 76 BPM, instrumental",
+    "mood": [
+      "emotioneel",
+      "piano"
+    ],
+    "bpm": 76,
+    "duration": 30.1,
+    "best_start": 0.4,
+    "used": []
+  },
+  {
+    "file": "energiek-straatkrijt.mp3",
+    "title": "Straatkrijt",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-01",
+    "prompt": "Upbeat boom-bap hip hop beat with crisp snares, playful horn stabs and a warm bass line, confident street style, 92 BPM, instrumental, clean ending",
+    "mood": [
+      "energiek",
+      "vrolijk"
+    ],
+    "bpm": 92,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
   }
 ]

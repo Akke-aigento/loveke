@@ -73,8 +73,9 @@ Geen vaste uren (Akke, 16 okt 2026). Volg https://github.com/Akke-aigento/nomadi
 2. **Haal live data** via de Lovable-connector, `query_database` op project `9932a7fe-43a1-42de-9c64-168968599600`:
    `select name, slug, short_description, (select min(price) from product_variants v where v.product_id=p.id and v.is_active) prijs from products p where tenant_id='1671a91c-31fe-42ed-8a10-41f3117ceb50' and is_active and not hide_from_storefront;`
    **Nieuwe producten gaan voor** (Akke, 01-11): vergelijk `products.created_at` met de vorige weekrun (log.md). Een nieuw product krijgt die week een post; bij een launch van meerdere producten mag dat een extra carousel zijn, ook als de vorige week er al één had. Ontbreekt de foto in `../product-photos/`, haal hem dan op uit `products.images` (de SellQo-opslag `gczmfcabnoofnmfpzeop.supabase.co` is bereikbaar vanuit de sandbox) en zet hem als `<product>-<n>.png` in `../product-photos/` (mee committen). Sla een nieuw product nooit over. Lukt het ophalen niet, meld het dan bovenaan aan Akke. Is de omschrijving leeg, gebruik dan enkel naam, prijs en wat op de foto te zien is.
-3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en per post één story (`story-ma.html` …), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
-   **Plus één reel per week** (zondag, sterkste slot: standaard 20:30), zie "Reels" hieronder.
+3. **Maak** per post één HTML in `weeks/<maandag>/` (`post-ma.html`, `post-wo.html`, `post-vr.html`) en **twee stories** per week (waarvan minstens één met sticker; `story-<dag>-<onderwerp>.html`, op dagen zonder reel), naar het voorbeeld van `launch/`. Elke file begint met `<meta name="loveke-size" content="1080x1350">` (of `1080x1920`) en `<link rel="stylesheet" href="../../brand.css">`. Paden naar foto's: `../../../product-photos/…`, naar de strip: `../../../../src/assets/comic/…`.
+   **Plus drie reels per week** (di, do, zo; de zondagreel op het sterkste slot), soms een vierde op zaterdag, zie "Reels" hieronder.
+   Weekritme: ma post · di reel · wo post · do reel · vr post · zo reel, stories op twee andere momenten.
 3b. **Tekstvakken markeren** (SOCIAL-4): geef elk tekstelement dat Akke later mag aanpassen `data-slot="<sleutel>" data-label="<Label>" data-max="<max tekens>"` (`data-multiline="true"` als er een `<br>` in mag). Enkel platte tekst in zo'n element (geen geneste opmaak); zet een vast stukje opmaak (bv. "1." of "vanaf") in een apart element ernaast. `data-max` ≈ wat nog mooi past in het ontwerp (meestal 1,4 × de huidige lengte). Geen scripts of on…-attributen.
 4. **Render**: `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node marketing/instagram/render.mjs marketing/instagram/weeks/<maandag> marketing/instagram/out/<maandag>` en bekijk elk beeld één keer (tekst niet afgesneden, niets overlapt). De reel met `reel.mjs` (zie "Reels").
 4b. **Recept**: `node marketing/instagram/recipe.mjs weeks/<maandag>/post-*.html weeks/<maandag>/story-*.html` → `<naam>.recipe.json` naast elke HTML. Commit die mee.
@@ -114,9 +115,14 @@ Een carousel is een post met 2 tot 10 beelden (1080×1350, allemaal hetzelfde fo
 
 ## Reels
 
-Eén per week, zondag op het sterkste slot (standaard 20:30). Afwisselen tussen formats (zie het log, nooit twee keer na elkaar hetzelfde):
-strip-verhaal (een hoofdstuk geanimeerd), product-drop, typografisch (zin woord per woord), slideshow op de beat,
-POV/meme met strippanelen, of montage van clips die Akke doorstuurt.
+**Drie per week** (Akke, 01-11): dinsdag, donderdag en zondag. De zondagreel krijgt het sterkste slot (zondagavond); de andere twee
+in een ander dagdeel (middag of ochtend), nooit op hetzelfde uur. Een **vierde** reel (zaterdag, overdag) enkel als er vers materiaal
+is dat geen post kan dragen: video of foto's die Akke aanlevert, klantfoto's, een nieuwe drop. Nooit een reel rekken om het aantal te halen.
+
+Formats: strip-verhaal (een hoofdstuk geanimeerd), product-drop, typografisch (zin woord per woord), slideshow op de beat,
+POV/meme met strippanelen, "3 dingen", voor/na of vergelijking, of montage van clips die Akke doorstuurt.
+De reels van één week hebben elk een **ander format en een ander nummer**, en geen enkel format herhaalt het format van de zondagreel van vorige week.
+Wissel ook de pijler (verhaal, product, samen, merk) over de reels.
 
 - **Bron**: `weeks/<maandag>/reel-<onderwerp>/index.html` met `<meta name="loveke-reel" content="1080x1920" data-duration="<s>" data-fps="30">` en een `window.setT(t)` die alles deterministisch op tijdstip t zet (voorbeeld: `weeks/2026-10-19/reel-kyiv/`). 12 tot 25 seconden; tekst binnen de veilige zone (boven 220 px en onder 380 px vrij laten).
 - **Muziek**: kies een nummer uit `../music/` (zie de README daar) en zet de scèneduur op de beat. Met een bibliotheeknummer gaat de reel als `pending_approval` de week in en na "Week goedkeuren" vanzelf online (sinds 28 okt). Enkel als er geen passend nummer is: stille versie, `manual` + `music`, en meld dat de bibliotheek aangevuld moet worden.

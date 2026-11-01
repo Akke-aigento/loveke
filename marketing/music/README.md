@@ -17,8 +17,9 @@ Doel: een reel met een nummer uit deze map gaat na "Week goedkeuren" vanzelf onl
 - Andere bronnen mogen enkel als ze commercieel gebruik zonder naamsvermelding toelaten (bron-URL + licentie in `tracks.json`).
 - Nooit commerciële hits of nummers uit de Instagram-app: die mogen we niet zelf onder een video mixen. Daarvoor is de stille versie ("Ik kies zelf muziek").
 - Max 5 MB per nummer (het script controleert dat). Bestandsnaam: `<sfeer>-<titel>.mp3`.
-- Een nummer niet twee reels na elkaar gebruiken; liefst niet vaker dan eens per maand
-  (`used` in `tracks.json` houdt dat bij).
+- Een nummer nooit twee keer in dezelfde week en nooit op twee reels na elkaar (Akke, 01-11: 3 à 4 reels per week).
+  Kies het nummer dat het langst niet gebruikt is (`used` in `tracks.json` houdt dat bij). Past geen enkel nummer dat
+  aan die regel voldoet: maak er een bij (zie `shared/MUZIEK.md`, route music-compose) in plaats van te herhalen.
 - Deze repo is publiek: de nummers zijn te downloaden. Aanvaard (28 okt), de reels zelf staan ook publiek.
 
 ## tracks.json
