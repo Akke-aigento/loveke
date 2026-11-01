@@ -46,14 +46,14 @@ Nog niet gebruikt: tanktop (winter, bewaren voor het voorjaar), strip p. 1-4 en 
 
 ## Week van 2 november 2026 — map `weeks/2026-11-02/`, beelden in `published/2026-11-02/`
 
-Data bij de start: 12 gemeten posts (gem. score ±17), bereik 6–131. Lessen toegepast: hook `statement` (vr) en cta `reageren` (ma, vr) = exploit; de rest explore. Testslot 17:40 (vorige week) scoorde 25,0 (1 post, boven gem.). Geen signalen van Akke. Vorige week wél een carousel → deze week **geen carousel**.
-Nieuwe producten zonder foto in `product-photos/`: Loveke Sweet (tee, cup, pet), Classic Hat, Classic Hoodie Kids → nog niet gebruikt.
+Data bij de start: 12 gemeten posts (gem. score ±17), bereik 6–131. Lessen toegepast: hook `statement` (vr) en cta `reageren` (ma, vr) = exploit; de rest explore. Testslot 17:40 (vorige week) scoorde 25,0 (1 post, boven gem.). Geen signalen van Akke. Vorige week wél een carousel, maar de launch van 30-10 (Loveke Sweet + Classic Hat) kreeg op vraag van Akke toch een carousel (woensdag). De hoodie-post "280 g/m²" (`post-wo-hoodie280`) is vervangen en dus niet gebruikt: reserve.
+Productfoto's van de nieuwe producten staan sinds 01-11 in `product-photos/` (sweet-*, classic-hat-*, hoodie-kids-*). De SellQo-opslag is nu bereikbaar vanuit de sandbox. Classic Hoodie Kids (€49,95) nog niet gepost.
 
 | Dag + uur | Item | Pijler | Format / template | Hook | Caption | CTA | Licht/donker | Bucket | Uur: reden |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ma 02-11 12:20 | Post "Drie seconden. Meer had hij niet nodig.": strip p. 3 (hartjes-paneel + "same hostel"), beeld eerst op oranje | verhaal | strip / strip-beeld-eerst-oranje | verhaal | lang | reageren | fel (oranje) | exploit (cta reageren) | middag: lunchpauze, middag scoorde 1× 50,0; strip nog nooit op de middag |
+| ma 02-11 07:55 **(test)** | Post "Drie seconden. Meer had hij niet nodig.": strip p. 3 (hartjes-paneel + "same hostel"), beeld eerst op oranje | verhaal | strip / strip-beeld-eerst-oranje | verhaal | lang | reageren | fel (oranje) | exploit (cta reageren), experiment tijd | testslot: vóór het ochtendvenster (ontbijt/pendel), nog nooit geprobeerd; strip past bij de ochtend (verplaatst van 12:20 toen de carousel de middag kreeg) |
 | ma 02-11 21:05 | Story quiz-sticker "Waar zagen wij elkaar voor het eerst?" (Bratislava/Kyiv/Mukachevo), strip p. 1 | samen | quiz / story-quiz-creme | vraag | – | reageren | licht | explore, experiment inhoud (eerste quiz) | sticker op de avondpiek |
-| wo 04-11 07:55 **(test)** | Post "280 gram per m²": Classic Hoodie, €59,95, groot cijfer op geel (foto hoodie-1) | product | groot-cijfer / cijfer-geel-product | cijfer | middel | link | fel (geel) | explore, experiment tijd | testslot: vóór het ochtendvenster (ontbijt), nog nooit geprobeerd; ochtend scoorde 2× boven gem. |
+| wo 04-11 12:35 | **Carousel** (6 slides) "Nieuw: Loveke Sweet": Sweet Tee €29,95 (2XL €31,95), Sweet Cup €24,95, Sweet Hat €29,95, Classic Hat €29,95, slotslide "Welke kies jij?" (foto's sweet-tee-1/2, sweet-cup-1/2, sweet-pet-1/2, classic-hat-1/2) | product | carousel-aanbod / carousel-nieuw-sweet | contrast | lang | reageren | licht/fel (crème, roze, geel, oranje) + donkere slotslide | explore, experiment inhoud | middag: lunchpauze, product-venster; launch van 30-10 krijgt een vast venster, geen testuur |
 | wo 04-11 20:55 | Story link-sticker "Al iets op je Sint-lijstje?" (tee-4 + hoodie-3) → /shop (utm loveke-20261104) | merk | seizoen / story-sint-rood | vraag | – | link | fel (rood) | explore | sticker op de avondpiek |
 | vr 06-11 12:15 | Story (geen sticker, automatisch) "Eén hoodie. Eén tee." (hoodie-3 + tee-5) | samen | lifestyle / story-duo-donker | statement | – | geen | donker | explore | middag, ander dagdeel dan de vr-post |
 | vr 06-11 19:50 | Post "Samen scrollen telt ook. als quality time.", typografisch op roze | samen | quote / typo-roze-quote | statement | kort | reageren | fel (roze) | exploit (hook statement + cta reageren) | avond: zetelmoment, past bij de inhoud |
@@ -62,4 +62,4 @@ Nieuwe producten zonder foto in `product-photos/`: Loveke Sweet (tee, cup, pet),
 Reel-muziek: bibliotheeknummer **Straatfunk** (funk-straatfunk.mp3, 108 BPM, scènes op 8 tellen) → `pending_approval`, gaat vanzelf na "Week goedkeuren". Songvoorstellen (optioneel): "Leave The Door Open" (Silk Sonic), "Only You" (The Platters), "Ring Ring Ring" (Tyler, The Creator). Bron: https://socialbee.com/blog/trending-instagram-songs/ (bijgewerkt 5-8-2026; geen recentere lijst gevonden).
 Reelformat: slideshow (Kyiv) → tekst (3 dingen) → nu POV.
 
-Nog niet gebruikt: tanktop (voorjaar), strip p. 2, 4, 6 en 7 als losse panelen, story "komt eraan", nieuwe producten zodra er foto's zijn.
+Nog niet gebruikt: tanktop (voorjaar), Classic Hoodie Kids, hoodie-post "280 g/m²" (klaar in de map), strip p. 2, 4, 6 en 7 als losse panelen, story "komt eraan".
