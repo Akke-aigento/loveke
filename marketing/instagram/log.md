@@ -63,3 +63,10 @@ Reel-muziek: bibliotheeknummer **Straatfunk** (funk-straatfunk.mp3, 108 BPM, sc�
 Reelformat: slideshow (Kyiv) → tekst (3 dingen) → nu POV.
 
 Nog niet gebruikt: tanktop (voorjaar), Classic Hoodie Kids, hoodie-post "280 g/m²" (klaar in de map), strip p. 2, 4, 6 en 7 als losse panelen, story "komt eraan".
+
+## Op aanvraag: jubileum Akke & Nastya (2,5 jaar), 2 november 2026 — map `weeks/2026-11-02/`
+
+| Dag + uur | Item | Pijler | Format / template | Hook | Caption | CTA | Licht/donker | Bucket | Uur: reden |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ma 02-11 22:35 | **Reel** "2,5 jaar samen": strip p. 1, 6 en 7 (bankje, good morning, proosten), zwevende hartjes, 22,5 s, nummer Zachte Ochtend, map `reel-jubileum/` | verhaal | reel-slideshow / reel-jubileum | cijfer | kort | reageren | fel (roze/geel/oranje) + donkere eindkaart | explore | op aanvraag: jubileum is vandaag, eerste vrije moment na de aanvraag (22:11) |
+| ma 02-11 22:45 | Story (geen sticker, automatisch) "vandaag 2,5 jaar", strip p. 6 good morning | verhaal | strip / story-jubileum-roze | statement | – | profiel | fel (roze) | explore | 10 min na de reel, wijst naar de reel |

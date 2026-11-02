@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="22.5" data-fps="30">
+<title>Reel: 2,5 jaar</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#FFF8F0}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#FFF8F0;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1.05}
+  .frame{position:relative;overflow:hidden;border:7px solid #1A1A1A;border-radius:28px;background:#FFF;box-shadow:16px 16px 0 #1A1A1A}
+  .pic{position:absolute;left:50%}
+  .cap{position:absolute;left:80px;right:80px;text-align:center}
+  .heart{position:absolute;width:70px;height:70px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="dots" style="position:absolute;inset:0"></div>
+
+  <div class="layer" id="s0" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.5"></div>
+    <div class="hand" id="a1" style="position:absolute;top:480px;width:100%;text-align:center;font-size:90px">vandaag is het</div>
+    <div class="big" id="a2" style="position:absolute;top:620px;width:100%;text-align:center;font-size:400px;color:#FFF8F0;-webkit-text-stroke:9px #1A1A1A;text-shadow:18px 18px 0 #1A1A1A">2,5</div>
+    <div class="big" id="a3" style="position:absolute;top:1030px;width:100%;text-align:center;font-size:150px">jaar samen</div>
+  </div>
+
+  <div class="layer" id="s1" style="background:#FFF8F0">
+    <div class="pic" id="b1" style="top:330px;margin-left:-410px"><div class="frame" style="width:820px;height:770px"><img src="../../../../../src/assets/comic/strip-1.webp" alt="Akke en Nastya op een bankje in Bratislava" style="position:absolute;width:1026.1px;left:-103.1px;top:-495.9px;max-width:none"></div></div>
+    <div class="cap big" id="b2" style="top:1180px;font-size:96px">Het begon in Bratislava.</div>
+    <div class="cap hand" id="b3" style="top:1420px;font-size:70px;color:#E3404B">met een bankje en twee pintjes</div>
+  </div>
+
+  <div class="layer" id="s2" style="background:#FFD43D">
+    <div class="pic" id="c1" style="top:330px;margin-left:-420px"><div class="frame" style="width:840px;height:687px"><img src="../../../../../src/assets/comic/strip-6.webp" alt="Good morning" style="position:absolute;width:1831.2px;left:-915.6px;top:-960.6px;max-width:none"></div></div>
+    <div class="cap big" id="c2" style="top:1110px;font-size:100px">Eén "good morning"</div>
+    <div class="cap hand" id="c3" style="top:1250px;font-size:84px">werd er een paar duizend</div>
+  </div>
+
+  <div class="layer" id="s3" style="background:#FF7033">
+    <div class="pic" id="d1" style="top:280px;margin-left:-480px"><div class="frame" style="width:520px;height:889px"><img src="../../../../../src/assets/comic/strip-7.webp" alt="Proosten" style="position:absolute;width:1301.5px;left:-119.1px;top:-748.0px;max-width:none"></div></div>
+    <div class="big" id="d2" style="position:absolute;left:640px;right:50px;top:480px;font-size:110px;color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">"Kom toch mee."</div>
+    <div class="hand" id="d3" style="position:absolute;left:640px;right:50px;top:920px;font-size:76px">en dat doen we nog altijd. overal.</div>
+  </div>
+
+  <div class="layer" id="s4" style="background:#1A1A1A">
+    <div class="hand" id="e0" style="position:absolute;top:520px;width:100%;text-align:center;font-size:96px;color:#FF85A1">Akke &amp; Nastya</div>
+    <div class="big wm" id="e1" style="position:absolute;top:660px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="big" id="e2" style="position:absolute;top:930px;width:100%;text-align:center;font-size:90px;color:#FFF8F0">2,5 jaar. op naar meer.</div>
+    <div class="hand" id="e3" style="position:absolute;top:1100px;width:100%;text-align:center;font-size:66px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+  </div>
+
+  <div id="hearts" style="position:absolute;inset:0;pointer-events:none"></div>
+</div>
+
+<script>
+const B = 4 * 60 / 96; // 2,5 s per 4 tellen (Zachte Ochtend, 96 BPM)
+const T = { s0: [0, B], s1: [B, 3*B], s2: [3*B, 5*B], s3: [5*B, 7*B], s4: [7*B, 22.5] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const $ = (id) => document.getElementById(id);
+const pop = (el, u, d, dur = .4, rot = 0) => {
+  const p = clamp((u - d) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id]; const u = t - a; const last = id === 's4';
+  const inO = clamp(u / .2), outO = last ? 1 : 1 - clamp((u - (b - a - .2)) / .2);
+  $(id).style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+// zwevende hartjes (deterministisch)
+const HC = ['#E3404B', '#FF85A1', '#FF7033', '#FFD43D'];
+const hearts = [];
+for (let i = 0; i < 12; i++) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  el.setAttribute('viewBox', '0 0 32 30'); el.setAttribute('class', 'heart');
+  el.innerHTML = `<path d="M16 29 C6 21 1 15 1 9 A7.5 7.5 0 0 1 16 5 A7.5 7.5 0 0 1 31 9 C31 15 26 21 16 29Z" fill="${HC[i % 4]}" stroke="#1A1A1A" stroke-width="2"/>`;
+  $('hearts').appendChild(el);
+  hearts.push({ el, x: (i % 2 ? 940 + (i * 37) % 80 : 10 + (i * 53) % 90), start: (i * 1.37) % 22, speed: 140 + (i * 37) % 120, size: 40 + (i * 13) % 50, sway: (i % 2 ? 1 : -1) * (20 + i % 30) });
+}
+window.setT = (t) => {
+  let u = vis('s0', t);
+  pop($('a1'), u, 0.05); pop($('a2'), u, 0.3, .5); pop($('a3'), u, 0.8);
+  u = vis('s1', t); pop($('b1'), u, 0.05, .5, -2); pop($('b2'), u, 0.9); pop($('b3'), u, 1.6);
+  u = vis('s2', t); pop($('c1'), u, 0.05, .5, 2); pop($('c2'), u, 0.9); pop($('c3'), u, 1.6);
+  u = vis('s3', t); pop($('d1'), u, 0.05, .5, -3); pop($('d2'), u, 0.9, .4, 3); pop($('d3'), u, 1.6);
+  u = vis('s4', t); pop($('e0'), u, 0.1); pop($('e1'), u, 0.5, .5); pop($('e2'), u, 1.1); pop($('e3'), u, 1.8);
+  hearts.forEach((h) => {
+    const life = 1920 / h.speed; const k = ((t - h.start) % 22 + 22) % 22;
+    const on = t >= h.start && k < life;
+    const y = 1980 - k * h.speed;
+    h.el.style.opacity = on ? 0.9 : 0;
+    h.el.style.width = h.el.style.height = h.size + 'px';
+    h.el.style.left = (h.x + Math.sin(k * 1.6) * h.sway) + 'px';
+    h.el.style.top = y + 'px';
+    h.el.style.transform = `rotate(${Math.sin(k * 2) * 15}deg)`;
+  });
+};
+window.setT(0);
+</script>
+</body>
+</html>
