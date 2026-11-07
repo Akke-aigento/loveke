@@ -70,3 +70,13 @@ Nog niet gebruikt: tanktop (voorjaar), Classic Hoodie Kids, hoodie-post "280 g/m
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | ma 02-11 22:35 | **Reel** "2,5 jaar samen": strip p. 1, 6 en 7 (bankje, good morning, proosten), zwevende hartjes, 22,5 s, nummer Zachte Ochtend, map `reel-jubileum/` | verhaal | reel-slideshow / reel-jubileum | cijfer | kort | reageren | fel (roze/geel/oranje) + donkere eindkaart | explore | op aanvraag: jubileum is vandaag, eerste vrije moment na de aanvraag (22:11) |
 | ma 02-11 22:45 | Story (geen sticker, automatisch) "vandaag 2,5 jaar", strip p. 6 good morning | verhaal | strip / story-jubileum-roze | statement | – | profiel | fel (roze) | explore | 10 min na de reel, wijst naar de reel |
+
+## Op aanvraag: echte foto's van Akke & Nastya (7–8 november 2026) — map `weeks/2026-11-02/`
+
+Bron: twee foto's die Akke op 07-11 in de SellQo-mediabibliotheek zette (media_assets fcde4365…, c93be1ff…). Niet in originele vorm gebruikt: vrijgesteld (rembg isnet) en als sticker met witte + zwarte rand (`product-photos/akke-tee-sticker.png`, `akke-duo-sticker.png`).
+
+| Dag + uur | Item | Pijler | Format / template | Hook | Caption | CTA | Licht/donker | Bucket | Uur: reden |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| za 07-11 19:50 | **Reel** "Eerst getekend, nu echt": strip p. 1 → sticker-uitsnede van Akke & Nastya, Oversized Tee €29,95, Hoodie + Sweatshirt €59,95, "geen modellen. gewoon wij.", 22,5 s, nummer Kussengevecht, map `reel-echt/` | samen | reel-voor-na / reel-echt | contrast | middel | reageren | fel (geel/oranje/roze/crème) + donkere eindkaart | explore, experiment inhoud (eerste echte foto's) | zaterdag = 4e reel-slot met vers materiaal, avondvenster |
+| za 07-11 21:15 | Story poll-sticker "Wie draagt het beter?" (Akke / Nastya), duo-sticker op geel | samen | poll / story-poll-sticker-geel | vraag | – | reageren | fel (geel) | explore | sticker op de avondpiek, vóór 21:30 (zaterdag) |
+| zo 08-11 12:25 | Post "Loveke Magazine nr. 1": magazinecover met de duo-sticker, "Exclusief: het koppel achter het merk", Hoodie + Sweatshirt €59,95 | merk | cover / magazine-roze | statement | middel | reageren | fel (roze) | explore | middag (zondag), ver van de hoodie-reel van 20:40 |

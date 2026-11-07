@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="22.5" data-fps="30">
+<title>Reel: eerst getekend, nu echt</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#FFF8F0}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#FFF8F0;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0;overflow:hidden}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1.05}
+  .frame{position:absolute;overflow:hidden;border:7px solid #1A1A1A;border-radius:28px;background:#FFF;box-shadow:16px 16px 0 #1A1A1A}
+  .st{position:absolute;display:block;filter:drop-shadow(14px 14px 0 rgba(26,26,26,1))}
+  .tag{position:absolute;font-family:'Lilita One',sans-serif;font-size:58px;background:#FFF8F0;border:6px solid #1A1A1A;border-radius:24px;box-shadow:10px 10px 0 #1A1A1A;padding:12px 26px;white-space:nowrap}
+  .price{color:#E3404B}
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- 0: de strip -->
+  <div class="layer" id="s0" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0"></div>
+    <div class="hand" id="a1" style="position:absolute;top:250px;width:100%;text-align:center;font-size:84px;color:#E3404B">in onze strip zien we er zo uit...</div>
+    <div class="frame" id="a2" style="left:130px;top:420px;width:820px;height:770px"><img src="../../../../../src/assets/comic/strip-1.webp" alt="" style="position:absolute;width:1026px;left:-103px;top:-496px;max-width:none"></div>
+    <div class="big" id="a3" style="position:absolute;top:1300px;width:100%;text-align:center;font-size:120px">getekend.</div>
+  </div>
+
+  <!-- 1: echt -->
+  <div class="layer" id="s1" style="background:#FFD43D">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="hand" id="b1" style="position:absolute;top:240px;width:100%;text-align:center;font-size:84px">...en zo in het echt</div>
+    <img class="st" id="b2" src="../../../../product-photos/akke-duo-sticker.png" alt="" style="left:200px;top:560px;height:1420px">
+    <div class="big" id="b3" style="position:absolute;top:1250px;left:50px;font-size:150px;color:#FFF8F0;-webkit-text-stroke:7px #1A1A1A;text-shadow:12px 12px 0 #1A1A1A">echt.</div>
+  </div>
+
+  <!-- 2: Akke tee -->
+  <div class="layer" id="s2" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.5"></div>
+    <img class="st" id="c1" src="../../../../product-photos/akke-tee-sticker.png" alt="" style="left:50px;top:430px;height:1540px">
+    <div class="hand" id="c2" style="position:absolute;right:60px;top:280px;width:420px;text-align:right;font-size:80px;color:#FFF8F0">hij: blij als een kind</div>
+    <div class="tag" id="c3" style="right:50px;top:1300px">Oversized Tee <span class="price">€29,95</span></div>
+  </div>
+
+  <!-- 3: duo producten -->
+  <div class="layer" id="s3" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.5"></div>
+    <img class="st" id="d1" src="../../../../product-photos/akke-duo-sticker.png" alt="" style="left:220px;top:480px;height:1480px">
+    <div class="tag" id="d2" style="left:30px;top:720px">hij: Hoodie <span class="price">€59,95</span></div>
+    <div class="tag" id="d3" style="right:30px;top:1150px">zij: Sweatshirt <span class="price">€59,95</span></div>
+  </div>
+
+  <!-- 4: geen modellen -->
+  <div class="layer" id="s4" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0"></div>
+    <div class="big" style="position:absolute;top:330px;left:80px;right:80px;text-align:center;font-size:120px">
+      <span id="e1" style="display:inline-block">geen modellen.</span><br><span id="e2" style="display:inline-block">geen studio.</span>
+    </div>
+    <div class="big" id="e3" style="position:absolute;top:650px;width:100%;text-align:center;font-size:170px;color:#E3404B;-webkit-text-stroke:5px #1A1A1A">gewoon wij.</div>
+    <img class="st" id="e4" src="../../../../product-photos/akke-tee-sticker.png" alt="" style="left:70px;top:960px;height:620px">
+    <img class="st" id="e5" src="../../../../product-photos/akke-duo-sticker.png" alt="" style="right:80px;top:940px;height:640px">
+  </div>
+
+  <!-- 5: eind -->
+  <div class="layer" id="s5" style="background:#1A1A1A">
+    <div class="hand" id="f0" style="position:absolute;top:560px;width:100%;text-align:center;font-size:90px;color:#FF85A1">Akke &amp; Nastya</div>
+    <div class="big wm" id="f1" style="position:absolute;top:690px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="f2" style="position:absolute;top:980px;width:100%;text-align:center;font-size:70px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div id="f3" style="position:absolute;top:1130px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">shop op <b>loveke.be</b></div>
+  </div>
+</div>
+<script>
+const S = 2 * 4 * 60 / 128; // 2 maten op 128 BPM (Kussengevecht) = 3,75 s
+const T = {}; ['s0','s1','s2','s3','s4','s5'].forEach((id, i) => T[id] = [i * S, (i + 1) * S]);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const $ = (id) => document.getElementById(id);
+const pop = (el, u, d, rot = 0, dur = .35) => { const p = clamp((u - d) / dur); el.style.opacity = p > 0 ? 1 : 0; el.style.transform = `scale(${0.5 + 0.5 * easeBack(p)}) rotate(${rot + (1 - p) * 10}deg)`; };
+const slam = (el, u, d, rot = 0, from = 1200) => { const p = clamp((u - d) / .45); el.style.opacity = p > 0 ? 1 : 0; el.style.transform = `translateY(${(1 - easeBack(p)) * from}px) rotate(${rot}deg)`; };
+const vis = (id, t) => { const [a, b] = T[id]; const u = t - a; const last = id === 's5';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .12)) / .12);
+  $(id).style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0; return u; };
+const beat = 60 / 128;
+window.setT = (t) => {
+  let u = vis('s0', t); pop($('a1'), u, 0.05); pop($('a2'), u, beat, -2); pop($('a3'), u, beat * 4);
+  // lichte zoom op de strip
+  u = vis('s1', t); pop($('b1'), u, 0.05); slam($('b2'), u, beat, 3); pop($('b3'), u, beat * 4, -6);
+  u = vis('s2', t); slam($('c1'), u, 0.05, -3); pop($('c2'), u, beat * 2, 4); pop($('c3'), u, beat * 4, -4);
+  u = vis('s3', t); slam($('d1'), u, 0.05, 2); pop($('d2'), u, beat * 2, -5); pop($('d3'), u, beat * 4, 4);
+  u = vis('s4', t); pop($('e1'), u, 0.05); pop($('e2'), u, beat); pop($('e3'), u, beat * 2, -3); slam($('e4'), u, beat * 4, -6); slam($('e5'), u, beat * 4.5, 5);
+  u = vis('s5', t); pop($('f0'), u, 0.1); pop($('f1'), u, beat * 1.5); pop($('f2'), u, beat * 3); pop($('f3'), u, beat * 4.5);
+};
+window.setT(0);
+</script>
+</body>
+</html>
