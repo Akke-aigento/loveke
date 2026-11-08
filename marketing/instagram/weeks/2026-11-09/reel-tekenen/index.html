@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="22" data-fps="30">
+<title>Reel: 5 tekenen dat je je Loveke gevonden hebt</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .w{display:inline-block}
+  .item{position:absolute;left:80px;right:70px;display:flex;align-items:center;gap:34px;opacity:0}
+  .box{flex:none;width:110px;height:110px;border:8px solid #1A1A1A;border-radius:22px;background:#FFF8F0;box-shadow:7px 7px 0 #1A1A1A;position:relative}
+  .box svg{position:absolute;left:-6px;top:-22px;width:130px;height:130px}
+  .txt{font-family:'Lilita One',sans-serif;font-size:66px;line-height:1.02}
+  .photo{position:absolute;display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="big" id="h1" style="position:absolute;top:400px;width:100%;text-align:center;font-size:400px;color:#FFD43D;-webkit-text-stroke:9px #1A1A1A;text-shadow:18px 18px 0 #1A1A1A">5</div>
+    <div class="big" style="position:absolute;top:820px;left:80px;right:80px;text-align:center;font-size:118px">
+      <span class="w h">tekenen</span> <span class="w h">dat</span> <span class="w h">je</span> <span class="w h">je</span> <span class="w h" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">Loveke</span> <span class="w h">gevonden</span> <span class="w h">hebt</span>
+    </div>
+    <div class="hand" id="h9" style="position:absolute;top:1330px;width:100%;text-align:center;font-size:80px">vink mee af</div>
+  </div>
+
+  <!-- Lijst -->
+  <div class="layer" id="list" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="big" style="position:absolute;top:240px;left:80px;font-size:84px;color:#E3404B">Je Loveke-check</div>
+    <div class="item" style="top:400px"><div class="box"></div><div class="txt">Je deelt je laatste frietje.</div></div>
+    <div class="item" style="top:600px"><div class="box"></div><div class="txt">Je kijkt geen aflevering verder zonder de ander.</div></div>
+    <div class="item" style="top:800px"><div class="box"></div><div class="txt">Eén "kom toch mee" en je zit op de trein.</div></div>
+    <div class="item" style="top:1000px"><div class="box"></div><div class="txt">Je weet hoe de ander z'n koffie drinkt.</div></div>
+    <div class="item" style="top:1200px"><div class="box"></div><div class="txt">Jullie matchen zonder af te spreken.</div></div>
+  </div>
+
+  <!-- Clou -->
+  <div class="layer" id="clou" style="background:#FFD43D">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="big" id="c1" style="position:absolute;top:260px;left:80px;right:80px;text-align:center;font-size:104px">Nummer 5 nog niet?</div>
+    <div class="big" id="c2" style="position:absolute;top:400px;left:80px;right:80px;text-align:center;font-size:104px;color:#FFF8F0;-webkit-text-stroke:5px #1A1A1A;text-shadow:9px 9px 0 #1A1A1A">Daar helpen wij.</div>
+    <img class="photo" id="c3" src="../../../../product-photos/hoodie-4.png" alt="" style="left:30px;top:640px;width:560px">
+    <img class="photo" id="c4" src="../../../../product-photos/sweatshirt-3.png" alt="" style="left:490px;top:640px;width:560px">
+    <div class="big" id="c5" style="position:absolute;left:110px;right:110px;top:1260px;text-align:center;font-size:56px;background:#FFF8F0;border:7px solid #1A1A1A;border-radius:26px;box-shadow:10px 10px 0 #1A1A1A;padding:16px 10px;line-height:1.1">Loveke for Two:<br>vanaf 2 stuks automatisch 7%</div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big" id="e0" style="position:absolute;top:470px;left:80px;right:80px;text-align:center;font-size:92px;color:#FFF8F0">hoeveel vinkjes?</div>
+    <div class="big wm" id="e1" style="position:absolute;top:690px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:980px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div id="e3" style="position:absolute;top:1150px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">shop op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+// Sticker Pop 118 BPM: 4 tellen = 2,034 s. Elk vinkje = 4 tellen.
+const B = 4 * 60 / 118;
+const T = { hook: [0, 2 * B], list: [2 * B, 7.5 * B], clou: [7.5 * B, 9.5 * B], end: [9.5 * B, 22] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3, rot = 0) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+// Vinkje als SVG-pad (getekend met stroke-dashoffset).
+document.querySelectorAll('.box').forEach((b) => {
+  b.innerHTML = '<svg viewBox="0 0 130 130"><path d="M18 70 L52 104 L118 18" fill="none" stroke="#E3404B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>';
+});
+const beat = B / 4;
+window.setT = (t) => {
+  let u = vis('hook', t);
+  pop(document.getElementById('h1'), u, 0.02, .4);
+  document.querySelectorAll('#hook .h').forEach((w, j) => pop(w, u, beat * 1 + j * beat / 2));
+  pop(document.getElementById('h9'), u, beat * 6);
+  u = vis('list', t);
+  document.querySelectorAll('#list .item').forEach((it, j) => {
+    const d = j * B + beat * .2;
+    const p = clamp((u - d) / .35);
+    it.style.opacity = p > 0 ? 1 : 0;
+    it.style.transform = `translateX(${(1 - easeOut(p)) * -200}px)`;
+    const path = it.querySelector('path');
+    path.style.strokeDashoffset = 1 - easeOut(clamp((u - d - beat * 2) / .3));
+  });
+  u = vis('clou', t);
+  pop(document.getElementById('c1'), u, 0.02);
+  pop(document.getElementById('c2'), u, beat * 1);
+  pop(document.getElementById('c3'), u, beat * 2, .35, -4);
+  pop(document.getElementById('c4'), u, beat * 2.5, .35, 4);
+  pop(document.getElementById('c5'), u, beat * 4, .3, -2);
+  u = vis('end', t);
+  pop(document.getElementById('e0'), u, 0.05);
+  pop(document.getElementById('e1'), u, beat * 1, .45);
+  pop(document.getElementById('e2'), u, beat * 2);
+  pop(document.getElementById('e3'), u, beat * 3);
+};
+window.setT(0);
+</script>
+</body>
+</html>

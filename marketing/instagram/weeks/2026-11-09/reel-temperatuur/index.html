@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="24" data-fps="30">
+<title>Reel: hoe koud is het vandaag</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .w{display:inline-block}
+  .tag{position:absolute;top:270px;right:80px;font-family:'Lilita One',sans-serif;font-size:90px;background:#1A1A1A;color:#FFF8F0;border-radius:28px;box-shadow:12px 12px 0 #FFF8F0;padding:10px 36px}
+  .line{position:absolute;left:80px;right:80px;top:450px;font-family:'Lilita One',sans-serif;font-size:124px;line-height:1}
+  .photo{position:absolute;left:150px;top:690px;width:780px;display:block}
+  .price{position:absolute;left:120px;right:120px;top:1430px;text-align:center;font-family:'Lilita One',sans-serif;font-size:62px;background:#FFF8F0;border:7px solid #1A1A1A;border-radius:26px;box-shadow:10px 10px 0 #1A1A1A;padding:14px 10px}
+  .meter{position:absolute;left:80px;top:300px;width:40px;height:1200px;border-radius:20px;background:#FFF8F0;border:6px solid #1A1A1A;overflow:hidden}
+  .meter i{position:absolute;left:0;right:0;bottom:0;background:#E3404B}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="big" style="position:absolute;top:470px;left:90px;right:90px;text-align:center;font-size:150px">
+      <span class="w h">Hoe</span> <span class="w h">koud</span> <span class="w h">is</span> <span class="w h">het</span> <span class="w h" style="color:#E3404B">vandaag?</span>
+    </div>
+    <div class="hand" id="h9" style="position:absolute;top:1080px;width:100%;text-align:center;font-size:90px">kies je Loveke</div>
+    <div class="hand" id="h10" style="position:absolute;top:1200px;width:100%;text-align:center;font-size:120px;color:#FF7033">&darr;</div>
+  </div>
+
+  <!-- Binnen -->
+  <div class="layer" id="s1" style="background:#FFD43D">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="meter"><i style="height:20%"></i></div>
+    <div class="tag">binnen</div>
+    <div class="line" style="left:170px"><span class="w">Zetel</span> <span class="w">+</span> <span class="w">serie?</span></div>
+    <img class="photo" src="../../../../product-photos/tee-1.png" alt="">
+    <div class="price">Oversized Tee · €29,95</div>
+  </div>
+
+  <!-- Frisjes -->
+  <div class="layer" id="s2" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="meter"><i style="height:55%;background:#FF7033"></i></div>
+    <div class="tag">frisjes</div>
+    <div class="line" style="left:170px"><span class="w">Ochtend-</span> <span class="w">wandeling?</span></div>
+    <img class="photo" src="../../../../product-photos/sweatshirt-3.png" alt="">
+    <div class="price">Classic Sweatshirt · €59,95</div>
+  </div>
+
+  <!-- Brrr -->
+  <div class="layer" id="s3" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="meter"><i style="height:92%;background:#1A1A1A"></i></div>
+    <div class="tag">brrr</div>
+    <div class="line" style="left:170px"><span class="w">Echt</span> <span class="w">hoodieweer?</span></div>
+    <img class="photo" src="../../../../product-photos/hoodie-1.png" alt="">
+    <div class="price">Classic Hoodie · €59,95</div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big" id="e0" style="position:absolute;top:480px;width:100%;text-align:center;font-size:96px;color:#FFF8F0">welke draag jij vandaag?</div>
+    <div class="big wm" id="e1" style="position:absolute;top:700px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:990px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div id="e3" style="position:absolute;top:1160px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">shop op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+// Straatkrijt 92 BPM: 4 tellen = 2,609 s. Elke scène = 8 tellen.
+const B = 4 * 60 / 92;
+const T = { hook: [0, 2 * B], s1: [2 * B, 4 * B], s2: [4 * B, 6 * B], s3: [6 * B, 8 * B], end: [8 * B, 24] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3, rot = 0) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+const beat = B / 4;
+window.setT = (t) => {
+  let u = vis('hook', t);
+  document.querySelectorAll('#hook .h').forEach((w, j) => pop(w, u, 0.05 + j * beat / 2));
+  pop(document.getElementById('h9'), u, beat * 4);
+  const ar = document.getElementById('h10');
+  pop(ar, u, beat * 5);
+  if (u > beat * 5.3) ar.style.transform += ` translateY(${Math.sin((u - beat * 5.3) * 2 * Math.PI / beat) * 14}px)`;
+  ['s1', 's2', 's3'].forEach((id, k) => {
+    const uu = vis(id, t);
+    const el = document.getElementById(id);
+    const fill = el.querySelector('.meter i');
+    const target = parseFloat(fill.style.height);
+    fill.style.transform = `scaleY(${easeOut(clamp(uu / (beat * 3)))})`;
+    fill.style.transformOrigin = 'bottom';
+    pop(el.querySelector('.tag'), uu, 0.02, .35, k % 2 ? 3 : -3);
+    el.querySelectorAll('.line .w').forEach((w, j) => pop(w, uu, beat + j * beat / 2));
+    const ph = el.querySelector('.photo');
+    const p = clamp((uu - beat * 2.5) / .45);
+    ph.style.opacity = p > 0 ? 1 : 0;
+    ph.style.transform = `translateY(${(1 - easeOut(p)) * 500}px) rotate(${(k % 2 ? 3 : -3) * (1 + (1 - p) * 2)}deg)`;
+    pop(el.querySelector('.price'), uu, beat * 4.5, .3, k % 2 ? -2 : 2);
+  });
+  u = vis('end', t);
+  pop(document.getElementById('e0'), u, 0.05);
+  pop(document.getElementById('e1'), u, beat * 1.5, .45);
+  pop(document.getElementById('e2'), u, beat * 3);
+  pop(document.getElementById('e3'), u, beat * 4.5);
+};
+window.setT(0);
+</script>
+</body>
+</html>

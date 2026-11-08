@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="23.5" data-fps="30">
+<title>Reel: zelfde hostel (strip p. 4)</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.95}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .w{display:inline-block}
+  .cap{position:absolute;left:70px;right:70px;top:250px;text-align:center;font-family:'Lilita One',sans-serif;font-size:82px;line-height:1}
+  .frame{position:absolute;left:50%;top:480px;overflow:hidden;border:8px solid #1A1A1A;border-radius:26px;box-shadow:16px 16px 0 #1A1A1A;background:#FFF}
+  .frame img{position:absolute;max-width:none;display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="hand" id="h0" style="position:absolute;top:470px;width:100%;text-align:center;font-size:84px;color:#FFF8F0">Bratislava, zomer 2024</div>
+    <div class="big" style="position:absolute;top:620px;left:80px;right:80px;text-align:center;font-size:170px;color:#FFF8F0;-webkit-text-stroke:7px #1A1A1A;text-shadow:14px 14px 0 #1A1A1A">
+      <span class="w h">Zelfde</span> <span class="w h">hostel.</span>
+    </div>
+    <div class="big" id="h9" style="position:absolute;top:1060px;width:100%;text-align:center;font-size:110px">Toeval?</div>
+  </div>
+
+  <div class="layer panel" id="p1" style="background:#FFD43D" data-box="38,42,496,582">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="cap">"Dit is 'm!"</div>
+    <div class="frame"><img src="../../../../../src/assets/comic/strip-4.webp" alt=""></div>
+  </div>
+  <div class="layer panel" id="p2" style="background:#FF85A1" data-box="520,42,860,582">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="cap">Eerst die rugzak kwijt.</div>
+    <div class="frame"><img src="../../../../../src/assets/comic/strip-4.webp" alt=""></div>
+  </div>
+  <div class="layer panel" id="p3" style="background:#FFF8F0" data-box="38,610,444,1160">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="cap">"Pintje straks?"</div>
+    <div class="frame"><img src="../../../../../src/assets/comic/strip-4.webp" alt=""></div>
+  </div>
+  <div class="layer panel" id="p4" style="background:#FFD43D" data-box="468,610,860,1160">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="cap">"Absoluut. Ik wacht hier."</div>
+    <div class="frame"><img src="../../../../../src/assets/comic/strip-4.webp" alt=""></div>
+  </div>
+
+  <!-- Twist -->
+  <div class="layer" id="tw" style="background:#E3404B">
+    <div class="dots" style="position:absolute;inset:0;opacity:.5"></div>
+    <div class="big" id="t1" style="position:absolute;top:480px;width:100%;text-align:center;font-size:130px;color:#FFF8F0">Hij wachtte.</div>
+    <div class="big" id="t2" style="position:absolute;top:680px;width:100%;text-align:center;font-size:300px;color:#FFD43D;-webkit-text-stroke:8px #1A1A1A;text-shadow:14px 14px 0 #1A1A1A">25</div>
+    <div class="big" id="t3" style="position:absolute;top:990px;width:100%;text-align:center;font-size:110px;color:#FFF8F0">minuten.</div>
+    <div class="hand" id="t4" style="position:absolute;top:1180px;left:80px;right:80px;text-align:center;font-size:76px;color:#1A1A1A">(zij zat vast in de badkamer)</div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big" id="e0" style="position:absolute;top:470px;left:80px;right:80px;text-align:center;font-size:92px;color:#FFF8F0">Hoe het verder ging?</div>
+    <div class="big wm" id="e1" style="position:absolute;top:690px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:980px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div id="e3" style="position:absolute;top:1150px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">de hele strip op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+// Late Bus 78 BPM: 4 tellen = 3,077 s. Panelen = 4 tellen, twist = 6 tellen.
+const B = 4 * 60 / 78;
+const T = { hook: [0, B], p1: [B, 2 * B], p2: [2 * B, 3 * B], p3: [3 * B, 4 * B], p4: [4 * B, 5 * B], tw: [5 * B, 6.5 * B], end: [6.5 * B, 23.5] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+// Paneel-uitsnede: frame zo groot mogelijk binnen 900 x 1000.
+document.querySelectorAll('.panel').forEach((el) => {
+  const [x0, y0, x1, y1] = el.dataset.box.split(',').map(Number);
+  const bw = x1 - x0, bh = y1 - y0;
+  const s = Math.min(900 / bw, 1000 / bh);
+  const f = el.querySelector('.frame'), img = f.querySelector('img');
+  f.style.width = bw * s + 'px'; f.style.height = bh * s + 'px'; f.style.marginLeft = -(bw * s) / 2 + 'px';
+  img.style.width = 896 * s + 'px'; img.style.left = -x0 * s + 'px'; img.style.top = -y0 * s + 'px';
+});
+const beat = B / 4;
+window.setT = (t) => {
+  let u = vis('hook', t);
+  pop(document.getElementById('h0'), u, 0.02);
+  document.querySelectorAll('#hook .h').forEach((w, j) => pop(w, u, beat * .6 + j * beat / 2));
+  pop(document.getElementById('h9'), u, beat * 2.2);
+  ['p1', 'p2', 'p3', 'p4'].forEach((id, k) => {
+    const uu = vis(id, t);
+    const el = document.getElementById(id);
+    const f = el.querySelector('.frame');
+    const p = clamp(uu / .4);
+    const rot = k % 2 ? 2 : -2;
+    f.style.transform = `translateY(${(1 - easeOut(p)) * 300}px) rotate(${rot}deg) scale(${1 + clamp(uu / B) * 0.04})`;
+    f.style.opacity = p > 0 ? 1 : 0;
+    pop(el.querySelector('.cap'), uu, beat * .8);
+  });
+  u = vis('tw', t);
+  pop(document.getElementById('t1'), u, 0.05);
+  pop(document.getElementById('t2'), u, beat * 1.5, .4);
+  pop(document.getElementById('t3'), u, beat * 2.5);
+  pop(document.getElementById('t4'), u, beat * 3.5);
+  u = vis('end', t);
+  pop(document.getElementById('e0'), u, 0.05);
+  pop(document.getElementById('e1'), u, beat * 1, .45);
+  pop(document.getElementById('e2'), u, beat * 2);
+  pop(document.getElementById('e3'), u, beat * 3);
+};
+window.setT(0);
+</script>
+</body>
+</html>
