@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-size" content="1080x1350">
+<title>Liefdesticket Bratislava → Kyiv</title>
+<link rel="stylesheet" href="../brand.css">
+<!-- genre: object (ticket in Loveke-stijl, geen echt spoorwegticket: geen datum, geen maatschappij, geen prijs).
+     Feiten: brand-loveke §0/§4 (de strip: van Bratislava tot Kyiv). -->
+<style>
+  body { margin:0; width:1080px; height:1350px; overflow:hidden; background:#FF85A1; position:relative; font-family:'DM Sans'; }
+  .dots { position:absolute; inset:0; background: radial-gradient(circle, rgba(255,255,255,.35) 0 6px, transparent 7px) 0 0/60px 60px; }
+  .ticket { position:absolute; left:90px; top:330px; width:900px; height:520px; background:#FFF8F0; border:8px solid #1A1A1A; border-radius:26px; box-shadow: 18px 18px 0 #1A1A1A; transform:rotate(-4deg); display:flex; }
+  .main { flex:1; padding:40px 44px; position:relative; }
+  .stub { width:230px; border-left:6px dashed #1A1A1A; padding:40px 26px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; background:#FFD43D; border-radius:0 18px 18px 0; }
+  .lbl { font:700 20px 'DM Sans'; letter-spacing:.2em; text-transform:uppercase; color:#1A1A1A; opacity:.6; }
+  .city { font:400 92px/1 'Lilita One'; color:#1A1A1A; }
+  .arrow { font:400 70px 'Lilita One'; color:#FF7033; margin:0 18px; }
+  .route { display:flex; align-items:center; margin-top:8px; }
+  .grid { display:flex; gap:56px; margin-top:44px; }
+  .grid b { display:block; font:400 46px 'Lilita One'; color:#E3404B; margin-top:4px; }
+  .stub .big { font:400 120px/1 'Lilita One'; color:#1A1A1A; }
+  .barcode { width:150px; height:80px; background: repeating-linear-gradient(90deg,#1A1A1A 0 5px,transparent 5px 9px,#1A1A1A 9px 11px,transparent 11px 17px); }
+  .hand { position:absolute; left:140px; top:910px; font:700 64px 'Caveat'; color:#1A1A1A; transform:rotate(-3deg); }
+  .word { position:absolute; left:90px; top:110px; font:400 120px/1 'Lilita One'; color:#fff; -webkit-text-stroke:6px #1A1A1A; paint-order: stroke fill; text-shadow: 10px 10px 0 #1A1A1A; }
+  .tag { position:absolute; right:80px; bottom:80px; font:700 26px 'DM Sans'; color:#1A1A1A; }
+</style>
+</head>
+<body>
+  <div class="dots"></div>
+  <div class="word">Enkele reis?</div>
+  <div class="ticket">
+    <div class="main">
+      <div class="lbl">Loveke · liefdesticket</div>
+      <div class="route"><span class="city">Bratislava</span><span class="arrow">→</span><span class="city">Kyiv</span></div>
+      <div class="grid">
+        <div><span class="lbl">Reizigers</span><b>2</b></div>
+        <div><span class="lbl">Klasse</span><b>Liefde</b></div>
+        <div><span class="lbl">Retour</span><b>Samen</b></div>
+      </div>
+    </div>
+    <div class="stub"><span class="lbl">Zitplaats</span><span class="big">2</span><div class="barcode"></div></div>
+  </div>
+  <div class="hand">Lees de hele rit in de strip.</div>
+  <div class="tag">loveke.be</div>
+</body>
+</html>

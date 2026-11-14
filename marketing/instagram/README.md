@@ -59,6 +59,8 @@ daar niet meer in.
 
 Volg de variatieregels uit de repo Akke-aigento/nomadix-socials, `shared/VARIATIE.md` (beslissing Akke, 16 okt 2026): elke post uniek (geen titel, hook, beeld of opbouw uit `log.md` herhalen), per week minstens 5 formats, nooit twee dagen na elkaar dezelfde template, minstens één lichte/felle post, één beeld-eerst-post en één typografische post, hooks en captionlengtes wisselen, en per item format/template/hook in `log.md`. Volstaat een template niet, maak een nieuwe variant in de huisstijl.
 
+Sinds 14 nov 2026 ook `shared/GENRES.md` (zelfde repo): elk item krijgt een genre (ticket, scrapbook, wasetiket, liefdesbrief, stripvakje invullen …), geen genre twee keer per week, hoogstens 2 items in de oude kaartstijl, minstens 4 families en één wildcard. Prototypes: `genres/` in deze map.
+
 ## Leren (verplicht)
 
 Volg https://github.com/Akke-aigento/nomadix-socials/blob/main/shared/LEREN.md (SOCIAL-6): elke post krijgt `content_tags` (pijler, format, template, hook, captionlengte, cta, bucket) in SellQo én in `log.md`; lees vóór je iets bedenkt `lessen.md` (deze map) en de resultaten in `social_post_performance`; kies volgens 70/20/10; UTM-parameters op elke link (`utm_campaign=loveke-<JJJJMMDD>`). Een story met link-sticker eindigt in `post_text` met een eigen regel `Link-sticker: https://loveke.be/<pad>?utm_source=instagram&utm_medium=social&utm_campaign=loveke-<JJJJMMDD>&utm_content=story` (volledige URL, klaar om te kopiëren; LEREN.md §5).

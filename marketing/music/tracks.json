@@ -226,5 +226,41 @@
     "used": [
       "2026-11-10 reel-temperatuur"
     ]
+  },
+  {
+    "file": "folk-balkan-trein.mp3",
+    "title": "Balkan Trein",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-14",
+    "prompt": "Joyful Eastern European folk with a fast accordion melody, upright bass and a shuffling rhythm like a train on the rails, romantic and playful, 132 BPM, instrumental, clean ending",
+    "mood": [
+      "folk",
+      "vrolijk"
+    ],
+    "bpm": 132,
+    "duration": 30.1,
+    "best_start": 0.5,
+    "used": []
+  },
+  {
+    "file": "chiptune-hartje.mp3",
+    "title": "Hartje",
+    "artist": "ElevenLabs Music (gegenereerd voor Nomadix BV)",
+    "source_url": "https://elevenlabs.io/music",
+    "license": "ElevenLabs Music, betaald plan: commercieel gebruik incl. social media",
+    "attribution_required": false,
+    "generated_on": "2026-11-14",
+    "prompt": "Cute 8-bit chiptune love theme with a bouncy square-wave melody, sparkling arpeggios and a punchy retro drum machine, playful video game romance, 140 BPM, instrumental, clean ending",
+    "mood": [
+      "chiptune",
+      "speels"
+    ],
+    "bpm": 140,
+    "duration": 30.1,
+    "best_start": 0,
+    "used": []
   }
 ]
