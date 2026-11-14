@@ -99,3 +99,12 @@ Data bij de start: 21 gemeten items (posts, reels, stories). Lessen toegepast (l
 Reels: drie formats (vergelijking, strip, checklist), drie nummers (Straatkrijt, Late Bus, Sticker Pop, alle drie nog nooit gebruikt), drie pijlers (product, verhaal, samen). Zondagreel vorige week = POV → nu checklist. Alle reels met bibliotheeknummer → `pending_approval`. Geen songvoorstellen (optioneel).
 
 Nog niet gebruikt: tanktop (voorjaar), hoodie-post "280 g/m²" (klaar in `weeks/2026-11-02/`), strip p. 2 (sigaret: enkel organisch), p. 6 en 7 als losse panelen, story "komt eraan".
+
+## Op aanvraag: strip 2 "Warsaw" als twee carousels (14 november 2026) — map `weeks/2026-11-16/`, beelden in `published/2026-11-16/`
+
+Bron: strip 2 (12 pagina's, Nano Banana 2 via imgeditor.co, scenario in projectdoc `claude/loveke-strip-2.md`), pagina's als JPG in `marketing/comic-2/`. De volledige strip past niet in één carousel (SellQo: max 10 beelden), dus twee delen van 8 slides: cover + 6 pagina's + afsluiter. Lessen toegepast (09-11): format `strip` scoort het hoogst, cta `reageren` boven geen cta, middag 12:10–12:40 is het beste dagdeel. Ingepland vóór de weektaak van 15-11: die ziet ze in SellQo en telt ze als de posts van maandag en woensdag.
+
+| Dag + uur | Item | Pijler | Format / template | Hook | Caption | CTA | Licht/donker | Bucket | Uur: reden |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ma 16-11 12:20 | **Carousel** (8 slides) "Warsaw, deel 1": cover + strip 2 p. 1–6 + "Deel 2 komt woensdag." | verhaal | carousel-strip / carousel-warsaw-roze | verhaal | middel | reageren | licht (crème) + roze afsluiter | exploit | middag = beste dagdeel (lessen 09-11) |
+| wo 18-11 12:35 | **Carousel** (8 slides) "Warsaw, deel 2": cover + strip 2 p. 7–12 + "Waar was jullie tweede afspraakje?" | verhaal | carousel-strip / carousel-warsaw-geel | verhaal | middel | reageren | licht (crème) + gele afsluiter | exploit | middag, ander uur dan maandag |
