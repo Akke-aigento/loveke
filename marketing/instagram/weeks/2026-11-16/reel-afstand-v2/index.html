@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="22" data-fps="30">
+<title>Reel: Lange afstand is… (parallax)</title>
+<link rel="stylesheet" href="../../../brand.css">
+<!-- Genre: reel parallax (genres v2). Stripvakjes uit strip 2 (Warsaw) in 2.5D: drie dieptelagen per scène
+     (wazige achtergrond traag, vakje middel, tekst en hartjes snel), inzoomen in het vakje, irisonthulling tussen scènes.
+     Zelfde feiten als v1: voice messages, het midden op de kaart, een dag op de trein, drie weken = drie jaar. -->
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif}
+  .sc{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+  .bg{position:absolute;left:-160px;top:-160px;width:1400px;height:2240px;background-size:cover;background-position:center;filter:blur(26px) brightness(.42) saturate(1.2)}
+  .tone{position:absolute;inset:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.98}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .txt{position:absolute;z-index:5;top:270px;left:80px;right:80px;color:#FFF8F0;text-shadow:0 6px 0 rgba(26,26,26,.55)}
+  .txt .lbl{font-family:'Caveat',cursive;font-weight:700;font-size:72px;color:#FFD43D;margin-bottom:14px}
+  .txt .line{font-family:'Lilita One',sans-serif;font-size:96px;line-height:1}
+  .w{display:inline-block}
+  .frame{position:absolute;z-index:2;left:70px;width:940px;border:8px solid #1A1A1A;border-radius:28px;box-shadow:16px 16px 0 #1A1A1A;overflow:hidden;background:#FFF8F0}
+  .frame img{display:block;width:100%}
+  .zoom{transform-origin:50% 50%}
+  .heart{position:absolute;z-index:3;width:var(--s);height:var(--s)}
+  .heart svg{width:100%;height:100%;display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Haak: hartjes op drie diepten, titel vooraan -->
+  <div class="sc" id="hook" style="background:#1A1A1A">
+    <div class="layer-far" id="hf"></div>
+    <div class="layer-near" id="hn"></div>
+    <div class="big" id="ht" style="position:absolute;z-index:5;top:640px;left:80px;right:80px;text-align:center;font-size:176px;color:#FFF8F0">
+      <span class="w">Lange</span><br><span class="w wm">afstand</span><br><span class="w">is…</span>
+    </div>
+    <div class="hand" id="h9" style="position:absolute;top:1290px;left:0;right:0;text-align:center;font-size:70px;color:#FFD43D">(wij weten ervan mee)</div>
+  </div>
+
+  <!-- 1. Voice messages: de twee helften van het vakje schuiven naar elkaar toe -->
+  <div class="sc" id="s1">
+    <div class="bg" style="background-image:url(../img/warsaw-voice.jpg)"></div>
+    <div class="tone" style="background:linear-gradient(180deg,rgba(255,133,161,.35),rgba(26,26,26,.2))"></div>
+    <div class="txt"><div class="lbl">lange afstand is…</div><div class="line"><span class="w">voice</span> <span class="w">messages,</span> <span class="w">video</span> <span class="w">calls</span> <span class="w">en</span> <span class="w" style="color:#FF85A1">veel</span> <span class="w" style="color:#FF85A1">te</span> <span class="w" style="color:#FF85A1">veel</span> <span class="w" style="color:#FF85A1">hartjes.</span></div></div>
+    <div id="vwrap" style="position:absolute;left:70px;top:880px;width:940px;height:443px;z-index:2">
+      <div id="v-l" style="position:absolute;inset:0;filter:drop-shadow(12px 12px 0 #1A1A1A)"><img src="../img/warsaw-voice.jpg" alt="" style="width:940px;display:block;clip-path:polygon(0 0,56.6% 0,51.6% 100%,0 100%);border-radius:24px"></div>
+      <div id="v-r" style="position:absolute;inset:0;filter:drop-shadow(12px 12px 0 #1A1A1A)"><img src="../img/warsaw-voice.jpg" alt="" style="width:940px;display:block;clip-path:polygon(56.6% 0,100% 0,100% 100%,51.6% 100%);border-radius:24px"></div>
+    </div>
+    <div id="h1" style="position:absolute;inset:0;z-index:3"></div>
+  </div>
+
+  <!-- 2. De kaart: inzoomen op het hartje in Warschau en uitzoomen tot Belgium en Kyiv in beeld komen -->
+  <div class="sc" id="s2">
+    <div class="bg" style="background-image:url(../img/warsaw-map.jpg)"></div>
+    <div class="tone" style="background:linear-gradient(180deg,rgba(255,212,61,.25),rgba(26,26,26,.15))"></div>
+    <div class="txt"><div class="lbl">lange afstand is…</div><div class="line"><span class="w">op</span> <span class="w">een</span> <span class="w">kaart</span> <span class="w" style="color:#FFD43D">het</span> <span class="w" style="color:#FFD43D">midden</span> <span class="w">zoeken.</span></div></div>
+    <div class="frame" id="mapf" style="top:820px;height:440px"><img id="mapi" class="zoom" src="../img/warsaw-map.jpg" alt="" style="transform-origin:64.7% 31.5%"></div>
+    <div id="h2" style="position:absolute;inset:0;z-index:3"></div>
+  </div>
+
+  <!-- 3. De trein: het landschap glijdt voorbij achter het raam, zij blijft zitten -->
+  <div class="sc" id="s3">
+    <div class="bg" style="background-image:url(../img/warsaw-train.jpg)"></div>
+    <div class="tone" style="background:linear-gradient(180deg,rgba(255,112,51,.28),rgba(26,26,26,.2))"></div>
+    <div class="txt"><div class="lbl">lange afstand is…</div><div class="line"><span class="w">een</span> <span class="w">hele</span> <span class="w">dag</span> <span class="w">op</span> <span class="w">de</span> <span class="w" style="color:#FF7033">trein.</span></div></div>
+    <div class="frame" id="trf" style="top:760px;height:493px">
+      <img id="tri" class="zoom" src="../img/warsaw-train.jpg" alt="" style="transform-origin:45% 45%">
+      <div id="win" style="position:absolute;left:62.5%;top:5%;width:34.5%;height:76%;overflow:hidden">
+        <img id="trw" src="../img/warsaw-train.jpg" alt="" style="position:absolute;width:940px;max-width:none;left:-587px;top:-25px">
+      </div>
+    </div>
+    <div class="hand" id="s3n" style="position:absolute;top:1330px;left:0;right:0;text-align:center;font-size:68px;color:#FFD43D">(in Oekraïne vliegt er niks)</div>
+  </div>
+
+  <!-- 4. Drie weken: inzoomen op de knuffel, hartjes vliegen vooraan voorbij -->
+  <div class="sc" id="s4">
+    <div class="bg" style="background-image:url(../img/warsaw-hug.jpg)"></div>
+    <div class="tone" style="background:linear-gradient(180deg,rgba(227,64,75,.35),rgba(26,26,26,.2))"></div>
+    <div class="txt"><div class="lbl">lange afstand is…</div><div class="line"><span class="w">drie</span> <span class="w">weken</span> <span class="w">die</span> <span class="w">voelen</span> <span class="w">als</span> <span class="w" style="color:#FF85A1">drie</span> <span class="w" style="color:#FF85A1">jaar.</span></div></div>
+    <div class="frame" id="hgf" style="top:780px;left:150px;width:780px;height:668px"><img id="hgi" class="zoom" src="../img/warsaw-hug.jpg" alt="" style="transform-origin:42% 30%"></div>
+    <div id="h4" style="position:absolute;inset:0;z-index:3"></div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="sc" id="end" style="background:#1A1A1A">
+    <div id="hef"></div>
+    <div class="big" id="e0" style="position:absolute;top:400px;left:80px;right:80px;text-align:center;font-size:104px;color:#FFF8F0">En toch: elke keer de moeite.</div>
+    <div class="big wm" id="e1" style="position:absolute;top:720px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:1010px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div class="big" id="e3" style="position:absolute;top:1170px;left:170px;right:170px;text-align:center;font-size:58px;background:#FF85A1;border:6px solid #FFF8F0;border-radius:24px;padding:14px 10px;color:#1A1A1A">Warsaw, deel 2: woensdag</div>
+  </div>
+</div>
+
+<script>
+// Lange Afstand 76 BPM: 4 tellen = 3,158 s per scène.
+const B = 4 * 60 / 76, beat = B / 4;
+const T = { hook: [0, B], s1: [B, 2 * B], s2: [2 * B, 3 * B], s3: [3 * B, 4 * B], s4: [4 * B, 5 * B], end: [5 * B, 22] };
+const IRIS = .42;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const eo = (x) => 1 - Math.pow(1 - x, 3);
+const eio = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const eb = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const $ = (s) => document.querySelector(s);
+
+// Hartjes (inline SVG), deterministisch verspreid op drie diepten
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const COLORS = ['#E3404B', '#FF85A1', '#FFD43D', '#FF7033'];
+const mkHearts = (host, n, depth) => {
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const d = depth[i % depth.length];
+    const el = document.createElement('div');
+    el.className = 'heart';
+    const s = d === 0 ? 40 + rnd() * 30 : d === 1 ? 70 + rnd() * 40 : 120 + rnd() * 70;
+    el.style.setProperty('--s', s + 'px');
+    el.style.opacity = d === 0 ? .35 : d === 1 ? .7 : .95;
+    if (d === 0) el.style.filter = 'blur(3px)';
+    el.innerHTML = `<svg viewBox="0 0 32 29"><path d="M16 28 C 6 20 0 14 0 8 A 8 8 0 0 1 16 5 A 8 8 0 0 1 32 8 C 32 14 26 20 16 28 Z" fill="${COLORS[i % 4]}" stroke="#1A1A1A" stroke-width="${d === 2 ? 2.2 : 0}"/></svg>`;
+    host.appendChild(el);
+    out.push({ el, d, x: rnd() * 1080, y: rnd() * 1920, r: (rnd() - .5) * 40, ph: rnd() * 6.28 });
+  }
+  return out;
+};
+const H = {
+  hook: mkHearts($('#hf'), 22, [0, 1, 0, 2]),
+  s1: mkHearts($('#h1'), 10, [1, 2]),
+  s2: mkHearts($('#h2'), 6, [1, 2]),
+  s4: mkHearts($('#h4'), 14, [1, 2, 2]),
+  end: mkHearts($('#hef'), 16, [0, 1]),
+};
+// Elke laag beweegt met een eigen snelheid omhoog: diepte 0 traag, 2 snel
+const SPEED = [40, 110, 260];
+const moveHearts = (list, u) => list.forEach((h) => {
+  const y = ((h.y - u * SPEED[h.d] * (1 + h.d * .3)) % 2100 + 2100) % 2100 - 120;
+  const x = h.x + Math.sin(u * 1.4 + h.ph) * (12 + h.d * 10);
+  h.el.style.transform = `translate(${x}px, ${y}px) rotate(${h.r + Math.sin(u + h.ph) * 8}deg)`;
+});
+
+const words = (sel, u, start, step) => document.querySelectorAll(sel).forEach((w, j) => {
+  const p = clamp((u - start - j * step) / .28);
+  w.style.opacity = p > 0 ? 1 : 0;
+  w.style.transform = `translateY(${(1 - eo(p)) * 50}px) scale(${.7 + .3 * eb(p)})`;
+});
+const pop = (el, u, delay, dur = .3, rot = 0) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${.6 + .4 * eb(p)}) translateY(${(1 - eo(p)) * 40}px) rotate(${rot}deg)`;
+};
+// Scène zichtbaar maken met irisonthulling (cirkel groeit vanuit het midden)
+const show = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const next = Object.keys(T)[Object.keys(T).indexOf(id) + 1];
+  const visible = t >= a && (id === 'end' || t < b + (next ? IRIS : 0));
+  el.style.visibility = visible ? 'visible' : 'hidden';
+  el.style.zIndex = Object.keys(T).indexOf(id);
+  const u = t - a;
+  if (id === 'hook') el.style.clipPath = 'none';
+  else { const p = eio(clamp(u / IRIS)); el.style.clipPath = p >= 1 ? 'none' : `circle(${p * 1150}px at 540px 1060px)`; }
+  return u;
+};
+// Diepte: achtergrond, vakje en tekst schuiven elk aan een andere snelheid
+const depth = (id, u) => {
+  const sc = document.getElementById(id);
+  const k = u / B;
+  const bg = sc.querySelector('.bg'); if (bg) bg.style.transform = `translateY(${-k * 60}px) scale(${1 + k * .04})`;
+  const tx = sc.querySelector('.txt'); if (tx) tx.style.transform = `translateY(${(1 - k) * 90 - 40}px)`;
+  sc.querySelectorAll('.frame').forEach((f) => { f.style.translate = `0 ${(1 - k) * 40 - 20}px`; });
+};
+
+window.setT = (t) => {
+  let u = show('hook', t);
+  moveHearts(H.hook, u + 2);
+  words('#ht .w', u, .05, beat * .8);
+  pop($('#h9'), u, beat * 2.6);
+  $('#ht').style.translate = `0 ${-u * 30}px`;
+
+  u = show('s1', t); depth('s1', u); moveHearts(H.s1, u + 1);
+  words('#s1 .line .w', u, .25, beat * .4);
+  const pv = eo(clamp((u - .1) / (beat * 2.2)));
+  $('#v-l').style.transform = `translateX(${(1 - pv) * -560}px) rotate(${-4 * (1 - pv)}deg)`;
+  $('#v-r').style.transform = `translateX(${(1 - pv) * 560}px) rotate(${4 * (1 - pv)}deg)`;
+  $('#vwrap').style.translate = `0 ${(1 - u / B) * 40 - 20}px`;
+
+  u = show('s2', t); depth('s2', u); moveHearts(H.s2, u + 3);
+  words('#s2 .line .w', u, .25, beat * .45);
+  const pm = eio(clamp((u - .2) / (B - .5)));
+  $('#mapi').style.transform = `scale(${3.2 - 2.2 * pm})`;
+  $('#mapf').style.rotate = `${-2 + pm * 1}deg`;
+
+  u = show('s3', t); depth('s3', u);
+  words('#s3 .line .w', u, .25, beat * .45);
+  $('#tri').style.transform = `scale(${1.04 + (u / B) * .08})`;
+  $('#trw').style.transform = `translateX(${-u * 46}px) scale(1.15)`;
+  $('#trf').style.rotate = '1.5deg';
+  pop($('#s3n'), u, beat * 2.4, .3, -2);
+
+  u = show('s4', t); depth('s4', u); moveHearts(H.s4, u * 1.3);
+  words('#s4 .line .w', u, .25, beat * .4);
+  $('#hgi').style.transform = `scale(${1 + eio(clamp(u / (B + IRIS))) * .45})`;
+  $('#hgf').style.rotate = '-2deg';
+
+  u = show('end', t); moveHearts(H.end, u);
+  pop($('#e0'), u, .2);
+  pop($('#e1'), u, .45 + beat * 1.5, .45);
+  pop($('#e2'), u, .45 + beat * 2.5);
+  pop($('#e3'), u, .45 + beat * 3.5, .35, -2);
+};
+window.setT(0);
+</script>
+</body>
+</html>
