@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="23" data-fps="30">
+<title>Reel: Van klik tot voor je deur</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#FFF8F0;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.98}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .pop{opacity:0}
+  #track{position:absolute;top:250px;left:130px;right:130px;height:90px;opacity:0}
+  #track .bar{position:absolute;left:40px;right:40px;top:37px;height:16px;background:#1A1A1A;border-radius:8px}
+  #track .fill{position:absolute;left:40px;top:37px;height:16px;background:#FF7033;border-radius:8px;width:0}
+  #track .dot{position:absolute;top:0;width:90px;height:90px;margin-left:-45px;border:7px solid #1A1A1A;border-radius:50%;background:#FFF8F0;box-sizing:border-box;font-family:'Lilita One',sans-serif;font-size:50px;text-align:center;line-height:76px}
+  .step .num{position:absolute;top:420px;left:80px;font-family:'Lilita One',sans-serif;font-size:96px;color:#FFF8F0;-webkit-text-stroke:5px #1A1A1A;text-shadow:9px 9px 0 #1A1A1A}
+  .step .ttl{position:absolute;top:550px;left:80px;right:80px;font-size:112px}
+  .card{position:absolute;left:150px;width:780px;height:640px;top:860px;border:8px solid #1A1A1A;border-radius:34px;box-shadow:16px 16px 0 #1A1A1A;overflow:hidden}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.55"></div>
+    <div class="big pop" id="h1" style="position:absolute;top:560px;left:80px;right:80px;text-align:center;font-size:150px">Van klik</div>
+    <div class="big pop" id="h2" style="position:absolute;top:720px;left:40px;right:40px;text-align:center;font-size:132px;color:#FFF8F0;-webkit-text-stroke:6px #1A1A1A;text-shadow:12px 12px 0 #1A1A1A">tot voor je deur</div>
+    <div class="hand pop" id="h3" style="position:absolute;top:900px;left:0;right:0;text-align:center;font-size:76px;color:#FFF8F0;-webkit-text-stroke:1.5px #1A1A1A">zo komt jouw Loveke tot bij jou</div>
+  </div>
+
+  <div id="track"><div class="bar"></div><div class="fill" id="fill"></div>
+    <div class="dot" style="left:40px">1</div><div class="dot" style="left:calc(40px + (100% - 80px) / 3)">2</div><div class="dot" style="left:calc(40px + 2 * (100% - 80px) / 3)">3</div><div class="dot" style="left:calc(100% - 40px)">4</div>
+  </div>
+
+  <!-- Stap 1 -->
+  <div class="layer step" id="s1">
+    <div class="num pop">stap 1</div>
+    <div class="big ttl pop">Jij kiest je Loveke.</div>
+    <div class="card pop" style="background:#FFD43D;transform:rotate(-2deg)">
+      <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+      <div style="position:absolute;left:220px;top:40px;width:340px;height:560px;background:#1A1A1A;border-radius:48px;padding:18px;box-sizing:border-box">
+        <div style="width:100%;height:100%;background:#FFF8F0;border-radius:32px;position:relative;overflow:hidden">
+          <img src="../../../../product-photos/hoodie-1.png" alt="" style="position:absolute;left:-10px;top:30px;width:324px">
+          <div class="big" style="position:absolute;left:0;right:0;bottom:30px;margin:0 30px;background:#FF7033;border:4px solid #1A1A1A;border-radius:16px;text-align:center;font-size:34px;padding:8px 0">in mijn mandje</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stap 2 -->
+  <div class="layer step" id="s2">
+    <div class="num pop">stap 2</div>
+    <div class="big ttl pop">Pas dán wordt hij gemaakt.</div>
+    <div class="card pop" style="background:#FF85A1;transform:rotate(2deg)">
+      <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+      <img src="../../../../product-photos/sweatshirt-1.png" alt="" style="position:absolute;left:110px;top:20px;width:560px">
+      <div class="big" style="position:absolute;right:40px;bottom:40px;background:#FFF8F0;border:5px solid #1A1A1A;border-radius:18px;box-shadow:7px 7px 0 #1A1A1A;padding:10px 24px;font-size:48px;transform:rotate(-4deg)">voor jou. in jouw maat.</div>
+    </div>
+  </div>
+
+  <!-- Stap 3 -->
+  <div class="layer step" id="s3">
+    <div class="num pop">stap 3</div>
+    <div class="big ttl pop">Even geduld: 5 tot 20 werkdagen.</div>
+    <div class="card pop" style="background:#FFF8F0;transform:rotate(-1.5deg)">
+      <svg viewBox="0 0 780 640" width="780" height="640" style="position:absolute;inset:0">
+        <rect x="190" y="110" width="400" height="380" rx="36" fill="#FFF" stroke="#1A1A1A" stroke-width="12"/>
+        <rect x="190" y="110" width="400" height="110" rx="36" fill="#E3404B" stroke="#1A1A1A" stroke-width="12"/>
+        <rect x="190" y="180" width="400" height="40" fill="#E3404B"/>
+        <line x1="190" y1="220" x2="590" y2="220" stroke="#1A1A1A" stroke-width="12"/>
+        <rect x="270" y="80" width="26" height="70" rx="12" fill="#1A1A1A"/><rect x="484" y="80" width="26" height="70" rx="12" fill="#1A1A1A"/>
+        <g fill="#1A1A1A">
+          <circle cx="260" cy="280" r="16"/><circle cx="340" cy="280" r="16"/><circle cx="420" cy="280" r="16"/><circle cx="500" cy="280" r="16"/>
+          <circle cx="260" cy="350" r="16"/><circle cx="340" cy="350" r="16"/><circle cx="420" cy="350" r="16"/><circle cx="500" cy="350" r="16"/>
+          <circle cx="260" cy="420" r="16"/><circle cx="340" cy="420" r="16"/><circle cx="420" cy="420" r="16"/>
+        </g>
+        <path d="M478 400 l22 22 l46 -56" fill="none" stroke="#FF7033" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="hand" style="position:absolute;left:0;right:0;bottom:36px;text-align:center;font-size:62px">goeie dingen hebben tijd nodig</div>
+    </div>
+  </div>
+
+  <!-- Stap 4 -->
+  <div class="layer step" id="s4">
+    <div class="num pop">stap 4</div>
+    <div class="big ttl pop">Gratis tot bij jou thuis.</div>
+    <div class="card pop" style="background:#FFD43D;transform:rotate(2deg)">
+      <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+      <svg viewBox="0 0 780 640" width="780" height="640" style="position:absolute;inset:0">
+        <polygon points="390,90 640,190 390,290 140,190" fill="#E8B07A" stroke="#1A1A1A" stroke-width="12" stroke-linejoin="round"/>
+        <polygon points="140,190 390,290 390,560 140,460" fill="#D9955A" stroke="#1A1A1A" stroke-width="12" stroke-linejoin="round"/>
+        <polygon points="640,190 390,290 390,560 640,460" fill="#C98247" stroke="#1A1A1A" stroke-width="12" stroke-linejoin="round"/>
+        <polygon points="265,140 515,240 515,300 265,200" fill="#FF7033" stroke="#1A1A1A" stroke-width="8" stroke-linejoin="round"/>
+        <path d="M515 380 c0 -30 40 -40 52 -12 c12 -28 52 -18 52 12 c0 34 -52 62 -52 62 s-52 -28 -52 -62z" fill="#E3404B" stroke="#1A1A1A" stroke-width="8"/>
+      </svg>
+      <div class="big" style="position:absolute;left:40px;bottom:40px;background:#FFF8F0;border:5px solid #1A1A1A;border-radius:18px;box-shadow:7px 7px 0 #1A1A1A;padding:10px 24px;font-size:48px;transform:rotate(-3deg)">gratis verzending</div>
+    </div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big pop" id="e0" style="position:absolute;top:400px;left:80px;right:80px;text-align:center;font-size:96px;color:#FFF8F0">Gemaakt voor jou.</div>
+    <div class="big pop" id="e0b" style="position:absolute;top:510px;left:80px;right:80px;text-align:center;font-size:96px;color:#FFD43D">Niet voor een rek.</div>
+    <div class="big wm pop" id="e1" style="position:absolute;top:740px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand pop" id="e2" style="position:absolute;top:1030px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div class="pop" id="e3" style="position:absolute;top:1190px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">shop op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+// Hoodieweer 112 BPM: 4 tellen = 2,143 s. Haak = 4 tellen, elke stap = 8 tellen.
+const B = 4 * 60 / 112;
+const beat = B / 4;
+const T = { hook: [0, B], s1: [B, 3 * B], s2: [3 * B, 5 * B], s3: [5 * B, 7 * B], s4: [7 * B, 9 * B], end: [9 * B, 23] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  const rot = el.dataset.rot ?? (el.dataset.rot = (el.style.transform.match(/rotate\(([-\d.]+)deg\)/) || [0, 0])[1]);
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+document.querySelectorAll('.pop').forEach((el) => pop(el, 0, 1));
+window.setT = (t) => {
+  let u = vis('hook', t);
+  pop(document.getElementById('h1'), u, 0.02);
+  pop(document.getElementById('h2'), u, beat);
+  pop(document.getElementById('h3'), u, beat * 2.2);
+  const tr = document.getElementById('track');
+  tr.style.opacity = t >= T.s1[0] && t < T.end[0] ? 1 : 0;
+  const prog = clamp((t - T.s1[0]) / (T.s4[0] - T.s1[0]));
+  document.getElementById('fill').style.width = `calc((100% - 80px) * ${prog})`;
+  document.querySelectorAll('#track .dot').forEach((d, j) => {
+    const on = t >= T[`s${j + 1}`][0];
+    d.style.background = on ? '#FF7033' : '#FFF8F0';
+  });
+  for (const id of ['s1', 's2', 's3', 's4']) {
+    u = vis(id, t);
+    const els = document.querySelectorAll(`#${id} > .pop`);
+    els.forEach((el, j) => pop(el, u, 0.05 + j * beat * 1.2, .35));
+  }
+  u = vis('end', t);
+  ['e0', 'e0b', 'e1', 'e2', 'e3'].forEach((id, j) => pop(document.getElementById(id), u, 0.05 + j * beat, .35));
+};
+window.setT(0);
+</script>
+</body>
+</html>

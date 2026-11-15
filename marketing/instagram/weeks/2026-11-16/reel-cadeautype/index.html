@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="25" data-fps="30">
+<title>Reel: Welk type lief heb jij?</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.98}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .pop{opacity:0}
+  .tag{position:absolute;top:250px;left:80px;background:#1A1A1A;color:#FFF8F0;border-radius:18px;padding:8px 26px;font-family:'Lilita One',sans-serif;font-size:50px}
+  .who{position:absolute;top:350px;left:80px;right:80px;font-family:'Lilita One',sans-serif;font-size:118px;line-height:.98}
+  .arrow{position:absolute;top:620px;left:80px;font-family:'Caveat',cursive;font-weight:700;font-size:74px}
+  .prod{position:absolute;left:170px;top:690px;width:740px}
+  .chip{position:absolute;left:80px;right:80px;top:1400px;text-align:center;background:#FFF8F0;border:7px solid #1A1A1A;border-radius:26px;box-shadow:10px 10px 0 #1A1A1A;padding:16px 10px;font-family:'Lilita One',sans-serif;font-size:62px}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#E3404B">
+    <div class="dots" style="position:absolute;inset:0;opacity:.55"></div>
+    <div class="big pop" style="position:absolute;top:520px;left:60px;right:60px;text-align:center;font-size:140px;color:#FFF8F0;-webkit-text-stroke:6px #1A1A1A;text-shadow:12px 12px 0 #1A1A1A">Je lief is één van deze 4.</div>
+    <div class="big pop" style="position:absolute;top:870px;left:80px;right:80px;text-align:center;font-size:80px">En voor elk type<br>hebben wij een cadeau.</div>
+  </div>
+
+  <div class="layer" id="s1" style="background:#FFD43D">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="tag pop">type 1</div>
+    <div class="who pop">Heeft het altijd koud.</div>
+    <div class="arrow pop">dus:</div>
+    <img class="prod pop" src="../../../../product-photos/hoodie-1.png" alt="" style="transform:rotate(-3deg);filter:drop-shadow(14px 14px 0 #1A1A1A)">
+    <div class="chip pop" style="transform:rotate(-2deg)">Classic Hoodie · vanaf €59,95</div>
+  </div>
+
+  <div class="layer" id="s2" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="tag pop">type 2</div>
+    <div class="who pop">Zondag = in de zetel.</div>
+    <div class="arrow pop">dus:</div>
+    <img class="prod pop" src="../../../../product-photos/sweatshirt-3.png" alt="" style="transform:rotate(3deg);filter:drop-shadow(14px 14px 0 #1A1A1A)">
+    <div class="chip pop" style="transform:rotate(2deg)">Classic Sweatshirt · vanaf €59,95</div>
+  </div>
+
+  <div class="layer" id="s3" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="tag pop">type 3</div>
+    <div class="who pop">Heeft echt al alles.</div>
+    <div class="arrow pop">dus:</div>
+    <div class="prod pop" style="top:740px;height:600px;overflow:hidden;border:7px solid #1A1A1A;border-radius:30px;box-shadow:14px 14px 0 #1A1A1A;background:#FFF;transform:rotate(-2deg)">
+      <img src="../../../../product-photos/cadeaukaart-1.png" alt="" style="position:absolute;width:760px;left:-10px;top:-40px;max-width:none">
+    </div>
+    <div class="chip pop" style="transform:rotate(-1.5deg)">Cadeaukaart · €5 tot €100</div>
+  </div>
+
+  <div class="layer" id="s4" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="tag pop">type 4</div>
+    <div class="who pop">Heeft een kleine thuis.</div>
+    <div class="arrow pop" style="color:#FFF8F0;-webkit-text-stroke:1px #1A1A1A">dus:</div>
+    <div class="prod pop" style="top:740px;height:600px;overflow:hidden;border:7px solid #1A1A1A;border-radius:30px;box-shadow:14px 14px 0 #1A1A1A;background:#FFF;transform:rotate(2deg)">
+      <img src="../../../../product-photos/hoodie-kids-1.png" alt="" style="position:absolute;width:760px;left:-10px;top:-80px;max-width:none">
+    </div>
+    <div class="chip pop" style="transform:rotate(2deg)">Classic Hoodie Kids · €49,95</div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big pop" style="position:absolute;top:380px;left:80px;right:80px;text-align:center;font-size:92px;color:#FFF8F0">Welk type is jouw lief?</div>
+    <div class="hand pop" style="position:absolute;top:600px;left:80px;right:80px;text-align:center;font-size:66px;color:#FF85A1">Sint of kerst? Bestel op tijd: we maken alles op bestelling.</div>
+    <div class="big wm pop" style="position:absolute;top:800px;width:100%;text-align:center;font-size:250px">Loveke</div>
+    <div class="hand pop" style="position:absolute;top:1090px;width:100%;text-align:center;font-size:72px;color:#FFD43D">Born from Love. Worn on the Street.</div>
+    <div class="pop" style="position:absolute;top:1250px;width:100%;text-align:center;font-size:50px;color:#FFF8F0">shop op <b>loveke.be</b></div>
+  </div>
+</div>
+
+<script>
+// Zondagmarkt 100 BPM: 4 tellen = 2,4 s. Haak = 4 tellen, elk type = 8 tellen.
+const B = 4 * 60 / 100;
+const beat = B / 4;
+const T = { hook: [0, B], s1: [B, 3 * B], s2: [3 * B, 5 * B], s3: [5 * B, 7 * B], s4: [7 * B, 9 * B], end: [9 * B, 25] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  const rot = el.dataset.rot ?? (el.dataset.rot = (el.style.transform.match(/rotate\(([-\d.]+)deg\)/) || [0, 0])[1]);
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+document.querySelectorAll('.pop').forEach((el) => pop(el, 0, 1));
+window.setT = (t) => {
+  let u = vis('hook', t);
+  document.querySelectorAll('#hook .pop').forEach((el, j) => pop(el, u, 0.02 + j * beat * 1.5, .35));
+  for (const id of ['s1', 's2', 's3', 's4']) {
+    u = vis(id, t);
+    document.querySelectorAll(`#${id} .pop`).forEach((el, j) => pop(el, u, 0.03 + [0, .5, 2, 2.4, 3.5][j] * beat, .35));
+  }
+  u = vis('end', t);
+  document.querySelectorAll('#end .pop').forEach((el, j) => pop(el, u, 0.05 + j * beat, .35));
+};
+window.setT(0);
+</script>
+</body>
+</html>

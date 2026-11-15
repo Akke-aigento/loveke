@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="22" data-fps="30">
+<title>Reel: Lange afstand is…</title>
+<link rel="stylesheet" href="../../../brand.css">
+<style>
+  body{background:#1A1A1A}
+  #stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:#1A1A1A;font-family:'DM Sans',sans-serif;color:#1A1A1A}
+  .layer{position:absolute;inset:0;opacity:0}
+  .big{font-family:'Lilita One',sans-serif;line-height:.98}
+  .hand{font-family:'Caveat',cursive;font-weight:700;line-height:1}
+  .w{display:inline-block;opacity:0}
+  .lbl{position:absolute;top:250px;left:80px;font-family:'Caveat',cursive;font-weight:700;font-size:74px}
+  .line{position:absolute;top:350px;left:80px;right:80px;font-size:100px}
+  .panel{position:absolute;left:90px;width:900px;border:8px solid #1A1A1A;border-radius:26px;box-shadow:16px 16px 0 #1A1A1A;overflow:hidden;background:#FFF;opacity:0}
+  .panel img{display:block;width:100%}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Haak -->
+  <div class="layer" id="hook" style="background:#1A1A1A">
+    <div class="big" style="position:absolute;top:620px;left:80px;right:80px;text-align:center;font-size:170px;color:#FFF8F0">
+      <span class="w">Lange</span> <span class="w wm">afstand</span> <span class="w">is…</span>
+    </div>
+    <div class="hand w" id="h9" style="position:absolute;top:1120px;left:0;right:0;text-align:center;font-size:70px;color:#FFD43D">(wij weten ervan mee)</div>
+  </div>
+
+  <div class="layer" id="s1" style="background:#FFF8F0">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="lbl" style="color:#E3404B">lange afstand is…</div>
+    <div class="big line"><span class="w">voice</span> <span class="w">messages,</span> <span class="w">video</span> <span class="w">calls</span> <span class="w">en</span> <span class="w" style="color:#E3404B">veel</span> <span class="w" style="color:#E3404B">te</span> <span class="w" style="color:#E3404B">veel</span> <span class="w" style="color:#E3404B">hartjes.</span></div>
+    <div class="panel" style="top:820px;transform:rotate(-2deg)"><img src="../img/warsaw-voice.jpg" alt=""></div>
+  </div>
+
+  <div class="layer" id="s2" style="background:#FF85A1">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="lbl" style="color:#FFF8F0;-webkit-text-stroke:1.5px #1A1A1A">lange afstand is…</div>
+    <div class="big line"><span class="w">op</span> <span class="w">een</span> <span class="w">kaart</span> <span class="w" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">het</span> <span class="w" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">midden</span> <span class="w">zoeken.</span></div>
+    <div class="panel" style="top:720px;transform:rotate(2deg)"><img src="../img/warsaw-map.jpg" alt=""></div>
+  </div>
+
+  <div class="layer" id="s3" style="background:#FFD43D">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="lbl" style="color:#1A1A1A">lange afstand is…</div>
+    <div class="big line"><span class="w">een</span> <span class="w">hele</span> <span class="w">dag</span> <span class="w">op</span> <span class="w">de</span> <span class="w" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">trein.</span></div>
+    <div class="panel" style="top:720px;transform:rotate(-1.5deg)"><img src="../img/warsaw-train.jpg" alt=""></div>
+    <div class="hand w" id="s3n" style="position:absolute;top:1300px;left:0;right:0;text-align:center;font-size:66px">(in Oekraïne vliegt er niks)</div>
+  </div>
+
+  <div class="layer" id="s4" style="background:#FF7033">
+    <div class="dots" style="position:absolute;inset:0;opacity:.6"></div>
+    <div class="lbl" style="color:#FFF8F0;-webkit-text-stroke:1.5px #1A1A1A">lange afstand is…</div>
+    <div class="big line"><span class="w">drie</span> <span class="w">weken</span> <span class="w">die</span> <span class="w">voelen</span> <span class="w">als</span> <span class="w" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">drie</span> <span class="w" style="color:#FFF8F0;-webkit-text-stroke:4px #1A1A1A">jaar.</span></div>
+    <div class="panel" style="top:700px;left:190px;width:700px;transform:rotate(2deg)"><img src="../img/warsaw-hug.jpg" alt=""></div>
+  </div>
+
+  <!-- Eindkaart -->
+  <div class="layer" id="end" style="background:#1A1A1A">
+    <div class="big" id="e0" style="position:absolute;top:420px;left:80px;right:80px;text-align:center;font-size:104px;color:#FFF8F0;opacity:0">En toch: elke keer de moeite.</div>
+    <div class="big wm" id="e1" style="position:absolute;top:720px;width:100%;text-align:center;font-size:250px;opacity:0">Loveke</div>
+    <div class="hand" id="e2" style="position:absolute;top:1010px;width:100%;text-align:center;font-size:72px;color:#FFD43D;opacity:0">Born from Love. Worn on the Street.</div>
+    <div class="big" id="e3" style="position:absolute;top:1170px;left:170px;right:170px;text-align:center;font-size:58px;background:#FF85A1;border:6px solid #FFF8F0;border-radius:24px;padding:14px 10px;transform:rotate(-2deg);opacity:0">Warsaw, deel 2: woensdag</div>
+  </div>
+</div>
+
+<script>
+// Lange Afstand 76 BPM: 4 tellen = 3,158 s per scène.
+const B = 4 * 60 / 76;
+const beat = B / 4;
+const T = { hook: [0, B], s1: [B, 2 * B], s2: [2 * B, 3 * B], s3: [3 * B, 4 * B], s4: [4 * B, 5 * B], end: [5 * B, 22] };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeBack = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pop = (el, u, delay, dur = .3, rot = 0) => {
+  const p = clamp((u - delay) / dur);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `scale(${0.6 + 0.4 * easeBack(p)}) translateY(${(1 - easeOut(p)) * 40}px) rotate(${rot}deg)`;
+};
+const slide = (el, u, delay, rot) => {
+  const p = clamp((u - delay) / .4);
+  el.style.opacity = p > 0 ? 1 : 0;
+  el.style.transform = `translateY(${(1 - easeOut(p)) * 260}px) rotate(${rot}deg)`;
+};
+const vis = (id, t) => {
+  const [a, b] = T[id];
+  const el = document.getElementById(id);
+  const u = t - a;
+  const last = id === 'end';
+  const inO = clamp(u / .15), outO = last ? 1 : 1 - clamp((u - (b - a - .15)) / .15);
+  el.style.opacity = (t >= a && (t < b || last)) ? inO * outO : 0;
+  return u;
+};
+const rots = { s1: -2, s2: 2, s3: -1.5, s4: 2 };
+window.setT = (t) => {
+  let u = vis('hook', t);
+  document.querySelectorAll('#hook .big .w').forEach((w, j) => pop(w, u, 0.05 + j * beat * .8, .35));
+  pop(document.getElementById('h9'), u, beat * 2.6);
+  for (const id of ['s1', 's2', 's3', 's4']) {
+    u = vis(id, t);
+    const ws = document.querySelectorAll(`#${id} .line .w`);
+    const step = Math.min(beat / 2, (beat * 2) / ws.length);
+    ws.forEach((w, j) => pop(w, u, 0.05 + j * step, .28));
+    slide(document.querySelector(`#${id} .panel`), u, beat * .5, rots[id]);
+  }
+  pop(document.getElementById('s3n'), t - T.s3[0], beat * 2.4, .3, -2);
+  u = vis('end', t);
+  pop(document.getElementById('e0'), u, 0.05);
+  pop(document.getElementById('e1'), u, beat * 1.5, .45);
+  pop(document.getElementById('e2'), u, beat * 2.5);
+  pop(document.getElementById('e3'), u, beat * 3.5, .35, -2);
+};
+window.setT(0);
+</script>
+</body>
+</html>
