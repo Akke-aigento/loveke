@@ -125,3 +125,10 @@ Weekrun 15-11. Data bij de start: 29 gemeten items (gem. score 18,8), bereik mee
 Reels: drie formats (tekst met strippanelen, stappen, gids), drie nummers (Lange Afstand, Hoodieweer, Zondagmarkt, alle drie nog nooit gebruikt), drie pijlers (verhaal, merk, product). Zondagreel vorige week = checklist → nu gids. Alle reels met bibliotheeknummer → `pending_approval`. Geen songvoorstellen (optioneel). Geen links in deze week (geen link-sticker), dus geen UTM nodig.
 
 Nog niet gebruikt: tanktop (voorjaar), hoodie-post "280 g/m²" (klaar in `weeks/2026-11-02/`, hook cijfer: liever anders brengen), strip p. 2 (sigaret: enkel organisch), p. 6 en 7 als losse panelen, story "komt eraan", Sweet Tee en Sweet Hat als losse post.
+
+## Week 16 nov 2026: genres v2, opnieuw gemaakt op 16-11 (Akke: "mega variatie")
+Wo–zo opnieuw gemaakt in een eigen genre per item (shared/GENRES.md). Bron: weeks/2026-11-16-g/. Oude versies blijven in weeks/2026-11-16/ (niet gebruikt).
+- 5c813cd0 · genre `stop-motion` · template `g-reel-stopmotion` · muziek chiptune-hartje.mp3 + sting (opnieuw gemaakt)
+- 1c342393 · genre `profiel` · template `g-profiel` (opnieuw gemaakt)
+- aa7cc92d · genre `etiket` · template `g-etiket` (opnieuw gemaakt)
+- 4683eac9 · genre `kaartflip` · template `g-reel-kaartflip` · muziek energiek-samen-sterk.mp3 + sting (opnieuw gemaakt)

@@ -1,0 +1,35 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8">
+<meta name="loveke-reel" content="1080x1920" data-duration="16" data-fps="30">
+<title>Reel kaartflip: welk type is jouw lief</title><link rel="stylesheet" href="../../../brand.css">
+<!-- reel-format: kaartflip (wildcard Loveke). Prijzen live (16-11): Classic Hoodie €59,95, Classic Sweatshirt €59,95, Hoodie Kids €49,95, cadeaukaart €5–€100 of eigen bedrag; op bestelling 5–20 werkdagen. -->
+<style>
+body{background:var(--pink);font-family:'DM Sans'}
+.dots{position:absolute;inset:0}
+.hd{position:absolute;left:70px;right:70px;top:260px;font:400 100px/.95 'Lilita One';color:var(--black)}
+.grid{position:absolute;left:80px;right:80px;top:540px;height:1040px;display:grid;grid-template-columns:1fr 1fr;gap:36px;perspective:2200px}
+.card{position:relative;transform-style:preserve-3d}
+.card>div{position:absolute;inset:0;border:6px solid var(--black);border-radius:34px;backface-visibility:hidden;box-shadow:10px 10px 0 var(--black);overflow:hidden}
+.bk{background:var(--orange);display:grid;place-items:center}
+.bk span{font:400 92px 'Lilita One';color:var(--cream);transform:rotate(-12deg);-webkit-text-stroke:3px var(--black);paint-order:stroke fill}
+.fr{background:var(--cream);transform:rotateY(180deg);padding:22px;text-align:center}
+.fr .t{font:700 22px 'DM Sans';letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+.fr .w{font:600 26px/1.2 'DM Sans';margin:6px 0}
+.fr img{height:250px;max-width:100%;object-fit:contain;margin:4px auto}
+.fr .p{font:400 40px 'Lilita One'}
+.fr .s{font:600 22px 'DM Sans';color:#555}
+.end{position:absolute;inset:0;background:var(--yellow);display:flex;flex-direction:column;justify-content:center;padding:0 70px;opacity:0}
+.end h2{font:400 130px/.95 'Lilita One';color:var(--black);margin:0}.end p{font:700 40px/1.4 'DM Sans';color:var(--black);margin-top:30px}
+.end .wm{font:400 90px 'Lilita One';margin-top:40px}
+</style></head><body><div class="dots"></div>
+<div class="hd">Je lief is één<br>van deze 4.</div>
+<div class="grid" id="grid"></div>
+<div class="end" id="end"><h2>Welk type is jouw lief?</h2><p>Alles op bestelling: 5 tot 20 werkdagen.<br>Voor Sint of kerst bestel je best op tijd.</p><div class="wm wm">Loveke</div></div>
+<script>
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),io=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+const C=[['Type 1','heeft het altijd koud','hoodie-1','Classic Hoodie','vanaf €59,95'],['Type 2','zondag = in de zetel','sweatshirt-1','Classic Sweatshirt','vanaf €59,95'],['Type 3','heeft echt al alles','cadeaukaart-1','Cadeaukaart','€5 tot €100 of eigen bedrag'],['Type 4','heeft een kleine thuis','hoodie-kids-1','Classic Hoodie Kids','€49,95']];
+const g=document.getElementById('grid');const E=C.map((c,i)=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<div class="bk"><span>${i+1}?</span></div><div class="fr"><div class="t">${c[0]}</div><div class="w">${c[1]}</div><img src="../../../../product-photos/${c[2]}.png"><div class="p">${c[3]}</div><div class="s">${c[4]}</div></div>`;g.appendChild(d);return d});
+window.setT=t=>{
+ E.forEach((e,i)=>{const a=1.4+i*2.4;const k=io(cl((t-a)/0.6));const lift=Math.sin(k*Math.PI);e.style.transform=`rotateY(${k*180}deg) translateZ(${lift*140}px) rotate(${(i%2?2:-2)*(1-k)}deg)`;e.style.opacity=cl((t-0.2-i*0.12)/0.4)});
+ document.getElementById('end').style.opacity=cl((t-12.2)/0.5);
+};
+</script></body></html>
