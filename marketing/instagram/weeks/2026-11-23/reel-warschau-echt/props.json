@@ -1,0 +1,54 @@
+{
+  "brand": "loveke",
+  "hook": "Lange afstand. Eindelijk samen.",
+  "transition": "cut",
+  "captionStyle": "pop",
+  "music": "loveke/music/folk-balkan-trein.mp3",
+  "musicVolume": 0.85,
+  "sting": "loveke/music/sting.mp3",
+  "scenes": [
+    {
+      "type": "image",
+      "src": "loveke/instagram/out/2026-11-23/src/img_1301.jpg",
+      "dur": 3.636,
+      "move": "in",
+      "caption": "Zaterdagavond. Kroegentocht in Warschau."
+    },
+    {
+      "type": "image",
+      "src": "loveke/instagram/out/2026-11-23/src/img_1332.jpg",
+      "dur": 3.636,
+      "move": "up",
+      "caption": "Zondag: de Oude Stad."
+    },
+    {
+      "type": "image",
+      "src": "loveke/instagram/out/2026-11-23/src/img_1358.jpg",
+      "dur": 3.636,
+      "move": "in",
+      "caption": "Zij: ruik eens! Hij: ik sta erin."
+    },
+    {
+      "type": "image",
+      "src": "loveke/instagram/out/2026-11-23/src/img_1368.jpg",
+      "dur": 3.636,
+      "move": "out",
+      "caption": "Maandag. Laatste volle dag."
+    },
+    {
+      "type": "image",
+      "src": "loveke/instagram/out/2026-11-23/src/img_1371.jpg",
+      "dur": 3.636,
+      "move": "in",
+      "caption": "Laatste avond. Volgende keer langer."
+    },
+    {
+      "type": "title",
+      "dur": 3.636,
+      "bg": "accent",
+      "kicker": "Dinsdagochtend",
+      "title": "Vlucht gehaald op 1 minuut.",
+      "sub": "Warschau, mei 2024. Loveke · Born from Love."
+    }
+  ]
+}

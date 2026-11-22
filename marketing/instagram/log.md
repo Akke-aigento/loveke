@@ -132,3 +132,24 @@ Wo–zo opnieuw gemaakt in een eigen genre per item (shared/GENRES.md). Bron: we
 - 1c342393 · genre `profiel` · template `g-profiel` (opnieuw gemaakt)
 - aa7cc92d · genre `etiket` · template `g-etiket` (opnieuw gemaakt)
 - 4683eac9 · genre `kaartflip` · template `g-reel-kaartflip` · muziek energiek-samen-sterk.mp3 + sting (opnieuw gemaakt)
+
+## Week van 23 november 2026 — map `weeks/2026-11-23/`, beelden in `published/2026-11-23/`
+
+Weekrun 22-11, eerste week volgens POSTS-2. Data bij de start: lessen 16-11 (strip/statement/verhaal + cta reageren = exploit; reels = bereik, score 0–7; vraag-hook laag). Signalen van Akke laatste 30 d: enkel de Leuven/Brussel-correctie (15-11) en de muziek (02-11). Geen nieuwe producten sinds 30-10.
+**Nieuw materiaal van Akke:** 40 echte foto's uit Warschau (25–27 mei 2024), mediabibliotheek map `general`, 14-11 (de bron van strip 2). Gebruikt als echt beeld in de reel en de story. De originelen (met GPS in de EXIF) staan bewust **niet** in de repo: reel en story zijn gerenderd uit kopieën zonder EXIF in `out/` (niet in git); de story-HTML laadt de foto rechtstreeks uit de SellQo-opslag.
+Kwaliteitspoort: eigen score + onafhankelijke subagent op contactsheet en captions. **Carrousel "Maatgids" (Value-Stack, 6 slides) geschrapt**: 5/12 bij de review, mockupmodellen naast "Akke (1m76) draagt L" = misleidend. Les: een maat- of draagclaim over een persoon enkel bij een echte foto van die persoon. Volgende week opnieuw met echte foto's van Akke en Nastya in tee en sweatshirt. Na de review aangepast: reel-hook (werkt nu zonder voorkennis van strip 2) en eindkaart, story-teaser groter en zelfde tijd als de reel, post met de vraag aan het koppel in beeld.
+
+| Dag + uur | Item | Pijler | Format / template | Hook | Caption | CTA | Licht/donker | Bucket | Uur: reden |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| do 26-11 18:10 **(test)** | Post "Luid of stil?": Classic Oversized Tee (groot logo) vs Sweet Tee (handschrift), allebei vanaf €29,95, "en wie van jullie is luid?" (foto's tee-1, sweet-tee-1) | samen | vergelijking / post-luidofstil | contrast | middel | reageren | licht (crème) + roze/geel | test, experiment tijd | testslot: 18 u nog nooit geprobeerd (17:40 scoorde 25,0; 19 u is het beste eigen uur) |
+| za 28-11 20:50 | Story (geen sticker, automatisch) "Warschau · 00:38. Mei 2024. Dit was geen tekening. morgen: de echte foto's" (echte selfie IMG_1320) | verhaal | foto / story-warschau-foto | statement | – | geen | donker (nachtfoto) | explore | story-avondpiek, vóór 21:30 (zaterdag), teaser voor de reel |
+| zo 29-11 20:35 | **Reel** "Lange afstand. Eindelijk samen.": 5 echte foto's uit Warschau (kroegentocht, Oude Stad, jasmijn "Ruik eens!" / "Ik sta erin.", Barbakan, laatste avond) → "Vlucht gehaald op 1 minuut.", 21,8 s, nummer **Balkan Trein** + sting, map `reel-warschau-echt/` | verhaal | reel-montage / reel-warschau-echt | verhaal | middel | reageren | echte foto's + oranje eindkaart | exploit (hook verhaal) | sterkste slot (zondagavond) |
+
+Drie vragen:
+- **Post** · doorsturen: naar je lief, "jij bent team luid" · hook: twee tees naast elkaar, LUID / STIL · idee: kies je kant. Score 10/12 (review 8: mockups i.p.v. mensen; prijs nagekeken in SellQo).
+- **Story** · doorsturen: nauwelijks (volgers-band) · hook: echte nachtselfie + "Dit was geen tekening" · idee: teaser voor zondag. Score 9/12 (review 8: geen sticker, teaser te klein → groter gemaakt).
+- **Reel** · doorsturen: naar je lief als je ook op afstand woont, "zo voelt dat weerzien" · hook: echte foto + "Lange afstand. Eindelijk samen." · idee: het echte weekend achter strip 2. Score 11/12 (review 9 vóór de aanpassingen).
+
+Reel: genre folk (vorige reel Zondagmarkt = akoestisch), Balkan Trein nog nooit gebruikt; format montage (vorige zondag gids). Geen links, dus geen UTM.
+
+Nog niet gebruikt: tanktop (voorjaar), maatgids (wacht op echte foto's), Warschau-foto's: Wisła, Slotplein solo's, jasmijn Nastya, Barbakan solo's.
