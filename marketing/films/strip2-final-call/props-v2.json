@@ -1,0 +1,85 @@
+{
+ "brand": "loveke",
+ "hook": {
+  "text": "Lange afstand.\nKorte weekends.",
+  "dur": 2.4
+ },
+ "shots": [
+  {
+   "src": "loveke/films/strip2-final-call/shots/s1-arrive-v2.mp4",
+   "dur": 7.6,
+   "volume": 0.45
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s2-wake.mp4",
+   "from": 0.3,
+   "dur": 5.2,
+   "volume": 0.9,
+   "fadeIn": 0.4
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s3-hug.mp4",
+   "from": 0.8,
+   "dur": 5.6,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s4-run-v2.mp4",
+   "from": 0.3,
+   "dur": 4.4,
+   "volume": 0.7
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s5-gate.mp4",
+   "from": 0.3,
+   "dur": 6.2,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s6-plane-v2.mp4",
+   "dur": 7.6,
+   "volume": 0.4,
+   "fadeIn": 0.4
+  }
+ ],
+ "lines": [
+  {
+   "text": "One more minute...",
+   "start": 12.9,
+   "end": 15.6
+  },
+  {
+   "text": "Final call.",
+   "start": 24.8,
+   "end": 26.4
+  },
+  {
+   "text": "Made it. By one minute.",
+   "start": 26.6,
+   "end": 28.5
+  },
+  {
+   "text": "Miss you already.",
+   "kind": "msg",
+   "side": "in",
+   "start": 29.4,
+   "end": 35.6
+  },
+  {
+   "text": "Next time, longer.",
+   "kind": "msg",
+   "side": "out",
+   "start": 31.2,
+   "end": 35.6
+  }
+ ],
+ "music": "loveke/music/emotioneel-lange-afstand.mp3",
+ "musicVolume": 0.6,
+ "duck": 0.8,
+ "end": {
+  "title": "Born from Love.\nWorn on the Street.",
+  "sub": "Ons verhaal → loveke.be",
+  "dur": 2.8,
+  "logo": false
+ }
+}
