@@ -1,0 +1,50 @@
+{
+  "title": "Final call (strip 2, Warschau)",
+  "brand": "loveke",
+  "idea": "Het weerzien en het afscheid van strip 2 als echte korte film: de personages bewegen, je hoort de wekker, haar stem, de luchthaven.",
+  "send": "Naar je lief als jullie ook op afstand wonen: zo voelt dat afscheid.",
+  "hook": "Lange afstand.\nKorte weekends.",
+  "style": "Hand-drawn comic illustration in exactly the style of the reference pages: clean ink outlines, soft painterly flat colors, warm natural light, same faces and proportions. Characters: the man has long curly brown hair, a full brown beard, black tank top, khaki cargo shorts and white sneakers; the woman has long straight blonde hair. Absolutely no text, letters, numbers, captions, speech balloons or readable signs anywhere in the image.",
+  "refs": ["marketing/comic-2/warsaw-p05.jpg", "marketing/comic-2/warsaw-p12.jpg"],
+  "music": "loveke/music/emotioneel-lange-afstand.mp3",
+  "video_model": "veo-3.1-generate-001",
+  "shots": [
+    {
+      "id": "s1-arrive", "panel": "marketing/films/strip2-final-call/refs/s1-arrive.jpg", "duration_secs": 6, "use": 4.5,
+      "frame": "Vertical 9:16 recomposition of the first reference panel: an underground metro platform in Warsaw, the train with open doors on the left, the blonde woman (black puff-sleeve top, olive green skirt, small backpack) has just stepped off and smiles; in the foreground on the right the bearded man waits, grinning, holding a big bouquet of dark red roses.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. The woman walks quickly toward the man, her smile getting bigger; he lifts the roses a little. Slow camera push-in. Sound: underground metro ambience, train doors hissing shut, footsteps echoing. No dialogue, no music."
+    },
+    {
+      "id": "s2-wake", "panel": "marketing/films/strip2-final-call/refs/s2-wake.jpg", "duration_secs": 6, "use": 4,
+      "frame": "Vertical 9:16 recomposition of the second reference panel: early morning, cool blue light in a small apartment bedroom; the bearded man and the blonde woman asleep together under a white duvet; an old-fashioned twin-bell alarm clock on the nightstand in the foreground.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. The alarm clock rings and rattles on the nightstand; the man groans and blindly reaches out an arm toward it without opening his eyes; the woman pulls the duvet over her head. Sound: loud old-fashioned alarm clock bell, sheets rustling, a sleepy groan. No speech, no music."
+    },
+    {
+      "id": "s3-hug", "panel": "marketing/films/strip2-final-call/refs/s3-hug.jpg", "duration_secs": 6, "use": 5,
+      "frame": "Vertical 9:16 recomposition of the third reference panel: at the apartment door in soft morning light, the bearded man wearing a big hiking backpack holds the sleepy blonde woman in a loose grey t-shirt; her head rests on his chest, eyes closed.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. They hold each other tight and sway slightly. Without lifting her head she murmurs softly and sleepily in English: \"One more minute...\". He smiles and kisses the top of her head. Sound: quiet room tone. Only that one spoken line, no other speech, no music."
+    },
+    {
+      "id": "s4-run", "panel": "marketing/films/strip2-final-call/refs/s4-run.jpg", "duration_secs": 6, "use": 4,
+      "frame": "Vertical 9:16 recomposition of the fourth reference panel: a bright airport terminal, the bearded man sprinting with his backpack in one hand, hair flying, travelers with rolling suitcases around him.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. He sprints toward the camera, weaving past travelers; the camera tracks backward with him. Sound: fast footsteps on tiles, rolling suitcases, a distant airport announcement chime. No speech, no music."
+    },
+    {
+      "id": "s5-gate", "panel": "marketing/films/strip2-final-call/refs/s5-gate.jpg", "duration_secs": 6, "use": 4.5,
+      "frame": "Vertical 9:16 recomposition of the fifth reference panel: an airport boarding gate with glass doors and a blank sign above them, a friendly gate agent in a navy uniform behind the desk on the left, the bearded man bursting through the doors at full speed.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. He skids to a stop at the desk, out of breath, and holds up his phone; the gate agent smiles and waves him through. Sound: an airport PA voice saying \"Final call\", heavy panting, a short scanner beep. No other speech, no music."
+    },
+    {
+      "id": "s6-plane", "panel": "marketing/films/strip2-final-call/refs/s6-plane.jpg", "duration_secs": 8, "use": 6,
+      "frame": "Vertical 9:16 recomposition of the sixth reference panel: a window seat in an airplane, warm golden sunrise light through the oval window, the bearded man smiling softly at his phone, a duffel bag in the open overhead bin.",
+      "motion": "Hand-drawn 2D comic animation, keep the drawing style. He reads a message on his phone, smiles, types a short reply, then leans his head back and closes his eyes with a content sigh as the sunlight moves across his face. Sound: airplane cabin hum, soft phone tapping. No speech, no music."
+    }
+  ],
+  "lines": [
+    {"shot": "s3-hug", "text": "One more minute...", "who": "Nastya", "at": 1.2, "dur": 2.6},
+    {"shot": "s5-gate", "text": "Made it. By one minute.", "at": 1.6, "dur": 2.6},
+    {"shot": "s6-plane", "text": "Miss you already.", "at": 0.6, "dur": 2.4},
+    {"shot": "s6-plane", "text": "Next time, longer.", "at": 3.1, "dur": 2.6}
+  ],
+  "end": {"title": "Volgende keer\nlanger.", "sub": "Ons verhaal → loveke.be", "dur": 2.6}
+}
