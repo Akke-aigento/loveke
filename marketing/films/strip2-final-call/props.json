@@ -1,0 +1,24 @@
+{
+  "brand": "loveke",
+  "grade": "none",
+  "hook": {"text": "Lange afstand.\nKorte weekends.", "dur": 2.4},
+  "shots": [
+    {"src": "loveke/films/strip2-final-call/shots/s1-arrive.mp4", "dur": 7.0, "volume": 0.8},
+    {"src": "loveke/films/strip2-final-call/shots/s2-wake.mp4", "from": 0.3, "dur": 5.2, "volume": 0.9, "fadeIn": 0.4},
+    {"src": "loveke/films/strip2-final-call/shots/s3-hug.mp4", "from": 0.8, "dur": 6.4, "volume": 1.0},
+    {"src": "loveke/films/strip2-final-call/shots/s4-run.mp4", "from": 0.5, "dur": 4.2, "volume": 0.8},
+    {"src": "loveke/films/strip2-final-call/shots/s5-gate.mp4", "from": 0.3, "dur": 6.2, "volume": 1.0},
+    {"src": "loveke/films/strip2-final-call/shots/s6-plane.mp4", "dur": 7.0, "volume": 0.35, "fadeIn": 0.4}
+  ],
+  "lines": [
+    {"text": "One more minute...", "who": "Nastya", "start": 12.3, "end": 14.9},
+    {"text": "Final call!", "start": 24.8, "end": 26.3},
+    {"text": "Made it. By one minute.", "start": 26.5, "end": 28.5},
+    {"text": "Miss you already.", "who": "Nastya", "start": 29.0, "end": 31.2},
+    {"text": "Next time, longer.", "who": "Akke", "start": 31.6, "end": 34.6}
+  ],
+  "music": "loveke/music/emotioneel-lange-afstand.mp3",
+  "musicVolume": 0.45,
+  "duck": 0.45,
+  "end": {"title": "Born from Love.\nWorn on the Street.", "sub": "Ons verhaal → loveke.be", "dur": 2.8, "logo": false}
+}
