@@ -1,0 +1,166 @@
+{
+ "brand": "loveke",
+ "hook": {
+  "text": "Hij had een\nverrassing.",
+  "dur": 2.4
+ },
+ "shots": [
+  {
+   "src": "loveke/films/strip2-pubcrawl/shots/s1-walk-v.mp4",
+   "dur": 2.5,
+   "volume": 0.5
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/shots/s2-gift-v.mp4",
+   "dur": 7.0,
+   "volume": 0,
+   "fadeIn": 0.3
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/shots/s3v.mp4",
+   "from": 1.5,
+   "dur": 6.3,
+   "volume": 0.4
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/shots/s4-tickets-v.mp4",
+   "dur": 4.3,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/shots/s5-laugh-v.mp4",
+   "from": 1.2,
+   "dur": 6.6,
+   "volume": 0
+  }
+ ],
+ "voices": [
+  {
+   "src": "loveke/films/strip2-pubcrawl/voice/akke-trying-v2.mp3",
+   "words": [
+    {
+     "text": "Are",
+     "start": 0,
+     "end": 0.151
+    },
+    {
+     "text": "you",
+     "start": 0.186,
+     "end": 0.255
+    },
+    {
+     "text": "trying",
+     "start": 0.302,
+     "end": 0.511
+    },
+    {
+     "text": "to",
+     "start": 0.546,
+     "end": 0.604
+    },
+    {
+     "text": "tell",
+     "start": 0.639,
+     "end": 0.778
+    },
+    {
+     "text": "me",
+     "start": 0.813,
+     "end": 0.894
+    },
+    {
+     "text": "something?",
+     "start": 0.929,
+     "end": 1.579
+    }
+   ],
+   "at": 2.4,
+   "who": "Akke"
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/voice/nastya-maybe-v2.mp3",
+   "words": [
+    {
+     "text": "Maybe.",
+     "start": 0,
+     "end": 0.836
+    }
+   ],
+   "at": 8.4,
+   "who": "Nastya"
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/voice/akke-tickets-v2.mp3",
+   "words": [
+    {
+     "text": "Two",
+     "start": 0,
+     "end": 0.197
+    },
+    {
+     "text": "tickets.",
+     "start": 0.255,
+     "end": 0.766
+    },
+    {
+     "text": "Pub",
+     "start": 0.952,
+     "end": 1.138
+    },
+    {
+     "text": "crawl.",
+     "start": 1.196,
+     "end": 1.509
+    },
+    {
+     "text": "Tonight.",
+     "start": 1.695,
+     "end": 2.368
+    }
+   ],
+   "at": 15.9,
+   "who": "Akke"
+  },
+  {
+   "src": "loveke/films/strip2-pubcrawl/voice/nastya-ofcourse-v2.mp3",
+   "words": [
+    {
+     "text": "Haha...",
+     "start": 0,
+     "end": 0.43
+    },
+    {
+     "text": "of",
+     "start": 0.592,
+     "end": 0.697
+    },
+    {
+     "text": "course",
+     "start": 0.766,
+     "end": 0.975
+    },
+    {
+     "text": "you",
+     "start": 0.998,
+     "end": 1.068
+    },
+    {
+     "text": "did.",
+     "start": 1.138,
+     "end": 1.533
+    }
+   ],
+   "at": 20.4,
+   "who": "Nastya"
+  }
+ ],
+ "music": "loveke/music/warm-zachte-ochtend.mp3",
+ "musicVolume": 0.5,
+ "duck": 0.35,
+ "end": {
+  "title": "Born from Love.\nWorn on the Street.",
+  "sub": "Ons verhaal → loveke.be",
+  "dur": 2.6,
+  "logo": false
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "brand": "loveke",
+ "hook": {
+  "text": "Lange afstand.\nKorte weekends.",
+  "dur": 2.4
+ },
+ "shots": [
+  {
+   "src": "loveke/films/strip2-final-call/shots/s1-arrive-v2.mp4",
+   "dur": 2.9,
+   "volume": 0.45
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s1-arrive-end-still.mp4",
+   "dur": 2.6,
+   "volume": 0,
+   "fadeIn": 0.3
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s2-wake-still.mp4",
+   "from": 0,
+   "dur": 5.2,
+   "volume": 0.9,
+   "fadeIn": 0.4
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s3-hug.mp4",
+   "from": 0.8,
+   "dur": 5.6,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s4-run-v2.mp4",
+   "from": 0.3,
+   "dur": 2.0,
+   "volume": 0.7
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s5-gate-still.mp4",
+   "dur": 3.0,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/strip2-final-call/shots/s6-plane-v2.mp4",
+   "from": 0,
+   "dur": 4.2,
+   "speed": 0.8,
+   "volume": 0.3,
+   "fadeIn": 0.4
+  }
+ ],
+ "lines": [
+  {
+   "text": "Miss you already.",
+   "kind": "msg",
+   "side": "in",
+   "start": 23.0,
+   "end": 25.5
+  },
+  {
+   "text": "Next time, longer.",
+   "kind": "msg",
+   "side": "out",
+   "start": 24.0,
+   "end": 25.5
+  }
+ ],
+ "music": "loveke/music/emotioneel-lange-afstand.mp3",
+ "musicVolume": 0.6,
+ "duck": 0.8,
+ "end": {
+  "title": "Born from Love.\nWorn on the Street.",
+  "sub": "Ons verhaal → loveke.be",
+  "dur": 2.8,
+  "logo": false
+ },
+ "voices": [
+  {
+   "src": "loveke/films/strip2-final-call/voice/nastya-oneminute.mp3",
+   "words": [
+    {
+     "text": "One",
+     "start": 0,
+     "end": 0.209
+    },
+    {
+     "text": "more",
+     "start": 0.244,
+     "end": 0.406
+    },
+    {
+     "text": "minute...",
+     "start": 0.441,
+     "end": 1.207
+    }
+   ],
+   "at": 11.4,
+   "who": "Nastya"
+  },
+  {
+   "src": "loveke/films/strip2-final-call/voice/daniel-finalcall.mp3",
+   "words": [
+    {
+     "text": "Final",
+     "start": 0,
+     "end": 0.383
+    },
+    {
+     "text": "call.",
+     "start": 0.441,
+     "end": 1.068
+    }
+   ],
+   "at": 18.7,
+   "who": "Omroep"
+  },
+  {
+   "src": "loveke/films/strip2-final-call/voice/akke-madeit.mp3",
+   "words": [
+    {
+     "text": "Made",
+     "start": 0,
+     "end": 0.29
+    },
+    {
+     "text": "it.",
+     "start": 0.325,
+     "end": 0.476
+    },
+    {
+     "text": "By",
+     "start": 0.58,
+     "end": 0.697
+    },
+    {
+     "text": "one",
+     "start": 0.778,
+     "end": 0.917
+    },
+    {
+     "text": "minute.",
+     "start": 0.952,
+     "end": 1.533
+    }
+   ],
+   "at": 21.7,
+   "who": "Akke"
+  }
+ ]
+}
