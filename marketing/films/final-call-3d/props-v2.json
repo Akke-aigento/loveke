@@ -1,0 +1,112 @@
+{
+ "brand": "loveke",
+ "msgTop": 1150,
+ "shots": [
+  {
+   "src": "loveke/films/final-call-3d/shots/s1-door.mp4",
+   "from": 1.0,
+   "dur": 2.6,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s2-run.mp4",
+   "from": 0,
+   "dur": 3.0,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s3-gate-v2.mp4",
+   "from": 0,
+   "dur": 2.2,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s5-nastya.mp4",
+   "from": 0,
+   "dur": 3.0,
+   "volume": 0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s4-plane-v2.mp4",
+   "from": 0,
+   "dur": 2.2,
+   "volume": 0.6
+  }
+ ],
+ "voices": [
+  {
+   "src": "loveke/films/final-call-3d/nastya-whisper-cut.mp3",
+   "words": [
+    {
+     "text": "One",
+     "start": 0.11,
+     "end": 0.249
+    },
+    {
+     "text": "more",
+     "start": 0.272,
+     "end": 0.435
+    },
+    {
+     "text": "minute...",
+     "start": 0.458,
+     "end": 1.166
+    }
+   ],
+   "at": 0.2,
+   "who": "Nastya",
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/ping.wav",
+   "words": [],
+   "at": 8.3,
+   "caption": false,
+   "volume": 0.9
+  },
+  {
+   "src": "loveke/films/final-call-3d/ping.wav",
+   "words": [],
+   "at": 11.2,
+   "caption": false,
+   "volume": 0.9
+  }
+ ],
+ "lines": [
+  {
+   "text": "Final call.",
+   "start": 2.6,
+   "end": 3.7,
+   "who": "Omroep"
+  },
+  {
+   "text": "Made it.",
+   "start": 5.45,
+   "end": 6.6,
+   "who": "Akke"
+  },
+  {
+   "text": "Was it worth it?",
+   "kind": "msg",
+   "side": "in",
+   "start": 8.3,
+   "end": 13.0
+  },
+  {
+   "text": "Every second.",
+   "kind": "msg",
+   "side": "out",
+   "start": 11.2,
+   "end": 13.0
+  }
+ ],
+ "music": "loveke/music/emotioneel-lange-afstand.mp3",
+ "musicVolume": 0.35,
+ "duck": 0.35,
+ "end": {
+  "title": "Born from Love.\nWorn on the Street.",
+  "sub": "loveke.be",
+  "dur": 1.4,
+  "logo": false
+ }
+}

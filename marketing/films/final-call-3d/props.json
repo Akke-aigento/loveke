@@ -1,0 +1,77 @@
+{
+ "brand": "loveke",
+ "shots": [
+  {
+   "src": "loveke/films/final-call-3d/shots/s1-door.mp4",
+   "from": 1.0,
+   "dur": 3.0,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s2-run.mp4",
+   "from": 0,
+   "dur": 3.4,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s3-gate.mp4",
+   "from": 0,
+   "dur": 2.0,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/s4-plane.mp4",
+   "from": 0,
+   "dur": 1.1,
+   "volume": 1.0
+  },
+  {
+   "src": "loveke/films/final-call-3d/shots/k4-still.mp4",
+   "dur": 3.6,
+   "volume": 0
+  }
+ ],
+ "lines": [
+  {
+   "text": "One more minute...",
+   "start": 0.35,
+   "end": 1.9,
+   "who": "Nastya"
+  },
+  {
+   "text": "Final call.",
+   "start": 3.0,
+   "end": 4.1,
+   "who": "Omroep"
+  },
+  {
+   "text": "Made it.",
+   "start": 6.4,
+   "end": 7.4,
+   "who": "Akke"
+  },
+  {
+   "text": "Was it worth it?",
+   "kind": "msg",
+   "side": "in",
+   "start": 9.1,
+   "end": 13.1
+  },
+  {
+   "text": "Every second.",
+   "kind": "msg",
+   "side": "out",
+   "start": 10.6,
+   "end": 13.1
+  }
+ ],
+ "music": "loveke/music/emotioneel-lange-afstand.mp3",
+ "musicVolume": 0.35,
+ "duck": 0.35,
+ "end": {
+  "title": "Born from Love.\nWorn on the Street.",
+  "sub": "loveke.be",
+  "dur": 1.4,
+  "logo": false
+ }
+}
