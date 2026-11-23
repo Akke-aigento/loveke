@@ -5,15 +5,17 @@ Doorstreepte regels (`~~…~~`) of regels met `(Akke: nee)` worden nooit meer ge
 
 ## Actief
 
-- 2026-11-16 · format `strip` scoort het hoogst van de formats met ≥3 posts (score_48h 30,5 vs merkgemiddelde 18,1; 6 posts), productfoto 18,0 (6 posts); beste post blijft strip 02-11 (100,0, 2 keer gedeeld) · voorlopig: bereik meestal <20 per beeld, één like = 5–15 punten
-- 2026-11-16 · hook `verhaal` (31,2; 5 posts) en `statement` (25,0; 10 posts) scoren boven het merkgemiddelde (18,1) · voorlopig, zelfde kanttekening
-- 2026-11-16 · cta `reageren` doet het beter dan geen cta en dan `link` (score_48h 21,7 vs 10,0 vs 7,4; 16/5/5 posts) · voorlopig
-- 2026-11-16 · hook `vraag` (0,0; 3 posts: tip 23-10, invullen 30-10, reel 10-11) en `cijfer` (4,4; 3 posts) scoren het laagst, pijler `merk` ook laag (10,4; 5 posts) · voorlopig: minder vaak, of anders brengen
-- 2026-11-16 · reels halen het meeste bereik (gem. 48, reel 08-11: 110, reel 15-11: 102) maar de laagste score (4,1; 8 posts) tegenover beelden (24,5; 16 posts) · voorlopig: reels voor bereik, beelden voor interactie
-- 2026-11-16 · `exploit`-posts scoren 3× hoger dan `explore` (43,8 vs 14,2; 4 vs 22 posts) · voorlopig: de bewezen combinaties (strip/statement + reageren) mogen vaker
-- 2026-11-16 · caption `lang` scoort hoger dan `middel` (53,7 vs 14,0; 3 vs 20 posts) · voorlopig: gedragen door strip 02-11 (100,0)
+- 2026-11-23 · Akke wil geen echte foto's in de beelden (2× opnieuw laten maken op 22-11: reel-montage "andere beelden gebruiken, geen echte foto's" en foto "liefst geen echte foto") · actief: signaal van Akke
+- 2026-11-23 · format `strip` scoort het hoogst van de formats met ≥3 posts (score 30,5 vs merkgemiddelde 16,5; 6 posts), productfoto 18,0 (6 posts); deze week ook carousel-strip 16-11 36,4 en 18-11 20,0 (eigen formatnaam, 2 posts) · voorlopig: bereik meestal <20 per beeld, één like = 5–15 punten
+- 2026-11-23 · hook `verhaal` (26,6; 8 posts) en `statement` (21,9; 13 posts) scoren boven het merkgemiddelde (16,5) · voorlopig, zelfde kanttekening
+- 2026-11-23 · cta `reageren` doet het beter dan geen cta en dan `link` (18,9 vs 8,3 vs 7,4; 22/7/5 posts) · voorlopig
+- 2026-11-23 · hooks `vraag` (0,0; 3 posts), `grap` (0,0; 3 posts) en `cijfer` (4,4; 3 posts) scoren het laagst, pijler `merk` ook laag (8,7; 6 posts) · voorlopig: minder vaak, of anders brengen
+- 2026-11-23 · reels halen het meeste bereik (gem. 40) maar de laagste score (3,0; 11 posts; deze week 3 reels op 0) tegenover carrousels (29,4; 4 posts) en beelden (23,8; 17 posts) · voorlopig: reels voor bereik, beelden en carrousels voor interactie
+- 2026-11-23 · `exploit`-posts scoren 2,3× hoger dan `explore` (30,5 vs 13,0; 8 vs 25 posts) · voorlopig: de bewezen combinaties (strip/verhaal/statement + reageren) mogen vaker
+- 2026-11-23 · caption `lang` scoort hoger dan `middel` (28,9 vs 14,7; 6 vs 23 posts) · voorlopig
+- 2026-11-23 · beste uur is 19u (26,5 over 7 posts) tegenover 12u (21,1 over 10) en 20u (10,1 over 8, vooral reels); dagdelen avond 17,6 (20) en middag 17,2 (12) gelijk, ochtend 10,9 (5) · voorlopig, in de zin van POSTTIJDEN
 
-_Stand 16-11: 30 posts in 90 d (29 met score), gemiddelde 18,1. Beste post deze week: aanbod 13-11 19:45 (33,3, test, cta delen); drie reels deze week scoorden 0–7 ondanks tot 102 bereik. Volgers 11 (+1). Dagdelen: avond 19,2 (16 posts) en middag 19,0 (7 posts) gelijk, ochtend 13,6 (4 posts). Site: 1 Instagram-bezoeker deze week (14-11, zonder campagne, waarschijnlijk aanbod 13-11 of story 14-11), 90 d: 9, 0 aanvragen, 0 bestellingen: te weinig voor een site-les. Akke vroeg 15-11 een poll opnieuw te maken (feitelijke fout: Leuven, niet Brussel); geen inhoudelijk patroon._
+_Stand 23-11: 37 posts in 90 d (36 met score), gemiddelde 16,5. Beste post deze week: carousel-strip 16-11 12:21 (score_48h 36,4, bereik 13, 1 keer gedeeld). Volgers 11 (stabiel). Site: 1 Instagram-bezoeker deze week (17-11, zonder campagne, waarschijnlijk carousel-strip 16-11 of reel-strip 17-11), 90 d: 10, 0 aanvragen, 0 bestellingen: te weinig voor een site-les._
 
 ## Vervallen
 
