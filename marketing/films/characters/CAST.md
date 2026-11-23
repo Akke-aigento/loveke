@@ -32,7 +32,15 @@ Nieuwe outfit = nieuwe rij hier, met een referentiebeeld.
 
 ## Stemmen
 
-Elk personage krijgt één vaste ElevenLabs-stem, nooit de willekeurige stem van het videomodel. Akke kiest ze nog (zie FILM.md); tot dan praten personages in beeld enkel met een korte zin wanneer hun mond niet in close-up te zien is, en controleren we elke zin met spraakherkenning.
+Elk personage heeft één vaste ElevenLabs-stem (gekozen door Akke op 23-11), nooit de stem van het videomodel. Model `eleven_multilingual_v2`, `language_code: en`. Een nieuwe stem altijd eerst alleen aanroepen (anders 409).
+
+| Personage | Stem | voice_id | Toon |
+|---|---|---|---|
+| Nastya | Marlena (Oekraïense moedertaal, spreekt Engels) | `W4ZBKBsXCMS1XKvLLTlU` | lief, warm, niet Amerikaans |
+| Akke | Diederik (Vlaams, spreekt Engels) | `9kBSa5emtWArU7U0792v` | jong, Belgisch |
+| Omroeper (luchthaven, station) | Daniel | `onwK4e9ZLuTAKqWW03F9` | neutraal, omroep |
+
+Elke zin wordt na de montage met spraakherkenning nagekeken.
 
 ## Regels tegen drift (les van de pilot "Final call")
 
