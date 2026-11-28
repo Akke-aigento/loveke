@@ -151,16 +151,26 @@
     "chapter3": "À Mukachevo, ils ont partagé leur première nuit. Un motel beaucoup trop chaud, un petit lit, tout habillés — très sage. Mais ils ont parlé toute la nuit, ri, et fixé le plafond. Certaines nuits changent tout.",
     "chapter4Title": "Kyiv 🏛️",
     "chapter4": "De Mukachevo à Kyiv — à chaque kilomètre, ils se sont rapprochés. Elle lui a montré tout Kyiv : les dômes dorés, les cafés, les couchers de soleil sur le Dnipro. Le meilleur guide qu'il ait jamais eu. Et puis il a fallu se dire au revoir.",
+    "chapterWarsawTitle": "Varsovie, 2024 🌹",
+    "chapterWarsaw": "Trois semaines après Kyiv, Akke n'en pouvait plus : « I need to see you again. » Nastya le trouvait fou. Varsovie était pile au milieu. Lui a pris l'avion, elle a passé toute une journée dans le train, car il n'y a pas de vols en Ukraine. Il l'attendait sur le quai avec des roses, et cette fois avec des chaussures. Trois jours ensemble : une tournée des bars où ils ont sauté la dernière boîte, des balades dans la vieille ville, une terrasse pleine de cuisine géorgienne et de chacha. Et le dernier matin, il a attrapé son vol à une minute près.",
     "chapter5Title": "Loveke ❤️",
     "chapter5": "De retour en Belgique, la connexion n'a jamais cessé. Messages, vocaux, appels vidéo — jour et nuit. Deux pays, un seul sentiment. La distance les a rendus plus forts. Quelque part en chemin, ils ont commencé à s'appeler 'Loveke'. Un petit mot belge plein de chaleur. Les amis l'adoraient. Les inconnus posaient des questions. Et c'est ainsi qu'un surnom est devenu... une marque. De Bratislava à la Belgique — Loveke, c'est l'amour que l'on porte.",
     "shopCta": "Voir la collection →"
   },
   "comic": {
     "title": "La BD",
-    "subtitle": "L'histoire Loveke en bande dessinée",
+    "subtitle": "Notre histoire en BD, en deux parties",
     "freeReminder": "Découvrez l'histoire Loveke en BD 📖",
     "englishNote": "La bande dessinée est en anglais.",
-    "alt": "Bande dessinée, page"
+    "alt": "Bande dessinée, page",
+    "partsLabel": "Choisis une partie",
+    "part1Label": "Partie 1",
+    "part1Title": "The Wild Elephants Story",
+    "part1Where": "Bratislava → Kyiv, 2024",
+    "part2Label": "Partie 2",
+    "part2Title": "The Warsaw Story",
+    "part2Where": "Varsovie, mai 2024",
+    "nextPart": "Continuer avec la partie 2"
   },
   "sizeGuide": {
     "title": "Guide des tailles",

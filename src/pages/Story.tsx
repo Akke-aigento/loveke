@@ -7,6 +7,7 @@ const chapters = [
   { key: 'chapter2', icon: '🚂', color: 'bg-accent/20' },
   { key: 'chapter3', icon: '🌙', color: 'bg-primary/10' },
   { key: 'chapter4', icon: '🏛️', color: 'bg-secondary' },
+  { key: 'chapterWarsaw', icon: '🌹', color: 'bg-primary/10' },
   { key: 'chapter5', icon: '❤️', color: 'bg-accent/20' },
 ];
 

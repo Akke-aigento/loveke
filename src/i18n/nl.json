@@ -151,16 +151,26 @@
     "chapter3": "In Mukachevo deelden ze hun eerste nacht. Een veel te warm motel, één bedje, broek aan — braaf hoor. Maar de hele nacht gepraat, gelachen, en naar het plafond gestaard. Sommige nachten veranderen alles.",
     "chapter4Title": "Kyiv 🏛️",
     "chapter4": "Van Mukachevo naar Kyiv — met elke kilometer groeiden ze dichter naar elkaar toe. Ze liet hem heel Kyiv zien: de gouden koepels, de gezellige cafés, de zonsondergangen boven de Dnjepr. De beste gids die hij ooit had gehad. En toen was het tijd om afscheid te nemen.",
+    "chapterWarsawTitle": "Warschau, 2024 🌹",
+    "chapterWarsaw": "Drie weken na Kyiv hield Akke het niet meer: 'I need to see you again.' Nastya vond hem zot. Warschau lag precies in het midden. Hij nam het vliegtuig, zij zat een hele dag op de trein, want in Oekraïne vliegt er niets. Hij wachtte op het perron met rozen, en deze keer wél met schoenen. Drie dagen samen: een kroegentocht waar ze de laatste club oversloegen, wandelen door de oude stad, een terras vol Georgisch eten en chacha. En op de laatste ochtend haalde hij zijn vlucht op één minuut na.",
     "chapter5Title": "Loveke ❤️",
     "chapter5": "Terug in België stopte het contact nooit. Berichten, voice notes, videocalls — dag en nacht. Twee landen, één gevoel. De afstand maakte hen alleen maar sterker. Ergens onderweg begonnen ze elkaar 'Loveke' te noemen. Een Belgisch woordje vol warmte. Vrienden vonden het geweldig. Vreemden vroegen ernaar. En zo werd een koosnaampje... een merk. Van Bratislava tot België — Loveke is liefde die je draagt.",
     "shopCta": "Shop de collectie →"
   },
   "comic": {
     "title": "De Strip",
-    "subtitle": "Het Loveke verhaal als stripverhaal",
+    "subtitle": "Ons verhaal als stripverhaal, in twee delen",
     "freeReminder": "Ontdek het Loveke-verhaal in stripvorm 📖",
     "englishNote": "De strip is in het Engels.",
-    "alt": "Strip, pagina"
+    "alt": "Strip, pagina",
+    "partsLabel": "Kies een deel",
+    "part1Label": "Deel 1",
+    "part1Title": "The Wild Elephants Story",
+    "part1Where": "Bratislava → Kyiv, 2024",
+    "part2Label": "Deel 2",
+    "part2Title": "The Warsaw Story",
+    "part2Where": "Warschau, mei 2024",
+    "nextPart": "Lees verder in deel 2"
   },
   "sizeGuide": {
     "title": "Maatgids",

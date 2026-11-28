@@ -151,16 +151,26 @@
     "chapter3": "In Mukachevo they shared their first night. A way too hot motel, one small bed, fully clothed — all very innocent. But they talked all night, laughed, and stared at the ceiling. Some nights change everything.",
     "chapter4Title": "Kyiv 🏛️",
     "chapter4": "From Mukachevo to Kyiv — with every kilometer they grew closer. She showed him all of Kyiv: the golden domes, the cozy cafés, the sunsets over the Dnipro. The best guide he ever had. And then it was time to say goodbye.",
+    "chapterWarsawTitle": "Warsaw, 2024 🌹",
+    "chapterWarsaw": "Three weeks after Kyiv, Akke couldn't take it anymore: 'I need to see you again.' Nastya thought he was crazy. Warsaw was right in the middle. He flew, she spent a whole day on the train, because there are no flights in Ukraine. He waited on the platform with roses, and this time with shoes on. Three days together: a pub crawl where they skipped the last club, walks through the old town, a terrace table full of Georgian food and chacha. And on the last morning he caught his flight with one minute to spare.",
     "chapter5Title": "Loveke ❤️",
     "chapter5": "Back in Belgium, the connection never stopped. Messages, voice notes, video calls — day and night. Two countries, one feeling. Distance only made them stronger. Somewhere along the way, they started calling each other 'Loveke'. A little Belgian word full of warmth. Friends loved it. Strangers asked about it. And that's how a pet name became... a brand. From Bratislava to Belgium — Loveke is love you wear.",
     "shopCta": "Shop the collection →"
   },
   "comic": {
     "title": "The Comic",
-    "subtitle": "The Loveke story as a comic book",
+    "subtitle": "Our story as a comic, in two parts",
     "freeReminder": "Discover the Loveke story in comic form 📖",
     "englishNote": "The comic is in English.",
-    "alt": "Comic, page"
+    "alt": "Comic, page",
+    "partsLabel": "Choose a part",
+    "part1Label": "Part 1",
+    "part1Title": "The Wild Elephants Story",
+    "part1Where": "Bratislava → Kyiv, 2024",
+    "part2Label": "Part 2",
+    "part2Title": "The Warsaw Story",
+    "part2Where": "Warsaw, May 2024",
+    "nextPart": "Continue with part 2"
   },
   "sizeGuide": {
     "title": "Size Guide",
